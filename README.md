@@ -38,7 +38,8 @@ Later
    | per_page | Integer | Filter airports by this value. |
 
    Responses
-
+   1. 🟢 200
+   
    ```json
    {
         "a" : 1
@@ -54,8 +55,12 @@ Later
    | Param | Type | Required |
    |-------|------|------------|
    | airport_id | Integer | True |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 404
    
-4. Add the airport data 💛 (POST)
+5. Add the airport data 💛 (POST)
    > `http://localhost:3000/api/v1/airports`
 
    Create an airport.
@@ -67,9 +72,13 @@ Later
    | country | String | True |
    | city | String | |
    | latitude | Float | |
-   | longitude | Float | | 
+   | longitude | Float | |
+
+   Responses
+   1. 🟢 201
+   2. 🔴 400
    
-5. Update airport info 💙 (PUT)
+7. Update airport info 💙 (PUT)
    > `http://localhost:3000/api/v1/airports/{airport_id}`
 
    Update airport details.
@@ -88,8 +97,13 @@ Later
    | latitude | Float | |
    | longitude | Float | |
    | archive | Boolean | |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 400
+   3. 🔴 404
    
-6. Delete an airport ❤️ (DELETE)
+9. Delete an airport ❤️ (DELETE)
    > `http://localhost:3000/api/v1/airports/{airport_id}`
 
    Delete an airport.
@@ -98,6 +112,10 @@ Later
    | Param | Type | Required |
    |-------|------|------------|
    | airport_id | Integer | True |
+
+   Responses
+   1. 🟢 204
+   2. 🔴 404
 
 ### Airplanes
 
@@ -112,8 +130,11 @@ Later
    | ids[] | String | Fitler airplanes by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
    | page | Integer | Filter airplanes by page. |
    | per_page | Integer | Filter airplanes by this value. |
+
+   Responses
+   1. 🟢 200
    
-2. Get an airplane 💚 (GET)
+3. Get an airplane 💚 (GET)
    > `http://localhost:3000/api/v1/airplanes/{airplane_id}`
 
    Get airplane details.
@@ -122,8 +143,12 @@ Later
    | Param | Type | Required |
    |-------|------|------------|
    | airplane_id | Integer | True |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 404
    
-3. Create an airplane 💛 (POST)
+5. Create an airplane 💛 (POST)
    > `http://localhost:3000/api/v1/airplanes`
 
    Create an airplane.
@@ -133,8 +158,12 @@ Later
    |-------|------|------------|
    | name | String | True |
    | capacity | Integer | True |
+
+   Responses
+   1. 🟢 201
+   2. 🔴 400
    
-4. Update airplane info 💙 (PUT)
+7. Update airplane info 💙 (PUT)
    > `http://localhost:3000/api/v1/airplanes/{airplane_id}`
 
    Update airplane details.
@@ -150,8 +179,13 @@ Later
    | name | String | |
    | capacity | Integer | |
    | archive | Boolean | |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 404
+   3. 🔴 400
    
-5. Delete an airplane ❤️ (DELETE)
+9. Delete an airplane ❤️ (DELETE)
    > `http://localhost:3000/api/v1/airplanes/{airplane_id}`
 
    Delete an airplane.
@@ -161,7 +195,11 @@ Later
    |-------|------|------------|
    | airport_id | Integer | True |
 
-6. List of airport airplanes 💚 (GET)
+   Responses
+   1. 🟢 204
+   2. 🔴 404
+
+11. List of airport airplanes 💚 (GET)
    > `http://localhost:3000/api/v1/airports/{airport_id}/airplanes`
 
    Returns a list of airport airplanes.
@@ -177,6 +215,10 @@ Later
    | ids[] | String | Fitler airplanes by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
    | page | Integer | Filter airplanes by page. |
    | per_page | Integer | Filter airplanes by this value. |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 404
 
 ### Passengers
 
@@ -194,8 +236,11 @@ Later
    | status    | String | Filter passengers by status. |
    | page | Integer | Filter passengers by page. |
    | per_page | Integer | Filter passengers by this value. |
+
+   Responses
+   1. 🟢 200
    
-2. Get a passenger's profile 💚 (GET)
+3. Get a passenger's profile 💚 (GET)
    > `http://localhost:3000/api/v1/passengers/{passenger_id}`
 
    Get a passenger's profile.
@@ -204,8 +249,12 @@ Later
    | Param | Type | Required |
    |-------|------|------------|
    | passenger_id | Integer | True |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 404
    
-3. Create a new passenger 💛 (POST)
+5. Create a new passenger 💛 (POST)
     > `http://localhost:3000/api/v1/passengers`
 
     Create a new passenger's profile.
@@ -224,8 +273,12 @@ Later
    | city | String | |
    | zip | Integer | |
    | street | String | |
+
+   Responses
+   1. 🟢 201
+   2. 🔴 400
     
-4. Update passenger info 💙 (PUT)
+7. Update passenger info 💙 (PUT)
    > `http://localhost:3000/api/v1/passengers/{passenger_id}`
 
    Update passenger details.
@@ -249,8 +302,13 @@ Later
    | city | String | |
    | zip | Integer | |
    | street | String | |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 400
+   3. 🔴 404
    
-5. Delete a passenger ❤️ (DELETE)
+9. Delete a passenger ❤️ (DELETE)
    > `http://localhost:3000/api/v1/passengers/{passenger_id}`
 
    Delete a passenger.
@@ -260,7 +318,11 @@ Later
    |-------|------|------------|
    | passenger_id | Integer | True |
 
-6. List of flight passengers 💚 (GET)
+   Responses
+   1. 🟢 204
+   2. 🔴 404
+
+11. List of flight passengers 💚 (GET)
    > `http://localhost:3000/api/v1/flights/{flight_id}/passengers`
 
    Returns a list of flight passengers.
@@ -273,6 +335,10 @@ Later
    | status    | String | Filter passengers by status. |
    | page | Integer | Filter passengers by page. |
    | per_page | Integer | Filter passengers by this value. |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 404
    
 
 ### Flights
@@ -292,8 +358,11 @@ Later
    | arrival | Datetime | Filter flights on or after this value. |
    | page | Integer | Filter flights by page. |
    | per_page | Integer | Filter flights by this value. |
+
+   Responses
+   1. 🟢 200
    
-2. Get flight info 💚 (GET)
+3. Get flight info 💚 (GET)
    > `http://localhost:3000/api/v1/flights/{flight_id}`
 
    Get flight details.
@@ -302,10 +371,16 @@ Later
    | Param | Type | Required |
    |-------|------|------------|
    | flight_id | Integer | True |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 404
    
-3. Create a flight 💛 (POST)
+5. Create a flight 💛 (POST)
    > `http://localhost:3000/api/v1/flights`
 
+   Create a new flight.
+   
    Body params
    | Param | Type | Required |
    |-------|------|------------|
@@ -316,9 +391,12 @@ Later
    | airplane_id | Integer | True |
    | price | Float | True |
 
-   Create a new flight.
+   Responses
+   1. 🟢 201
+   2. 🔴 404
+   3. 🔴 400
    
-4. Delete a flight ❤️ (DELETE)
+7. Delete a flight ❤️ (DELETE)
    > `http://localhost:3000/api/v1/flights/{flight_id}`
 
    Delete a flight.
@@ -327,8 +405,12 @@ Later
    | Param | Type | Required |
    |-------|------|------------|
    | flight_id | Integer | True |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 404
    
-5. Update a flight info 💙 (PUT)
+9. Update a flight info 💙 (PUT)
    > `http://localhost:3000/api/v1/flights/{flight_id}`
 
    Update flight details.
@@ -349,7 +431,12 @@ Later
    | airplane_id | Integer | |
    | price | Float | |
 
-6. List of airplane flights 💚 (GET)
+   Responses
+   1. 🟢 200
+   2. 🔴 404
+   3. 🔴 400
+
+11. List of airplane flights 💚 (GET)
    > `http://localhost:3000/api/v1/airplanes/{airplane_id}/flights`
 
    Returns a list of airplane flights.
@@ -369,6 +456,10 @@ Later
    | arrival | Datetime | Filter flights on or before this value. |
    | page | Integer | Filter flights by page. |
    | per_page | Integer | Filter flights by this value. |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 404
    
 ### Bookings
    
@@ -386,13 +477,25 @@ Later
    | status    | String | Filter bookings by status. |
    | page | Integer | Filter bookings by page. |
    | per_page | Integer | Filter bookings by this value. |
+
+   Responses
+   1. 🟢 200
    
-2. Get booking info 💚 (GET)
+3. Get booking info 💚 (GET)
    > `http://localhost:3000/api/v1/bookings/{booking_id}`
 
    Get booking details.
 
-3. Update the booking 💙 (PUT)
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | booking_id | Integer | True |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 404
+
+5. Update the booking 💙 (PUT)
    > `http://localhost:3000/api/v1/bookings/{booking_id}`
 
    Update booking info.
@@ -408,13 +511,27 @@ Later
    | seat | Integer | |
    | status | String | |
    | passenger_name | String | |
+
+   Responses
+   1. 🟢 200
+   2. 🔴 404
+   3. 🔴 400
    
-4. Delete booking ❤️ (DELETE)
+7. Delete booking ❤️ (DELETE)
    > `http://localhost:3000/api/v1/bookings/{booking_id}`
 
    Delete the booking.
 
-5. Book a flight 💛 (POST)
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | booking_id | Integer | True |
+
+   Responses
+   1. 🟢 204
+   2. 🔴 404
+
+9. Book a flight 💛 (POST)
    > `http://localhost:3000/api/v1/flights/{flight_id}/bookings`
 
    Create a new booking.
@@ -431,7 +548,12 @@ Later
    | seat | Integer | True |
    | passenger_name | String | |
 
-6. List of passenger bookings 💚 (GET)
+   Responses
+   1. 🟢 201
+   2. 🔴 404
+   3. 🔴 400
+
+11. List of passenger bookings 💚 (GET)
    > `http://localhost:3000/api/v1/passengers/{passenger_id}/bookings`
 
    Returns a list of passenger bookings.
@@ -451,3 +573,6 @@ Later
    | page | Integer | Filter bookings by page. |
    | per_page | Integer | Filter bookings by this value. |
 
+   Responses
+   1. 🟢 200
+   2. 🔴 404
