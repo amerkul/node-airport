@@ -20,7 +20,7 @@ Later
 
 ## REST API
 
-### Airport info service
+### Airports
 
 1. List all airports 💚 (GET)
    > `http://localhost:3000/api/v1/airports`
@@ -37,45 +37,69 @@ Later
    | page | Integer | Filter airports by page. |
    | per_page | Integer | Filter airports by this value. |
 
+   Responses
+
+   ```json
+   {
+        "a" : 1
+   }
+   ```
+
 3. Get airport info 💚 (GET)
    > `http://localhost:3000/api/v1/airports/{airport_id}`
 
    Get an airport.
-   
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | airport_id | Integer | True |
    
 4. Add the airport data 💛 (POST)
    > `http://localhost:3000/api/v1/airports`
 
    Create an airport.
+
+   Body params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | name | String | True |
+   | country | String | True |
+   | city | String | |
+   | latitude | Float | |
+   | longitude | Float | | 
    
-5. Archive an airport 💜 (PATCH)
+5. Update airport info 💙 (PUT)
    > `http://localhost:3000/api/v1/airports/{airport_id}`
 
-   Change an airport status.
+   Update airport details.
    
-6. Update airport info 💙 (PUT)
-   > `http://localhost:3000/api/v1/airports/{airport_id}`
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | airport_id | Integer | True |
 
-   Update airport details
+   Body params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | name | String | |
+   | country | String | |
+   | city | String | |
+   | latitude | Float | |
+   | longitude | Float | |
+   | archive | Boolean | |
    
-7. Delete an airport ❤️ (DELETE)
+6. Delete an airport ❤️ (DELETE)
    > `http://localhost:3000/api/v1/airports/{airport_id}`
 
    Delete an airport.
    
-8. List of airport airplanes 💚 (GET)
-   > `http://localhost:3000/api/v1/airports/{airport_id}/airplanes`
-
-   Returns a list of airport airplanes.
-
-   Query params
-   | Param | Type | description |
+   Path params
+   | Param | Type | Required |
    |-------|------|------------|
-   | ids[] | String | Fitler airplanes by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
-   | page | Integer | Filter airplanes by page. |
-   | per_page | Integer | Filter airplanes by this value. |
+   | airport_id | Integer | True |
 
-### Airplane service
+### Airplanes
 
 1. List all airplanes 💚 (GET)
    > `http://localhost:3000/api/v1/airplanes`
@@ -89,48 +113,72 @@ Later
    | page | Integer | Filter airplanes by page. |
    | per_page | Integer | Filter airplanes by this value. |
    
-3. Get an airplane 💚 (GET)
+2. Get an airplane 💚 (GET)
    > `http://localhost:3000/api/v1/airplanes/{airplane_id}`
 
    Get airplane details.
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | airplane_id | Integer | True |
    
-4. Create an airplane 💛 (POST)
+3. Create an airplane 💛 (POST)
    > `http://localhost:3000/api/v1/airplanes`
 
    Create an airplane.
-   
-5. Archive an airplane 💜 (PATCH)
-   > `http://localhost:3000/api/v1/airplanes/{airplane_id}`
 
-   Change an airplane status.
+   Body params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | name | String | True |
+   | capacity | Integer | True |
    
-6. Update airplane info 💙 (PUT)
+4. Update airplane info 💙 (PUT)
    > `http://localhost:3000/api/v1/airplanes/{airplane_id}`
 
    Update airplane details.
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | airport_id | Integer | True |
+
+   Body params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | name | String | |
+   | capacity | Integer | |
+   | archive | Boolean | |
    
-7. Delete an airplane ❤️ (DELETE)
+5. Delete an airplane ❤️ (DELETE)
    > `http://localhost:3000/api/v1/airplanes/{airplane_id}`
 
    Delete an airplane.
 
-8. List of airplane flights 💚 (GET)
-   > `http://localhost:3000/api/v1/airplanes/{airplane_id}/flights`
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | airport_id | Integer | True |
 
-   Returns a list of airplane flights.
+6. List of airport airplanes 💚 (GET)
+   > `http://localhost:3000/api/v1/airports/{airport_id}/airplanes`
+
+   Returns a list of airport airplanes.
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | airport_id | Integer | True |
 
    Query params
    | Param | Type | description |
    |-------|------|------------|
-   | ids[] | Integer | Fitler flights by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
-   | from  | Integer | Filter flights by place of departure. Provide an airport id. |
-   | to    | Integer | Filter flights by place of arrival. Provide an airport id. |
-   | departure | Date | Filter flights on this value. |
-   | arrival | Date | Filter flights on this value. |
-   | page | Integer | Filter flights by page. |
-   | per_page | Integer | Filter flights by this value. |
+   | ids[] | String | Fitler airplanes by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
+   | page | Integer | Filter airplanes by page. |
+   | per_page | Integer | Filter airplanes by this value. |
 
-### Passenger service
+### Passengers
 
 1. List all passengers 💚 (GET)
    > `http://localhost:3000/api/v1/passengers`
@@ -147,48 +195,87 @@ Later
    | page | Integer | Filter passengers by page. |
    | per_page | Integer | Filter passengers by this value. |
    
-3. Get a passenger's profile 💚 (GET)
+2. Get a passenger's profile 💚 (GET)
    > `http://localhost:3000/api/v1/passengers/{passenger_id}`
 
    Get a passenger's profile.
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | passenger_id | Integer | True |
    
-4. Create a new passenger 💛 (POST)
+3. Create a new passenger 💛 (POST)
     > `http://localhost:3000/api/v1/passengers`
 
     Create a new passenger's profile.
+
+   Body params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | first_name | String | True |
+   | last_name | String | True |
+   | email | String | True |
+   | passport | String | True |
+   | phone | String | |
+   | sex | String | |
+   | birthday | Date | |
+   | country | String | |
+   | city | String | |
+   | zip | Integer | |
+   | street | String | |
     
-5. Update passenger info 💙 (PUT)
+4. Update passenger info 💙 (PUT)
    > `http://localhost:3000/api/v1/passengers/{passenger_id}`
 
    Update passenger details.
-   
-6. Archive a passenger 💜 (PATCH)
-   > `http://localhost:3000/api/v1/passengers/{passenger_id}`
 
-   Change a passenger status.
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | passenger_id | Integer | True |
+
+   Body params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | first_name | String | |
+   | last_name | String | |
+   | email | String | |
+   | passport | String | |
+   | phone | String | |
+   | sex | String | |
+   | birthday | Date | |
+   | country | String | |
+   | city | String | |
+   | zip | Integer | |
+   | street | String | |
    
-7. Delete a passenger ❤️ (DELETE)
+5. Delete a passenger ❤️ (DELETE)
    > `http://localhost:3000/api/v1/passengers/{passenger_id}`
 
    Delete a passenger.
 
-8. List of passenger bookings 💚 (GET)
-   > `http://localhost:3000/api/v1/passengers/{passenger_id}/bookings`
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | passenger_id | Integer | True |
 
-   Returns a list of passenger bookings.
+6. List of flight passengers 💚 (GET)
+   > `http://localhost:3000/api/v1/flights/{flight_id}/passengers`
+
+   Returns a list of flight passengers.
 
    Query params
    | Param | Type | description |
    |-------|------|------------|
-   | ids[] | Integer | Fitler bookings by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
-   | flights[]  | Integer | Fitler bookings by flights. Multiple IDs of flights can be provided using an ampersand separated list. For example, flights[]=1&flights[]=2. |
-   | passengers[] | String | Filter bookings by passengers. Multiple IDs of passengers can be provided using an ampersand separated list. For example, passengers[]=1&passengers[]=2|
-   | status    | String | Filter bookings by status. |
-   | page | Integer | Filter bookings by page. |
-   | per_page | Integer | Filter bookings by this value. |
+   | full_name  | String | Filter passengers by full name. |
+   | emails[] | String | Filter passengers by emails. Multiple emails can be provided using an ampersand separated list. For example, emails[]=abc@gmail.com&emails[]=def@gmail.com|
+   | status    | String | Filter passengers by status. |
+   | page | Integer | Filter passengers by page. |
+   | per_page | Integer | Filter passengers by this value. |
    
 
-### Flight service
+### Flights
 
 1. List all flights 💚 (GET)
    > `http://localhost:3000/api/v1/flights`
@@ -201,54 +288,91 @@ Later
    | ids[] | Integer | Fitler flights by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
    | from  | Integer | Filter flights by place of departure. Provide an airport id. |
    | to    | Integer | Filter flights by place of arrival. Provide an airport id. |
-   | departure | Date | Filter flights on this value. |
-   | arrival | Date | Filter flights on this value. |
+   | departure | Datetime | Filter flights on or after this value. |
+   | arrival | Datetime | Filter flights on or after this value. |
    | page | Integer | Filter flights by page. |
    | per_page | Integer | Filter flights by this value. |
    
-3. Get flight info 💚 (GET)
+2. Get flight info 💚 (GET)
    > `http://localhost:3000/api/v1/flights/{flight_id}`
 
    Get flight details.
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | flight_id | Integer | True |
    
-4. Create a flight 💛 (POST)
+3. Create a flight 💛 (POST)
    > `http://localhost:3000/api/v1/flights`
+
+   Body params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | from | Integer | True |
+   | to | Integer | True |
+   | departure | Datetime | True |
+   | arrival | Datetime | True |
+   | airplane_id | Integer | True |
+   | price | Float | True |
 
    Create a new flight.
    
-5. Delete a flight ❤️ (DELETE)
+4. Delete a flight ❤️ (DELETE)
    > `http://localhost:3000/api/v1/flights/{flight_id}`
 
    Delete a flight.
    
-6. Update a flight info 💙 (PUT)
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | flight_id | Integer | True |
+   
+5. Update a flight info 💙 (PUT)
    > `http://localhost:3000/api/v1/flights/{flight_id}`
 
    Update flight details.
 
-7. List of flight passengers 💚 (GET)
-   > `http://localhost:3000/api/v1/flights/{flight_id}/passengers`
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | flight_id | Integer | True |
+   
+   Body params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | from | Integer | |
+   | to | Integer | |
+   | archive | Boolean | |
+   | departure | Datetime | |
+   | arrival | Datetime | |
+   | airplane_id | Integer | |
+   | price | Float | |
 
-   Returns a list of flight passengers.
+6. List of airplane flights 💚 (GET)
+   > `http://localhost:3000/api/v1/airplanes/{airplane_id}/flights`
 
+   Returns a list of airplane flights.
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | airplane_id | Integer | True |
+   
    Query params
    | Param | Type | description |
    |-------|------|------------|
-   | ids[] | Integer | Fitler passengers by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
-   | full_name  | String | Filter passengers by full name. |
-   | emails[] | String | Filter passengers by emails. Multiple emails can be provided using an ampersand separated list. For example, emails[]=abc@gmail.com&emails[]=def@gmail.com|
-   | status    | String | Filter passengers by status. |
-   | page | Integer | Filter passengers by page. |
-   | per_page | Integer | Filter passengers by this value. |
-
-### Booking service
-
-1. Book a flight 💛 (POST)
-   > `http://localhost:3000/api/v1/bookings`
-
-   Create a new booking.
+   | ids[] | Integer | Fitler flights by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
+   | from  | Integer | Filter flights by place of departure. Provide an airport id. |
+   | to    | Integer | Filter flights by place of arrival. Provide an airport id. |
+   | departure | Datetime | Filter flights on or after this value. |
+   | arrival | Datetime | Filter flights on or before this value. |
+   | page | Integer | Filter flights by page. |
+   | per_page | Integer | Filter flights by this value. |
    
-2. List all booked flights 💚 (GET)
+### Bookings
+   
+1. List all booked flights 💚 (GET)
    > `http://localhost:3000/api/v1/bookings`
 
    Returns a list of booked flights.
@@ -263,24 +387,67 @@ Later
    | page | Integer | Filter bookings by page. |
    | per_page | Integer | Filter bookings by this value. |
    
-4. Get booking info 💚 (GET)
+2. Get booking info 💚 (GET)
    > `http://localhost:3000/api/v1/bookings/{booking_id}`
 
    Get booking details.
-   
-5. Update booking 💙 (PUT)
+
+3. Update the booking 💙 (PUT)
    > `http://localhost:3000/api/v1/bookings/{booking_id}`
 
    Update booking info.
-   
-6. Change the booking status 💜 (PATCH)
-   > `http://localhost:3000/api/v1/bookings/{booking_id}`
 
-   Change the booking status.
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | booking_id | Integer | True |
+
+   Body params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | seat | Integer | |
+   | status | String | |
+   | passenger_name | String | |
    
-7. Delete booking ❤️ (DELETE)
+4. Delete booking ❤️ (DELETE)
    > `http://localhost:3000/api/v1/bookings/{booking_id}`
 
    Delete the booking.
-   
+
+5. Book a flight 💛 (POST)
+   > `http://localhost:3000/api/v1/flights/{flight_id}/bookings`
+
+   Create a new booking.
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | flight_id | Integer | True |
+
+   Body params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | passenger_id | Integer | True |
+   | seat | Integer | True |
+   | passenger_name | String | |
+
+6. List of passenger bookings 💚 (GET)
+   > `http://localhost:3000/api/v1/passengers/{passenger_id}/bookings`
+
+   Returns a list of passenger bookings.
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | passenger_id | Integer | True |
+
+   Query params
+   | Param | Type | description |
+   |-------|------|------------|
+   | ids[] | Integer | Fitler bookings by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
+   | flights[]  | Integer | Fitler bookings by flights. Multiple IDs of flights can be provided using an ampersand separated list. For example, flights[]=1&flights[]=2. |
+   | passengers[] | String | Filter bookings by passengers. Multiple IDs of passengers can be provided using an ampersand separated list. For example, passengers[]=1&passengers[]=2|
+   | status    | String | Filter bookings by status. |
+   | page | Integer | Filter bookings by page. |
+   | per_page | Integer | Filter bookings by this value. |
 
