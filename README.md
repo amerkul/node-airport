@@ -6,13 +6,14 @@ The project presents a travel advisory system for airports. When a traveler want
 
 ## Table of contents
 
-- [🚀 Install and run](https://github.com/amerkul/node-airport/edit/main/README.md#install-and-run)
-- [🌐 REST API](https://github.com/amerkul/node-airport/edit/main/README.md#rest-api)
-     - [🏠 Airport info service](https://github.com/amerkul/node-airport/edit/main/README.md#airport-info-service)
-     - [✈️ Airplane service](https://github.com/amerkul/node-airport/edit/main/README.md#airplane-service)
-     - [💃 Passenger service](https://github.com/amerkul/node-airport/edit/main/README.md#passenger-service)
-     - [📆 Flight service](https://github.com/amerkul/node-airport/edit/main/README.md#flight-service)
-     - [✅ Booking service](https://github.com/amerkul/node-airport/edit/main/README.md#booking-service)
+- [🚀 Install and run](https://github.com/amerkul/node-airport/readme-patch-1/README.md#install-and-run)
+- [🌐 REST API](https://github.com/amerkul/node-airport/readme-patch-1/README.md#rest-api)
+     - [🏠 Airport info service](https://github.com/amerkul/node-airport/readme-patch-1/README.md#airports)
+     - [⭐ Airline service](https://github.com/amerkul/node-airport/readme-patch-1/README.md#airlines)
+     - [✈️ Airplane service](https://github.com/amerkul/node-airport/readme-patch-1/README.md#airplanes)
+     - [💃 Passenger service](https://github.com/amerkul/node-airport/readme-patch-1/README.md#passengers)
+     - [📆 Flight service](https://github.com/amerkul/node-airport/readme-patch-1/README.md#flights)
+     - [✅ Booking service](https://github.com/amerkul/node-airport/readme-patch-1/README.md#bookings)
 
 ## Install and run
 
@@ -32,21 +33,50 @@ Later
    |-------|------|------------|
    | ids[] | Integer | Fitler airports by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
    | name | String | Fitler airporsts by name. |
+   | status | String | Filter by status |
    | country | String | Fitler airporsts by country. |
    | city | String | Filter airports by city. |
    | page | Integer | Filter airports by page. |
    | per_page | Integer | Filter airports by this value. |
 
    Responses
-   1. 🟢 200
+   
+   🟢 200
    
    ```json
    {
-        "a" : 1
+     "airports" : [
+       {
+         "id": 1,
+         "name": "National Airport Minsk",
+         "status": "In service",
+         "country": "Belarus",
+         "city": "Minsk",
+         "latitude": 53.882222,
+         "longitude": 28.030556,
+         "iata": "MSQ",
+         "icao": "UMMS"
+       },
+       {
+         "id": 2,
+         "name": "Brussels International Airport",
+         "status": "In service",
+         "country": "Belgium",
+         "city": "Brussels",
+         "latitude": 53.882222,
+         "longitude": 28.030556,
+         "iata": "BRU",
+         "icao": "EBBR"
+       }
+     ],
+     "page": 1,
+     "per_page": 10,
+     "total_entries": 2,
+     "total_pages": 1 
    }
    ```
 
-3. Get airport info 💚 (GET)
+2. Get airport info 💚 (GET)
    > `http://localhost:3000/api/v1/airports/{airport_id}`
 
    Get an airport.
@@ -57,10 +87,34 @@ Later
    | airport_id | Integer | True |
 
    Responses
-   1. 🟢 200
-   2. 🔴 404
    
-5. Add the airport data 💛 (POST)
+   🟢 200
+
+   ```json
+   {
+     "id": 1,
+     "name": "National Airport Minsk",
+     "status": "In service",
+     "country": "Belarus",
+     "city": "Minsk",
+     "latitude": 53.882222,
+     "longitude": 28.030556,
+     "iata": "MSQ",
+     "icao": "UMMS"
+   }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The airport with id = 1 doesn't exist"
+   }
+   ```
+   
+3. Add the airport data 💛 (POST)
    > `http://localhost:3000/api/v1/airports`
 
    Create an airport.
@@ -75,10 +129,34 @@ Later
    | longitude | Float | |
 
    Responses
-   1. 🟢 201
-   2. 🔴 400
    
-7. Update airport info 💙 (PUT)
+   🟢 201
+  
+   ```json
+   {
+     "id": 1,
+     "name": "National Airport Minsk",
+     "status": "In service",
+     "country": "Belarus",
+     "city": "Minsk",
+     "latitude": 53.882222,
+     "longitude": 28.030556,
+     "iata": "MSQ",
+     "icao": "UMMS"
+   }
+   ```
+   
+   🔴 400
+   
+   ```json
+   {
+     "status": 400,
+     "error": "Bad Request",
+     "message": "Providing name is required"
+   }
+   ```
+   
+4. Update airport info 💙 (PUT)
    > `http://localhost:3000/api/v1/airports/{airport_id}`
 
    Update airport details.
@@ -92,6 +170,7 @@ Later
    | Param | Type | Required |
    |-------|------|------------|
    | name | String | |
+   | status | String | |
    | country | String | |
    | city | String | |
    | latitude | Float | |
@@ -99,11 +178,34 @@ Later
    | archive | Boolean | |
 
    Responses
-   1. 🟢 200
-   2. 🔴 400
-   3. 🔴 404
    
-9. Delete an airport ❤️ (DELETE)
+   🟢 200
+
+   ```json
+   {
+     "id": 1,
+     "name": "National Airport Minsk (Minsk-2)",
+     "status": "In service",
+     "country": "Belarus",
+     "city": "Minsk",
+     "latitude": 53.882222,
+     "longitude": 28.030556,
+     "iata": "MSQ",
+     "icao": "UMMS"
+   }
+   ```
+   
+   🔴 404
+  
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The airport with id = 1 doesn't exist"
+   }
+   ```
+   
+5. Delete an airport ❤️ (DELETE)
    > `http://localhost:3000/api/v1/airports/{airport_id}`
 
    Delete an airport.
@@ -114,8 +216,251 @@ Later
    | airport_id | Integer | True |
 
    Responses
-   1. 🟢 204
-   2. 🔴 404
+   
+   🟢 204
+
+   No content
+   
+   🔴 404
+  
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The airport with id = 1 doesn't exist"
+   }
+   ```
+
+### Airlines
+
+1. List all airlines 💚 (GET)
+   > `http://localhost:3000/api/v1/airlines`
+
+   Returns a list of airplanes.
+
+   Query params
+   | Param | Type | description |
+   |-------|------|------------|
+   | ids[] | Integer | Fitler airlines by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
+   | archive | Boolean | Filter by archive. |
+   | name | String | Filter airlines by name. |
+   | page | Integer | Filter airlines by page. |
+   | per_page | Integer | Filter airlines by this value. |
+
+   Responses
+   
+   🟢 200
+
+   ```json
+   {
+     "airlines" : [
+       {
+         "id": 1,
+         "name": "Belavia",
+         "iata": "B2",
+         "archive": false
+       },
+       {
+         "id": 2,
+         "name": "Air Belgium",
+         "iata": "AK",
+         "archive": false
+       }
+     ],
+     "page": 1,
+     "per_page": 10,
+     "total_entries": 2,
+     "total_pages": 1 
+   }
+   ```
+   
+2. Get an airline 💚 (GET)
+   > `http://localhost:3000/api/v1/airlines/{airline_id}`
+
+   Get airplane details.
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | airline_id | Integer | True |
+
+   Responses
+   
+   🟢 200
+
+   ```json
+   {
+     "id": 2,
+     "name": "Air Belgium",
+     "iata": "AK",
+     "archive": false
+   }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The airline with id = 1 doesn't exist"
+   }
+   ```
+   
+3. Create an airline 💛 (POST)
+   > `http://localhost:3000/api/v1/airlines`
+
+   Create an airplane.
+
+   Body params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | name | String | True |
+   | iata | Integer |  |
+
+   Responses
+   
+   🟢 201
+
+   ```json
+   {
+     "id": 2,
+     "name": "Air Belgium",
+     "iata": null,
+     "archive": false
+   }
+   ```
+   
+   🔴 400
+
+   ```json
+   {
+     "status": 400,
+     "error": "Bad Request",
+     "message": "Providing name is required"
+   }
+   ```
+   
+4. Update airline info 💙 (PUT)
+   > `http://localhost:3000/api/v1/airlines/{airline_id}`
+
+   Update airplane details.
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | airline_id | Integer | True |
+
+   Body params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | name | String | |
+   | iata | Integer | |
+   | archive | Boolean | |
+
+   Responses
+   
+   🟢 200
+
+   ```json
+   {
+     "id": 2,
+     "name": "Air Belgium",
+     "iata": "AK",
+     "archive": false
+   }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The airline with id = 1 doesn't exist"
+   }
+   ```
+      
+5. Delete an airline ❤️ (DELETE)
+   > `http://localhost:3000/api/v1/airlines/{airline_id}`
+
+   Delete an airplane.
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | airline_id | Integer | True |
+
+   Responses
+   
+   🟢 204
+
+   No content
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The airplane with id = 1 doesn't exist"
+   }
+   ```
+
+6. List of airport airplines 💚 (GET)
+    > `http://localhost:3000/api/v1/airports/{airport_id}/airlines`
+
+    Returns a list of airport airplanes.
+
+    Path params
+    | Param | Type | Required |
+    |-------|------|------------|
+    | airport_id | Integer | True |
+
+    Query params
+    | Param | Type | description |
+    |-------|------|------------|
+    | ids[] | String | Fitler airplanes by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
+    | page | Integer | Filter airplanes by page. |
+    | archive | Boolean | Filter by archive. |
+    | per_page | Integer | Filter airplanes by this value. |
+
+    Responses
+    
+    🟢 200
+
+    ```json
+    {
+     "airlines" : [
+       {
+         "id": 1,
+         "name": "Belavia",
+         "iata": "B2",
+         "archive": false
+       },
+       {
+         "id": 2,
+         "name": "Air Belgium",
+         "iata": "AK",
+         "archive": false
+       }
+     ],
+     "page": 1,
+     "per_page": 10,
+     "total_entries": 2,
+     "total_pages": 1 
+    }
+    ```
+    
+    🔴 404
+
+    ```json
+    {
+      "status": 404,
+      "error": "Not Found",
+      "message": "The airport with id = 1 doesn't exist"
+    }
+    ```
 
 ### Airplanes
 
@@ -128,13 +473,39 @@ Later
    | Param | Type | description |
    |-------|------|------------|
    | ids[] | String | Fitler airplanes by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
+   | name | String | Filter by name |
+   | archive | Boolean | Filter by archive. |
    | page | Integer | Filter airplanes by page. |
    | per_page | Integer | Filter airplanes by this value. |
 
    Responses
-   1. 🟢 200
    
-3. Get an airplane 💚 (GET)
+   🟢 200
+
+   ```json
+   {
+     "airplanes" : [
+       {
+         "id": 1,
+         "name": "Airbus A380",
+         "capacity": 853,
+         "archive": false
+       },
+       {
+         "id": 2,
+         "name": "Airbus A3280",
+         "capacity": 344,
+         "archive": true
+       }
+     ],
+     "page": 1,
+     "per_page": 10,
+     "total_entries": 2,
+     "total_pages": 1 
+   }
+   ```
+   
+2. Get an airplane 💚 (GET)
    > `http://localhost:3000/api/v1/airplanes/{airplane_id}`
 
    Get airplane details.
@@ -145,10 +516,29 @@ Later
    | airplane_id | Integer | True |
 
    Responses
-   1. 🟢 200
-   2. 🔴 404
    
-5. Create an airplane 💛 (POST)
+   🟢 200
+
+   ```json
+   {
+     "id": 1,
+     "name": "Airbus A380",
+     "capacity": 853,
+     "archive": false
+   }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The airplane with id = 1 doesn't exist"
+   }
+   ```
+   
+3. Create an airplane 💛 (POST)
    > `http://localhost:3000/api/v1/airplanes`
 
    Create an airplane.
@@ -160,10 +550,29 @@ Later
    | capacity | Integer | True |
 
    Responses
-   1. 🟢 201
-   2. 🔴 400
    
-7. Update airplane info 💙 (PUT)
+   🟢 201
+
+   ```json
+   {
+     "id": 1,
+     "name": "Airbus A380",
+     "capacity": 853,
+     "archive": false
+   }
+   ```
+   
+   🔴 400
+
+   ```json
+   {
+     "status": 400,
+     "error": "Bad Request",
+     "message": "Providing name is required"
+   }
+   ```
+   
+4. Update airplane info 💙 (PUT)
    > `http://localhost:3000/api/v1/airplanes/{airplane_id}`
 
    Update airplane details.
@@ -171,7 +580,7 @@ Later
    Path params
    | Param | Type | Required |
    |-------|------|------------|
-   | airport_id | Integer | True |
+   | airplane_id | Integer | True |
 
    Body params
    | Param | Type | Required |
@@ -181,11 +590,29 @@ Later
    | archive | Boolean | |
 
    Responses
-   1. 🟢 200
-   2. 🔴 404
-   3. 🔴 400
    
-9. Delete an airplane ❤️ (DELETE)
+   🟢 200
+
+   ```json
+   {
+     "id": 1,
+     "name": "Airbus A380",
+     "capacity": 853,
+     "archive": true
+   }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The airplane with id = 1 doesn't exist"
+   }
+   ```
+      
+5. Delete an airplane ❤️ (DELETE)
    > `http://localhost:3000/api/v1/airplanes/{airplane_id}`
 
    Delete an airplane.
@@ -193,32 +620,72 @@ Later
    Path params
    | Param | Type | Required |
    |-------|------|------------|
-   | airport_id | Integer | True |
+   | airplane_id | Integer | True |
 
    Responses
-   1. 🟢 204
-   2. 🔴 404
+   
+   🟢 204
 
-11. List of airport airplanes 💚 (GET)
-   > `http://localhost:3000/api/v1/airports/{airport_id}/airplanes`
+   No content
+   
+   🔴 404
 
-   Returns a list of airport airplanes.
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The airplane with id = 1 doesn't exist"
+   }
+   ```
 
-   Path params
-   | Param | Type | Required |
-   |-------|------|------------|
-   | airport_id | Integer | True |
+6. List of airline airplanes 💚 (GET)
+    > `http://localhost:3000/api/v1/airlines/{airline_id}/airplanes`
 
-   Query params
-   | Param | Type | description |
-   |-------|------|------------|
-   | ids[] | String | Fitler airplanes by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
-   | page | Integer | Filter airplanes by page. |
-   | per_page | Integer | Filter airplanes by this value. |
+    Returns a list of airport airplanes.
 
-   Responses
-   1. 🟢 200
-   2. 🔴 404
+    Path params
+    | Param | Type | Required |
+    |-------|------|------------|
+    | airline_id | Integer | True |
+
+    Query params
+    | Param | Type | description |
+    |-------|------|------------|
+    | ids[] | String | Fitler airplanes by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
+    | archive | Boolean | Filter by archive. |
+    | page | Integer | Filter airplanes by page. |
+    | per_page | Integer | Filter airplanes by this value. |
+
+    Responses
+    
+    🟢 200
+
+    ```json
+    {
+     "airplanes" : [
+       {
+         "id": 1,
+         "name": "Airbus A380",
+         "capacity": 853,
+         "archive": false
+       }
+     ],
+     "page": 1,
+     "per_page": 10,
+     "total_entries": 1,
+     "total_pages": 1 
+    }
+    ```
+    
+    🔴 404
+
+    ```json
+    {
+      "status": 404,
+      "error": "Not Found",
+      "message": "The airline with id = 1 doesn't exist"
+    }
+    ```
 
 ### Passengers
 
@@ -231,16 +698,43 @@ Later
    | Param | Type | description |
    |-------|------|------------|
    | ids[] | Integer | Fitler passengers by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
+   | active | Boolean | Filter by active. |
    | full_name  | String | Filter passengers by full name. |
-   | emails[] | String | Filter passengers by emails. Multiple emails can be provided using an ampersand separated list. For example, emails[]=abc@gmail.com&emails[]=def@gmail.com|
-   | status    | String | Filter passengers by status. |
    | page | Integer | Filter passengers by page. |
    | per_page | Integer | Filter passengers by this value. |
 
    Responses
-   1. 🟢 200
    
-3. Get a passenger's profile 💚 (GET)
+   🟢 200
+
+   ```json
+    {
+     "passengers" : [
+       {
+         "id": 1,
+         "first_name": "Anna",
+         "last_name": "Merkul",
+         "full_name": "Anna Merkul",
+         "passport": "MP1111111",
+         "active": true,
+       },
+       {
+         "id": 2,
+         "first_name": "Ivan",
+         "last_name": "Karavai",
+         "full_name": "Ivan Karavai",
+         "passport": "MP2222222",
+         "active": true,
+       }
+     ],
+     "page": 1,
+     "per_page": 10,
+     "total_entries": 2,
+     "total_pages": 1 
+    }
+    ```
+   
+2. Get a passenger's profile 💚 (GET)
    > `http://localhost:3000/api/v1/passengers/{passenger_id}`
 
    Get a passenger's profile.
@@ -251,10 +745,41 @@ Later
    | passenger_id | Integer | True |
 
    Responses
-   1. 🟢 200
-   2. 🔴 404
    
-5. Create a new passenger 💛 (POST)
+   🟢 200
+
+   ```json
+   {
+     "id": 1,
+     "first_name": "Anna",
+     "last_name": "Merkul",
+     "full_name": "Anna Merkul",
+     "passport": "MP1111111",
+     "active": true,
+     "details": {
+       "email": "anna.merkul@bk.ru",
+       "phone": "+375293376183"
+       "sex": "female",
+       "birthday": "2002-08-16",
+       "country": "Belarus",
+       "city": "Minsk",
+       "zip": 220101,
+       "street": null
+     }
+   }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The passenger with id = 1 doesn't exist"
+   }
+   ```
+   
+3. Create a new passenger 💛 (POST)
     > `http://localhost:3000/api/v1/passengers`
 
     Create a new passenger's profile.
@@ -275,10 +800,41 @@ Later
    | street | String | |
 
    Responses
-   1. 🟢 201
-   2. 🔴 400
+   
+   🟢 201
+
+   ```json
+   {
+     "id": 1,
+     "first_name": "Anna",
+     "last_name": "Merkul",
+     "full_name": "Anna Merkul",
+     "passport": "MP1111111",
+     "active": true,
+     "details": {
+       "email": "anna.merkul@bk.ru",
+       "phone": null,
+       "sex": null,
+       "birthday": null,
+       "country": null,
+       "city": null,
+       "zip": null,
+       "street": null
+     }
+   }
+   ```
+   
+   🔴 400
+
+   ```json
+   {
+     "status": 400,
+     "error": "Bad Request",
+     "message": "Providing email is required"
+   }
+   ```
     
-7. Update passenger info 💙 (PUT)
+4. Update passenger info 💙 (PUT)
    > `http://localhost:3000/api/v1/passengers/{passenger_id}`
 
    Update passenger details.
@@ -291,6 +847,7 @@ Later
    Body params
    | Param | Type | Required |
    |-------|------|------------|
+   | active | Boolean | |
    | first_name | String | |
    | last_name | String | |
    | email | String | |
@@ -304,11 +861,41 @@ Later
    | street | String | |
 
    Responses
-   1. 🟢 200
-   2. 🔴 400
-   3. 🔴 404
    
-9. Delete a passenger ❤️ (DELETE)
+   🟢 200
+   
+   ```json
+   {
+     "id": 1,
+     "first_name": "Anna",
+     "last_name": "Merkul",
+     "full_name": "Anna Merkul",
+     "passport": "MP3333333",
+     "active": true,
+     "details": {
+       "email": "anna.merkul@bk.ru",
+       "phone": null,
+       "sex": null,
+       "birthday": null,
+       "country": null,
+       "city": null,
+       "zip": null,
+       "street": null
+     }
+   }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The passenger with id = 1 doesn't exist"
+   }
+   ```
+   
+5. Delete a passenger ❤️ (DELETE)
    > `http://localhost:3000/api/v1/passengers/{passenger_id}`
 
    Delete a passenger.
@@ -319,26 +906,79 @@ Later
    | passenger_id | Integer | True |
 
    Responses
-   1. 🟢 204
-   2. 🔴 404
+   
+   🟢 204
 
-11. List of flight passengers 💚 (GET)
+   No content
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The passenger with id = 1 doesn't exist"
+   }
+   ```
+
+6. List of flight passengers 💚 (GET)
    > `http://localhost:3000/api/v1/flights/{flight_id}/passengers`
 
    Returns a list of flight passengers.
+
+   Path params
+   | Param | Type | Required |
+   |-------|------|------------|
+   | flight_id | Integer | True |
 
    Query params
    | Param | Type | description |
    |-------|------|------------|
    | full_name  | String | Filter passengers by full name. |
-   | emails[] | String | Filter passengers by emails. Multiple emails can be provided using an ampersand separated list. For example, emails[]=abc@gmail.com&emails[]=def@gmail.com|
-   | status    | String | Filter passengers by status. |
+   | active    | String | Filter passengers by status. |
    | page | Integer | Filter passengers by page. |
    | per_page | Integer | Filter passengers by this value. |
 
    Responses
-   1. 🟢 200
-   2. 🔴 404
+   
+   🟢 200
+
+   ```json
+    {
+     "passengers" : [
+       {
+         "id": 1,
+         "first_name": "Anna",
+         "last_name": "Merkul",
+         "full_name": "Anna Merkul",
+         "passport": "MP1111111",
+         "active": true,
+       },
+       {
+         "id": 2,
+         "first_name": "Ivan",
+         "last_name": "Karavai",
+         "full_name": "Ivan Karavai",
+         "passport": "MP2222222",
+         "active": true,
+       }
+     ],
+     "page": 1,
+     "per_page": 10,
+     "total_entries": 2,
+     "total_pages": 1 
+    }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The flight with id = 1 doesn't exist"
+   }
+   ```
    
 
 ### Flights
@@ -354,15 +994,88 @@ Later
    | ids[] | Integer | Fitler flights by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
    | from  | Integer | Filter flights by place of departure. Provide an airport id. |
    | to    | Integer | Filter flights by place of arrival. Provide an airport id. |
+   | price[gte] | Float | Filter flights on or greater than this value. |
+   | price[lte] | Float | Filter flights on or less than this value. |
    | departure | Datetime | Filter flights on or after this value. |
    | arrival | Datetime | Filter flights on or after this value. |
+   | status | String | Filter by status. |
    | page | Integer | Filter flights by page. |
    | per_page | Integer | Filter flights by this value. |
 
    Responses
-   1. 🟢 200
    
-3. Get flight info 💚 (GET)
+   🟢 200
+
+   ```json
+    {
+     "flights" : [
+       [
+        {
+         "id": 1,
+         "status": "In progress"
+         "from": {
+           "id": 1,
+           "name": "National Airport Minsk",
+           "country": "Belarus",
+           "city": "Minsk",
+         },
+         "to" : {
+           "id": 2,
+           "name": "Brussels International Airport",
+           "country": "Belgium",
+           "city": "Brussels",
+         },
+         "price": 400,
+         "departure": "2023-10-12T14:20:00Z",
+         "arrival": "2023-10-12T15:20:00Z",
+         "airline": {
+           "id": 1,
+           "name": "Belavia",
+         },
+         "airplane": {
+            "id": 1,
+            "name": "Airbus A380"
+         }
+        }
+       ],
+       [
+        {
+         "id": 2,
+         "status": "In process",
+         "from": {
+           "id": 2,
+           "name": "Brussels International Airport",
+           "country": "Belgium",
+           "city": "Brussels"
+         },
+         "to" : {
+           "id": 1,
+           "name": "National Airport Minsk",
+           "country": "Belarus",
+           "city": "Minsk"
+         },
+         "price": 500,
+         "departure": "2023-10-12T17:20:00Z",
+         "arrival": "2023-10-12T19:20:00Z",
+         "airline": {
+           "id": 1,
+           "name": "Belavia",
+         },
+         "airplane": {
+            "id": 1,
+            "name": "Airbus A380"
+         }
+        }
+      ]
+     ],
+     "page": 1,
+     "per_page": 10,
+     "total_entries": 2,
+     "total_pages": 1 
+    }
+   ```
+   
+2. Get flight info 💚 (GET)
    > `http://localhost:3000/api/v1/flights/{flight_id}`
 
    Get flight details.
@@ -373,10 +1086,50 @@ Later
    | flight_id | Integer | True |
 
    Responses
-   1. 🟢 200
-   2. 🔴 404
    
-5. Create a flight 💛 (POST)
+   🟢 200
+
+   ```json
+   {
+     "id": 1,
+     "status": "In progress"
+     "from": {
+       "id": 1,
+       "name": "National Airport Minsk",
+       "country": "Belarus",
+       "city": "Minsk",
+     },
+     "to" : {
+       "id": 2,
+       "name": "Brussels International Airport",
+       "country": "Belgium",
+       "city": "Brussels",
+     },
+     "price": 400,
+     "departure": "2023-10-12T14:20:00Z",
+     "arrival": "2023-10-12T15:20:00Z",
+     "airline": {
+       "id": 1,
+       "name": "Belavia",
+     },
+     "airplane": {
+       "id": 1,
+       "name": "Airbus A380"
+     }
+   }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The flight with id = 1 doesn't exist"
+   }
+   ```
+   
+3. Create a flight 💛 (POST)
    > `http://localhost:3000/api/v1/flights`
 
    Create a new flight.
@@ -384,19 +1137,57 @@ Later
    Body params
    | Param | Type | Required |
    |-------|------|------------|
-   | from | Integer | True |
-   | to | Integer | True |
+   | from_id | Integer | True |
+   | to_id | Integer | True |
    | departure | Datetime | True |
    | arrival | Datetime | True |
    | airplane_id | Integer | True |
+   | airpline_id | Integer | True |
    | price | Float | True |
 
    Responses
-   1. 🟢 201
-   2. 🔴 404
-   3. 🔴 400
    
-7. Delete a flight ❤️ (DELETE)
+   🟢 201
+
+   ```json
+   {
+     "from": {
+       "id": 1,
+       "name": "National Airport Minsk",
+       "country": "Belarus",
+       "city": "Minsk",
+     },
+     "to" : {
+       "id": 2,
+       "name": "Brussels International Airport",
+       "country": "Belgium",
+       "city": "Brussels",
+     },
+     "price": 400,
+     "departure": "2023-10-12T14:20:00Z",
+     "arrival": "2023-10-12T15:20:00Z",
+     "airline": {
+       "id": 1,
+       "name": "Belavia",
+     },
+     "airplane": {
+       "id": 1,
+       "name": "Airbus A380"
+     }
+   }
+   ```
+   
+   🔴 400
+
+   ```json
+   {
+     "status": 400,
+     "error": "Bad Request",
+     "message": "Providing from value is required"
+   }
+   ```
+   
+4. Delete a flight ❤️ (DELETE)
    > `http://localhost:3000/api/v1/flights/{flight_id}`
 
    Delete a flight.
@@ -407,10 +1198,22 @@ Later
    | flight_id | Integer | True |
 
    Responses
-   1. 🟢 200
-   2. 🔴 404
    
-9. Update a flight info 💙 (PUT)
+   🟢 204
+
+   No content
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The flight with id = 1 doesn't exist"
+   }
+   ```
+   
+5. Update a flight info 💙 (PUT)
    > `http://localhost:3000/api/v1/flights/{flight_id}`
 
    Update flight details.
@@ -423,20 +1226,60 @@ Later
    Body params
    | Param | Type | Required |
    |-------|------|------------|
-   | from | Integer | |
-   | to | Integer | |
-   | archive | Boolean | |
+   | from_id | Integer | |
+   | to_id | Integer | |
+   | status | String | |
    | departure | Datetime | |
    | arrival | Datetime | |
-   | airplane_id | Integer | |
+   | airplane_id | Integer | True |
+   | airpline_id | Integer | True |
    | price | Float | |
 
    Responses
-   1. 🟢 200
-   2. 🔴 404
-   3. 🔴 400
+   
+   🟢 200
 
-11. List of airplane flights 💚 (GET)
+   ```json
+   {
+     "id": 1,
+     "status": "In progress",
+     "from": {
+       "id": 1,
+       "name": "National Airport Minsk",
+       "country": "Belarus",
+       "city": "Minsk",
+     },
+     "to" : {
+       "id": 2,
+       "name": "Brussels International Airport",
+       "country": "Belgium",
+       "city": "Brussels",
+     },
+     "price": 400,
+     "departure": "2023-10-12T14:20:00Z",
+     "arrival": "2023-10-12T15:20:00Z",
+     "airline": {
+       "id": 1,
+       "name": "Belavia",
+     },
+     "airplane": {
+       "id": 1,
+       "name": "Airbus A380"
+     }
+   }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The flight with id = 1 doesn't exist"
+   }
+   ```
+   
+6. List of airplane flights 💚 (GET)
    > `http://localhost:3000/api/v1/airplanes/{airplane_id}/flights`
 
    Returns a list of airplane flights.
@@ -452,14 +1295,96 @@ Later
    | ids[] | Integer | Fitler flights by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
    | from  | Integer | Filter flights by place of departure. Provide an airport id. |
    | to    | Integer | Filter flights by place of arrival. Provide an airport id. |
+   | status | String | Filter flights by status. |
+   | price[gte] | Float | Filter flights on or greater than this value. |
+   | price[lte] | Float | Filter flights on or less than this value. |
    | departure | Datetime | Filter flights on or after this value. |
    | arrival | Datetime | Filter flights on or before this value. |
    | page | Integer | Filter flights by page. |
    | per_page | Integer | Filter flights by this value. |
 
    Responses
-   1. 🟢 200
-   2. 🔴 404
+   
+   🟢 200
+
+   ```json
+    {
+     "flights" : [
+       [
+        {
+         "id": 1,
+         "status": "In progress"
+         "from": {
+           "id": 1,
+           "name": "National Airport Minsk",
+           "country": "Belarus",
+           "city": "Minsk",
+         },
+         "to" : {
+           "id": 2,
+           "name": "Brussels International Airport",
+           "country": "Belgium",
+           "city": "Brussels",
+         },
+         "price": 400,
+         "departure": "2023-10-12T14:20:00Z",
+         "arrival": "2023-10-12T15:20:00Z",
+         "airline": {
+           "id": 1,
+           "name": "Belavia",
+         },
+         "airplane": {
+            "id": 1,
+            "name": "Airbus A380"
+         }
+        }
+       ],
+       [
+        {
+         "id": 2,
+         "status": "In process",
+         "from": {
+           "id": 2,
+           "name": "Brussels International Airport",
+           "country": "Belgium",
+           "city": "Brussels"
+         },
+         "to" : {
+           "id": 1,
+           "name": "National Airport Minsk",
+           "country": "Belarus",
+           "city": "Minsk"
+         },
+         "price": 500,
+         "departure": "2023-10-12T17:20:00Z",
+         "arrival": "2023-10-12T19:20:00Z",
+         "airline": {
+           "id": 1,
+           "name": "Belavia",
+         },
+         "airplane": {
+            "id": 1,
+            "name": "Airbus A380"
+         }
+        }
+      ]
+     ],
+     "page": 1,
+     "per_page": 10,
+     "total_entries": 2,
+     "total_pages": 1 
+    }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The airplane with id = 1 doesn't exist"
+   }
+   ```
    
 ### Bookings
    
@@ -479,9 +1404,43 @@ Later
    | per_page | Integer | Filter bookings by this value. |
 
    Responses
-   1. 🟢 200
    
-3. Get booking info 💚 (GET)
+   🟢 200
+
+   ```json
+   {
+     "bookings": [
+       {
+         "id": 1,
+         "status": "booked"
+         "seat": 1,
+         "passenger_name": "Anna Merkul",
+         "passenger_id": 1,
+         "flight": {
+           "from": {
+             "id": 2,
+             "name": "Brussels International Airport",
+             "country": "Belgium",
+             "city": "Brussels"
+           },
+           "to" : {
+             "id": 1,
+             "name": "National Airport Minsk",
+             "country": "Belarus",
+             "city": "Minsk"
+           },
+           "price": 500,
+         }
+       }
+     ],
+     "page": 1,
+     "per_page": 10,
+     "total_entries": 1,
+     "total_pages": 1 
+   }
+   ```
+   
+2. Get booking info 💚 (GET)
    > `http://localhost:3000/api/v1/bookings/{booking_id}`
 
    Get booking details.
@@ -492,10 +1451,45 @@ Later
    | booking_id | Integer | True |
 
    Responses
-   1. 🟢 200
-   2. 🔴 404
+   
+   🟢 200
 
-5. Update the booking 💙 (PUT)
+   ```json
+   {
+     "id": 1,
+     "status": "booked"
+     "seat": 1,
+     "passenger_name": "Anna Merkul",
+     "passenger_id": 1,
+     "flight": {
+       "from": {
+         "id": 2,
+         "name": "Brussels International Airport",
+         "country": "Belgium",
+         "city": "Brussels"
+       },
+       "to" : {
+         "id": 1,
+         "name": "National Airport Minsk",
+         "country": "Belarus",
+         "city": "Minsk"
+       },
+       "price": 500
+     }
+   }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The booking with id = 1 doesn't exist"
+   }
+   ```
+
+3. Update the booking 💙 (PUT)
    > `http://localhost:3000/api/v1/bookings/{booking_id}`
 
    Update booking info.
@@ -513,11 +1507,45 @@ Later
    | passenger_name | String | |
 
    Responses
-   1. 🟢 200
-   2. 🔴 404
-   3. 🔴 400
    
-7. Delete booking ❤️ (DELETE)
+   🟢 200
+
+   ```json
+   {
+     "id": 1,
+     "status": "cancelled"
+     "seat": 1,
+     "passenger_name": "Anna Merkul",
+     "passenger_id": 1,
+     "flight": {
+       "from": {
+         "id": 2,
+         "name": "Brussels International Airport",
+         "country": "Belgium",
+         "city": "Brussels"
+       },
+       "to" : {
+         "id": 1,
+         "name": "National Airport Minsk",
+         "country": "Belarus",
+         "city": "Minsk"
+       },
+       "price": 500
+     }
+   }
+   ```
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The booking with id = 1 doesn't exist"
+   }
+   ```
+      
+4. Delete booking ❤️ (DELETE)
    > `http://localhost:3000/api/v1/bookings/{booking_id}`
 
    Delete the booking.
@@ -528,10 +1556,22 @@ Later
    | booking_id | Integer | True |
 
    Responses
-   1. 🟢 204
-   2. 🔴 404
+   
+   🟢 204
 
-9. Book a flight 💛 (POST)
+   No content
+   
+   🔴 404
+
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The booking with id = 1 doesn't exist"
+   }
+   ```
+
+5. Book a flight 💛 (POST)
    > `http://localhost:3000/api/v1/flights/{flight_id}/bookings`
 
    Create a new booking.
@@ -549,30 +1589,116 @@ Later
    | passenger_name | String | |
 
    Responses
-   1. 🟢 201
-   2. 🔴 404
-   3. 🔴 400
+   
+   🟢 201
 
-11. List of passenger bookings 💚 (GET)
-   > `http://localhost:3000/api/v1/passengers/{passenger_id}/bookings`
+   ```json
+   {
+     "id": 1,
+     "status": "booked"
+     "seat": 1,
+     "passenger_name": "Anna Merkul",
+     "passenger_id": 1,
+     "flight": {
+       "from": {
+         "id": 2,
+         "name": "Brussels International Airport",
+         "country": "Belgium",
+         "city": "Brussels"
+       },
+       "to" : {
+         "id": 1,
+         "name": "National Airport Minsk",
+         "country": "Belarus",
+         "city": "Minsk"
+       },
+       "price": 500
+     }
+   }
+   ```
+   
+   🔴 404
 
-   Returns a list of passenger bookings.
+   ```json
+   {
+     "status": 404,
+     "error": "Not Found",
+     "message": "The flight with id = 1 doesn't exist"
+   }
+   ```
+   
+   🔴 400
 
-   Path params
-   | Param | Type | Required |
-   |-------|------|------------|
-   | passenger_id | Integer | True |
+   ```json
+   {
+     "status": 400,
+     "error": "Bad Request",
+     "message": "Providing passenger id is required"
+   }
+   ```
 
-   Query params
-   | Param | Type | description |
-   |-------|------|------------|
-   | ids[] | Integer | Fitler bookings by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
-   | flights[]  | Integer | Fitler bookings by flights. Multiple IDs of flights can be provided using an ampersand separated list. For example, flights[]=1&flights[]=2. |
-   | passengers[] | String | Filter bookings by passengers. Multiple IDs of passengers can be provided using an ampersand separated list. For example, passengers[]=1&passengers[]=2|
-   | status    | String | Filter bookings by status. |
-   | page | Integer | Filter bookings by page. |
-   | per_page | Integer | Filter bookings by this value. |
+6. List of passenger bookings 💚 (GET)
+    > `http://localhost:3000/api/v1/passengers/{passenger_id}/bookings`
 
-   Responses
-   1. 🟢 200
-   2. 🔴 404
+    Returns a list of passenger bookings.
+
+    Path params
+    | Param | Type | Required |
+    |-------|------|------------|
+    | passenger_id | Integer | True |
+
+    Query params
+    | Param | Type | description |
+    |-------|------|------------|
+    | ids[] | Integer | Fitler bookings by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
+    | flights[]  | Integer | Fitler bookings by flights. Multiple IDs of flights can be provided using an ampersand separated list. For example, flights[]=1&flights[]=2. |
+    | status    | String | Filter bookings by status. |
+    | page | Integer | Filter bookings by page. |
+    | per_page | Integer | Filter bookings by this value. |
+
+    Responses
+    
+    🟢 200
+
+    ```json
+    {
+     "bookings": [
+       {
+         "id": 1,
+         "status": "booked"
+         "seat": 1,
+         "passenger_name": "Anna Merkul",
+         "passenger_id": 1,
+         "flight": {
+           "from": {
+             "id": 2,
+             "name": "Brussels International Airport",
+             "country": "Belgium",
+             "city": "Brussels"
+           },
+           "to" : {
+             "id": 1,
+             "name": "National Airport Minsk",
+             "country": "Belarus",
+             "city": "Minsk"
+           },
+           "price": 500,
+         }
+       }
+     ],
+     "page": 1,
+     "per_page": 10,
+     "total_entries": 1,
+     "total_pages": 1 
+    }
+   ```
+    
+    🔴 404
+
+    ```json
+    {
+      "status": 404,
+      "error": "Not Found",
+      "message": "The passenger with id = 1 doesn't exist"
+    }
+    ```
