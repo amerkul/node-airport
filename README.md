@@ -6,14 +6,14 @@ The project presents a travel advisory system for airports. When a traveler want
 
 ## Table of contents
 
-- [🚀 Install and run](https://github.com/amerkul/node-airport/readme-patch-1/README.md#install-and-run)
-- [🌐 REST API](https://github.com/amerkul/node-airport/readme-patch-1/README.md#rest-api)
-     - [🏠 Airport info service](https://github.com/amerkul/node-airport/readme-patch-1/README.md#airports)
-     - [⭐ Airline service](https://github.com/amerkul/node-airport/readme-patch-1/README.md#airlines)
-     - [✈️ Airplane service](https://github.com/amerkul/node-airport/readme-patch-1/README.md#airplanes)
-     - [💃 Passenger service](https://github.com/amerkul/node-airport/readme-patch-1/README.md#passengers)
-     - [📆 Flight service](https://github.com/amerkul/node-airport/readme-patch-1/README.md#flights)
-     - [✅ Booking service](https://github.com/amerkul/node-airport/readme-patch-1/README.md#bookings)
+- [🚀 Install and run](https://github.com/amerkul/node-airport/tree/readme-patch-1/#install-and-run)
+- [🌐 REST API](https://github.com/amerkul/node-airport/tree/readme-patch-1/#rest-api)
+     - [🏠 Airport info service](https://github.com/amerkul/node-airport/tree/readme-patch-1#airports)
+     - [⭐ Airline service](https://github.com/amerkul/node-airport/tree/readme-patch-1#airlines)
+     - [✈️ Airplane service](https://github.com/amerkul/node-airport/tree/readme-patch-1#airplanes)
+     - [💃 Passenger service](https://github.com/amerkul/node-airport/tree/readme-patch-1#passengers)
+     - [📆 Flight service](https://github.com/amerkul/node-airport/tree/readme-patch-1#flights)
+     - [✅ Booking service](https://github.com/amerkul/node-airport/tree/readme-patch-1#bookings)
 
 ## Install and run
 
