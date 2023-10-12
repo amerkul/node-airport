@@ -63,8 +63,8 @@ Later
          "status": "In service",
          "country": "Belgium",
          "city": "Brussels",
-         "latitude": 53.882222,
-         "longitude": 28.030556,
+         "latitude": 50.846667,
+         "longitude": 4.3525,
          "iata": "BRU",
          "icao": "EBBR"
        }
