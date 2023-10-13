@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "sourceMap": true,
+      "module": "commonjs",
+      "strict": true,
+      "target": "es2017",
+      "outDir": "./dist",
+      "baseUrl": "./src"
+    },
+    "include": [
+      "src/com/solvd/airport/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules"
+    ]
+}
