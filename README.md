@@ -6,15 +6,15 @@ The project presents a travel advisory system for airports. When a traveler want
 
 ## Table of contents
 
-- [🚀 Install and run](https://github.com/amerkul/node-airport/tree/readme-patch-1/#install-and-run)
-- [🌐 REST API](https://github.com/amerkul/node-airport/tree/readme-patch-1/#rest-api)
-     - [🚪 Register and login] (https://github.com/amerkul/node-airport/tree/air-1-jwt-auth#register-and-login)
-     - [🏠 Airport info service](https://github.com/amerkul/node-airport/tree/air-1-jwt-auth#airports)
-     - [⭐ Airline service](https://github.com/amerkul/node-airport/tree/air-1-jwt-auth#airlines)
-     - [✈️ Airplane service](https://github.com/amerkul/node-airport/tree/air-1-jwt-auth#airplanes)
-     - [💃 Passenger service](https://github.com/amerkul/node-airport/tree/air-1-jwt-auth#passengers)
-     - [📆 Flight service](https://github.com/amerkul/node-airport/tree/air-1-jwt-auth#flights)
-     - [✅ Booking service](https://github.com/amerkul/node-airport/tree/air-1-jwt-auth#bookings)
+- [🚀 Install and run](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#install-and-run)
+- [🌐 REST API](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#rest-api)
+     - [🚪 Register and login] (https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#register-and-login)
+     - [🏠 Airport info service](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#airports)
+     - [⭐ Airline service](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#airlines)
+     - [✈️ Airplane service](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#airplanes)
+     - [💃 Passenger service](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#passengers)
+     - [📆 Flight service](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#flights)
+     - [✅ Booking service](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#bookings)
 
 ## Install and run
 
