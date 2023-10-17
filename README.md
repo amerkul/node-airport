@@ -8,7 +8,7 @@ The project presents a travel advisory system for airports. When a traveler want
 
 - [🚀 Install and run](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#install-and-run)
 - [🌐 REST API](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#rest-api)
-     - [🚪 Register and login] (https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#register-and-login)
+     - [🚪 Register and login](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#register-and-login)
      - [🏠 Airport info service](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#airports)
      - [⭐ Airline service](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#airlines)
      - [✈️ Airplane service](https://github.com/amerkul/node-airport/tree/AIR-1-jwt-auth#airplanes)
