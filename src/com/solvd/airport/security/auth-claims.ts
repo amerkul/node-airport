@@ -7,8 +7,16 @@ export default class Claims {
         this.put('subject', subject);
     }
 
-    getSubject(): string | undefined | number {
-        return this.claims.get('subject');
+    getSubject(): string {
+        return this.claims.get('subject') as string;
+    }
+
+    getExpiration(): string | number | undefined {
+        return this.claims.get('exp');
+    }
+
+    getClaims(): Map<string, string | number> {
+        return this.claims;
     }
 
     put(key: string, value: string | number) {

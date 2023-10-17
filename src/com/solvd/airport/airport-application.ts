@@ -27,7 +27,7 @@ export default class AirportApplication {
     }
 
     public listen() {
-        this.app.listen(3000);
+        this.app.listen(this.port);
     }
 
 }

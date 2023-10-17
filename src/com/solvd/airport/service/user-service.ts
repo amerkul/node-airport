@@ -1,15 +1,13 @@
 import User from "../model/user";
 
-export default class UserService {
-
-    constructor() {}
+class UserService {
 
     async findByUsername(username: String): Promise<User> {
-        return new User('anna', 'password');
+        return new User('anna', '$2b$10$BdOpsXGQ/6rMCB8z67uKBux04UPTG1NH4h0ABDYZ94ffvhokDsTA2', 'admin');
     }
 
     async create(newUser: User) {
-        return new User('anna', 'password');
+        return new User('anna', '$2b$10$BdOpsXGQ/6rMCB8z67uKBux04UPTG1NH4h0ABDYZ94ffvhokDsTA2', 'admin');
     }
 
 }

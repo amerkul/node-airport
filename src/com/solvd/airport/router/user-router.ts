@@ -1,22 +1,20 @@
 import { Router } from "express";
-import UserController, { userController } from "../controller/user-controller";
+import { userController } from "../controller/user-controller";
 
-export default class UserRouter {
+class UserRouter {
 
-    private userController: UserController;
-    private router = Router();
+    public router = Router();
 
-    constructor(userController: UserController) {
-        this.userController = userController;
+    constructor() {
         this.initialize();
     }
 
     public initialize() {
-        this.router.post('/register', this.userController.register);
-        this.router.post('/login', this.userController.login);
+        this.router.post('/register', userController.register);
+        this.router.post('/login', userController.login);
     }
 
 }
 
-export const userRouter = new UserRouter(userController);
+export const userRouter = new UserRouter();
 

@@ -4,11 +4,11 @@
       "module": "commonjs",
       "strict": true,
       "target": "es2017",
-      "outDir": "./dist",
-      "baseUrl": "./src"
+      "outDir": "dist",
+      "baseUrl": "src"
     },
     "include": [
-      "src/com/solvd/airport/**/*.ts"
+      "src/com/solvd/airport/**/*.ts", "server.ts"    
     ],
     "exclude": [
       "node_modules"
