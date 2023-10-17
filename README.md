@@ -201,7 +201,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Body params
@@ -248,7 +248,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
    
    Path params
@@ -302,7 +302,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
    
    Path params
@@ -409,7 +409,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Body params
@@ -448,7 +448,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
@@ -493,7 +493,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
@@ -655,7 +655,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Body params
@@ -694,7 +694,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
@@ -739,7 +739,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
@@ -821,7 +821,7 @@ Later
    
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Query params
@@ -871,7 +871,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
@@ -921,7 +921,7 @@ Later
 
     AUTHORIZATION
     | Header| Value |
-    |-------|------|------------|
+    |-------|------|
     | Authorization | Bearer token|
 
     Body params
@@ -981,7 +981,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
@@ -1047,7 +1047,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
@@ -1078,7 +1078,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
@@ -1291,7 +1291,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
    
    Body params
@@ -1354,7 +1354,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
    
    Path params
@@ -1385,7 +1385,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
@@ -1676,7 +1676,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
@@ -1737,7 +1737,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
@@ -1768,7 +1768,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
@@ -1839,7 +1839,7 @@ Later
 
     AUTHORIZATION
     | Header| Value |
-    |-------|------|------------|
+    |-------|------|
     | Authorization | Bearer token|
 
     Path params
@@ -1891,14 +1891,14 @@ Later
      "total_entries": 1,
      "total_pages": 1 
     }
-   ```
-    
+    ```
+
     🔴 404
 
     ```json
     {
-      "status": 404,
-      "error": "Not Found",
-      "message": "The passenger with id = 1 doesn't exist"
+     "status": 404,
+     "error": "Not Found",
+     "message": "The passenger with id = 1 doesn't exist"
     }
     ```
