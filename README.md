@@ -1565,7 +1565,7 @@ Later
    
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Query params
@@ -1622,7 +1622,7 @@ Later
 
    AUTHORIZATION
    | Header| Value |
-   |-------|------|------------|
+   |-------|------|
    | Authorization | Bearer token|
 
    Path params
