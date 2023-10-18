@@ -1,5 +1,5 @@
+import { createHash } from '../crypto/custom-crypto';
 import Claims from './auth-claims';
-import * as crypto from 'crypto';
 
 export default class Jwt {
 
@@ -78,7 +78,7 @@ class JwtBuilder {
     }
 
     getEncodedSignature(encodedHeader: string, encodedPayload: string): string {
-        const hash = crypto.createHash('sha256');
+        const hash = createHash('sha256');
         return hash.update(`${encodedHeader}.${encodedPayload}${this.secret}`).digest('hex');
     }
 

@@ -41,7 +41,6 @@ class AuthenticationUtil {
             }
             let dateNow = Date.now();
             const expiration = claims.getExpiration();
-            console.log(`${dateNow} and ${expiration}`);
             return dateNow < Number(expiration);
         } catch (e) {
             throw new AuthenticationException(401, 'Unathorized');
