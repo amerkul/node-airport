@@ -4,6 +4,8 @@ CREATE TYPE BOOKING_STATUSES AS ENUM ('Reserved', 'Cancelled', 'Paid');
 
 CREATE TYPE USER_ROLE AS ENUM ('Admin', 'Manager', 'Passenger');
 
+CREATE TYPE SEX AS ENUM ('Male', 'Female');
+
 CREATE TABLE airports (
 	airport_id serial PRIMARY KEY,
 	name VARCHAR ( 255 ) UNIQUE NOT NULL,
@@ -17,7 +19,7 @@ CREATE TABLE airports (
 );
 
 CREATE TABLE airlines (
-	airplane_id serial PRIMARY KEY,
+	airpline_id serial PRIMARY KEY,
 	name VARCHAR ( 255 ) UNIQUE NOT NULL,
 	iata VARCHAR ( 3 ) UNIQUE NOT NULL,
 	archive BOOLEAN NOT NULL DEFAULT false,
@@ -45,14 +47,14 @@ CREATE TABLE users (
 	role USER_ROLE NOT NULL DEFAULT 'Passenger',
 	username VARCHAR ( 255 ) UNIQUE NOT NULL,
 	password VARCHAR ( 72 ) NOT NULL,
-);
-
-CREATE TABLE passengers (
 	first_name VARCHAR ( 255 ) NOT NULL,
 	last_name VARCHAR ( 255 ) NOT NULL, 
 	full_name VARCHAR ( 255 ) NOT NULL,
+	active BOOLEAN NOT NULL DEFAULT true
+);
+
+CREATE TABLE passengers (
 	passport VARCHAR (9) UNIQUE NOT NULL,
-	active BOOLEAN NOT NULL DEFAULT true,
 	user_id BIGINT NOT NULL
 );
 
@@ -63,7 +65,7 @@ FOREIGN KEY ( user_id ) REFERENCES users( user_id );
 CREATE TABLE user_details (
 	email VARCHAR ( 255 ) UNIQUE, 
 	phone VARCHAR ( 255 ) UNIQUE,
-	sex VARCHAR ( 10 ),
+	sex SEX,
 	birthday DATE,
 	country VARCHAR ( 255 ),
 	city VARCHAR ( 255 ),
@@ -77,11 +79,7 @@ ADD CONSTRAINT user_details_fk
 FOREIGN KEY ( user_id ) REFERENCES users( user_id );
 
 CREATE TABLE employees (
-	first_name VARCHAR ( 255 ) NOT NULL,
-	last_name VARCHAR ( 255 ) NOT NULL, 
-	full_name VARCHAR ( 255 ) NOT NULL,
 	department VARCHAR ( 255 ) NOT NULL,
-	active BOOLEAN NOT NULL DEFAULT true,
 	salary NUMERIC( 20, 2 ),
 	user_id BIGINT NOT NULL
 );
@@ -96,10 +94,10 @@ CREATE TABLE flights (
 	arrival TIMESTAMP NOT NULL,
 	price NUMERIC ( 10, 2 ) NOT NULL,
 	status FLIGHT_STATUSES NOT NULL DEFAULT 'Scheduled',
-	from_id INTEGER NOT NULL,
-	to_id INTEGER NOT NULL,
-	airplane_id INTEGER NOT NULL,
-	airline_id INTEGER NOT NULL
+	from_id BIGINT NOT NULL,
+	to_id BIGINT NOT NULL,
+	airplane_id BIGINT NOT NULL,
+	airline_id BIGINT NOT NULL
 );
 
 ALTER TABLE flights
@@ -125,7 +123,7 @@ FOREIGN KEY ( airline_id ) REFERENCES airlines( airline_id );
 CREATE TABLE bookings (
 	booking_id serial PRIMARY KEY,
 	seat INTEGER NOT NULL,
-	passanger_name NOT NULL,
+	passanger_name VARCHAR ( 255 ) NOT NULL,
 	status BOOKING_STATUSES NOT NULL DEFAULT 'Reserved', 
 	user_id BIGINT NOT NULL, 
 	flight_id BIGINT NOT NULL
