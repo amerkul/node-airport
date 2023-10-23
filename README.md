@@ -6,20 +6,20 @@ The project presents a travel advisory system for airports. When a traveler want
 
 ## Table of contents
 
-- [🚀 Install and run](https://github.com/amerkul/node-airport/tree/main#install-and-run)
-- [🌐 REST API](https://github.com/amerkul/node-airport/tree/main#rest-api)
-     - [🚪 Register and login](https://github.com/amerkul/node-airport/tree/main#register-and-login)
-     - [🏠 Airport info service](https://github.com/amerkul/node-airport/tree/main#airports)
-     - [⭐ Airline service](https://github.com/amerkul/node-airport/tree/main#airlines)
-     - [✈️ Airplane service](https://github.com/amerkul/node-airport/tree/main#airplanes)
-     - [💃 Passenger service](https://github.com/amerkul/node-airport/tree/main#passengers)
-     - [💃 Employee service](https://github.com/amerkul/node-airport/tree/main#employees)
-     - [📆 Flight service](https://github.com/amerkul/node-airport/tree/main#flights)
-     - [✅ Booking service](https://github.com/amerkul/node-airport/tree/main#bookings)
-- [Database]
-     - [🚪 Technology](https://github.com/amerkul/node-airport/tree/main#technology)
-     - [🚪 Database schema](https://github.com/amerkul/node-airport/tree/main#database-schema)
-     - [🚪 Tables ](https://github.com/amerkul/node-airport/tree/main#tables)
+- [🚀 Install and run](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#install-and-run)
+- [🌐 REST API](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#rest-api)
+     - [🚪 Register and login](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#register-and-login)
+     - [🏠 Airport info service](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#airports)
+     - [⭐ Airline service](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#airlines)
+     - [✈️ Airplane service](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#airplanes)
+     - [💃 Passenger service](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#passengers)
+     - [🧑‍💼 Employee service](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#employees)
+     - [📆 Flight service](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#flights)
+     - [✅ Booking service](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#bookings)
+- [💣 Database](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#database)
+     - [💻 Technology](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#technology)
+     - [🖼️ Database schema](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#database-schema)
+     - [📓 Tables ](https://github.com/amerkul/node-airport/tree/AIR-3-docker-database#tables)
 
 ## Install and run
 
