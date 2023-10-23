@@ -25,6 +25,8 @@ services:
       PGADMIN_DEFAULT_PASSWORD: strong-password
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - airport
 networks:
   airport: 
     driver: bridge 

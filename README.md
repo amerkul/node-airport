@@ -2184,7 +2184,7 @@ PostgreSQL and PgAdmin
 
 ### Database schema
 
-Picture should be here.
+![Screenshot](./data/schema.png)
 
 ### Tables
 

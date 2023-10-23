@@ -13,13 +13,13 @@ CREATE TABLE airports (
 	icao VARCHAR ( 4 ) UNIQUE NOT NULL,
 	country VARCHAR ( 50 ) UNIQUE NOT NULL,
 	city VARCHAR ( 50 ) NOT NULL,
-	latitude NUMERIC( 3,6 ),
-        longitude NUMERIC( 3,6 ),
+	latitude NUMERIC( 9,6 ),
+    longitude NUMERIC( 9,6 ),
 	archive BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE airlines (
-	airpline_id serial PRIMARY KEY,
+	airline_id serial PRIMARY KEY,
 	name VARCHAR ( 255 ) UNIQUE NOT NULL,
 	iata VARCHAR ( 3 ) UNIQUE NOT NULL,
 	archive BOOLEAN NOT NULL DEFAULT false,
@@ -40,7 +40,7 @@ CREATE TABLE airplanes (
 
 ALTER TABLE airplanes
 ADD CONSTRAINT airplanes_airlines_fk
-FOREIGN KEY ( airline_id ) REFERENCES airlines( airplane_id );
+FOREIGN KEY ( airline_id ) REFERENCES airlines( airline_id );
 
 CREATE TABLE users (
 	user_id serial PRIMARY KEY,
@@ -70,7 +70,7 @@ CREATE TABLE user_details (
 	country VARCHAR ( 255 ),
 	city VARCHAR ( 255 ),
 	zip INTEGER,
-	street VARCHAR ( 255 )
+	street VARCHAR ( 255 ),
 	user_id BIGINT UNIQUE NOT NULL
 );
 
@@ -92,7 +92,7 @@ CREATE TABLE flights (
 	flight_id serial PRIMARY KEY,
 	depature TIMESTAMP NOT NULL,
 	arrival TIMESTAMP NOT NULL,
-	price NUMERIC ( 10, 2 ) NOT NULL,
+	price NUMERIC ( 20, 2 ) NOT NULL,
 	status FLIGHT_STATUSES NOT NULL DEFAULT 'Scheduled',
 	from_id BIGINT NOT NULL,
 	to_id BIGINT NOT NULL,
@@ -110,7 +110,7 @@ FOREIGN KEY ( from_id ) REFERENCES airports( airport_id );
 
 ALTER TABLE flights
 ADD CONSTRAINT flights_to_fk
-FOREIGN KEY ( to_id ) REFERENCES airports( to_id );
+FOREIGN KEY ( to_id ) REFERENCES airports( airport_id );
 
 ALTER TABLE flights 
 ADD CONSTRAINT flights_airplane_fk
