@@ -2197,7 +2197,7 @@ PostgreSQL and PgAdmin
    |	name | VARCHAR | | Airport's name: UNIQUE, NOT NULL |
    |	iata | VARCHAR | | IATA airport code: UNIQUE, NOT NULL |
    |	icao | VARCHAR | | ICAO airport code: UNIQUE, NOT NULL |
-   |	country | VARCHAR | | Airport's country: UNIQUE, NOT NULL |
+   |	country | VARCHAR | | Airport's country: NOT NULL |
    |	city | VARCHAR | | Airport's city: NOT NULL |
    |	latitude | NUMERIC | | Airport's latitude |
    | longitude | NUMERIC | | Airport's longitude |
@@ -2232,7 +2232,7 @@ PostgreSQL and PgAdmin
    | last_name | VARCHAR | | Last name: NOT NULL |
    | email | VARCHAR | | User email: NOT NULL, UNIQUE |
    | birthday | DATE | | User's birthday |
-   | passport | VARCHAR | Passenger's passport: UNIQUE, NOT NULL |
+   | passport | VARCHAR | | Passenger's passport: UNIQUE, NOT NULL |
 
 5. Users
 
@@ -2250,7 +2250,7 @@ PostgreSQL and PgAdmin
    |	city | VARCHAR | | User city |
    |	zip | INTEGER | | Zip code |
    |	street | VARCHAR | | User's street |
-   |	passenger_id | BIGINT | FK | Passenger ID: NOT NULL |
+   |	passenger_id | BIGINT | FK | Passenger ID: UNIQUE, NOT NULL |
 
 6. Employees
 
@@ -2258,7 +2258,7 @@ PostgreSQL and PgAdmin
    |------|------|-----|-------------|
    | department | VARCHAR | | Employee's department: NOT NULL |
    |	salary | NUMERIC | | Employee's salary |
-   |	user_id | BIGINT | FK | User ID: NOT NULL |
+   |	user_id | BIGINT | FK | User ID: UNIQUE, NOT NULL |
 
 7. Flights
 
