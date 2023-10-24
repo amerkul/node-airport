@@ -11,7 +11,7 @@ CREATE TABLE airports (
 	name VARCHAR ( 255 ) UNIQUE NOT NULL,
 	iata VARCHAR ( 3 ) UNIQUE NOT NULL,
 	icao VARCHAR ( 4 ) UNIQUE NOT NULL,
-	country VARCHAR ( 50 ) UNIQUE NOT NULL,
+	country VARCHAR ( 50 ) NOT NULL,
 	city VARCHAR ( 50 ) NOT NULL,
 	latitude NUMERIC( 9,6 ),
     	longitude NUMERIC( 9,6 ),
@@ -64,7 +64,7 @@ CREATE TABLE users (
 	zip INTEGER,
 	street VARCHAR ( 255 ),
 	active BOOLEAN NOT NULL DEFAULT true,
-	passenger_id BIGINT NOT NULL
+	passenger_id BIGINT NOT NULL UNIQUE
 );
 
 ALTER TABLE users
@@ -75,7 +75,7 @@ FOREIGN KEY ( passenger_id ) REFERENCES passengers( passenger_id );
 CREATE TABLE employees (
 	department VARCHAR ( 255 ) NOT NULL,
 	salary NUMERIC( 20, 2 ),
-	user_id BIGINT NOT NULL
+	user_id BIGINT NOT NULL UNIQUE
 );
 
 ALTER TABLE employees
@@ -124,7 +124,7 @@ CREATE TABLE bookings (
 
 ALTER TABLE bookings
 ADD CONSTRAINT bookings_passengers_fk
-FOREIGN KEY ( passengers_id ) REFERENCES passengers( passengers_id );
+FOREIGN KEY ( passenger_id ) REFERENCES passengers( passenger_id );
 
 ALTER TABLE bookings
 ADD CONSTRAINT bookings_flight_fk

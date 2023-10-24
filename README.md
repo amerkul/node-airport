@@ -2223,7 +2223,18 @@ PostgreSQL and PgAdmin
    |	archive | BOOLEAN | | Airplane's status: NOT NULL, DEFAULT false |
    |	airline_id | BIGINT | FK | Airline ID: NOT NULL |
 
-4. Users
+4. Passengers
+
+   | name | type | key | Description |
+   |------|------|-----|-------------|
+   | passenger_id | BIGINT | PK | Passenger ID |
+   | first_name | VARCHAR | | First name: NOT NULL |
+   | last_name | VARCHAR | | Last name: NOT NULL |
+   | email | VARCHAR | | User email: NOT NULL, UNIQUE |
+   | birthday | DATE | | User's birthday |
+   | passport | VARCHAR | Passenger's passport: UNIQUE, NOT NULL |
+
+5. Users
 
    | name | type | key | Description |
    |------|------|-----|-------------|
@@ -2231,17 +2242,15 @@ PostgreSQL and PgAdmin
    |	role | ENUM | | User's role: Admin, Manager, Passenger . NOT NULL, DEFAULT 'Passenger'|
    |	username | VARCHAR | | Username: UNIQUE, NOT NULL |
    |	password | VARCHAR | | Password: NOT NULL |
-   |	first_name | VARCHAR | | First name: NOT NULL |
-   |	last_name | VARCHAR | | Last name: NOT NULL |
    |	full_name | VARCHAR | | Full name: first name + last name: NOT NULL |
    |	active | BOOLEAN | | User's status: NOT NULL, DEFAULT true |
-
-5. Passengers
-
-   | name | type | key | Description |
-   |------|------|-----|-------------|
-   | passport | VARCHAR | Passenger's passport: UNIQUE, NOT NULL |
-   |	user_id | BIGINT | FK | User ID: NOT NULL |
+   |	phone | VARCHAR | | User phone: UNIQUE |
+   |	sex | ENUM | | User sex: male, female |
+   |	country | VARCHAR | | User country | 
+   |	city | VARCHAR | | User city |
+   |	zip | INTEGER | | Zip code |
+   |	street | VARCHAR | | User's street |
+   |	passenger_id | BIGINT | FK | Passenger ID: NOT NULL |
 
 6. Employees
 
@@ -2251,21 +2260,7 @@ PostgreSQL and PgAdmin
    |	salary | NUMERIC | | Employee's salary |
    |	user_id | BIGINT | FK | User ID: NOT NULL |
 
-7. User details
-
-   | name | type | key | Description |
-   |------|------|-----|-------------|
-   | email | VARCHAR | | User email: UNIQUE |
-   |	phone | VARCHAR | | User phone: UNIQUE |
-   |	sex | ENUM | | User sex: male, female |
-   |	birthday | DATE | | User's birthday |
-   |	country | VARCHAR | | User country | 
-   |	city | VARCHAR | | User city |
-   |	zip | INTEGER | | Zip code |
-   |	street | VARCHAR | | User's street |
-   |	user_id | BIGINT | FK | User ID: NOT NULL |
-
-8. Flights
+7. Flights
 
    | name | type | key | Description |
    |------|------|-----|-------------|
@@ -2279,13 +2274,12 @@ PostgreSQL and PgAdmin
    |	airplane_id | BIGINT | FK | Airplane ID: NOT NULL |
    |	airline_id | BIGINT | FK | Airline ID: NOT NULL |
 
-9. Bookings
+8. Bookings
 
    | name | type | key | Description |
    |------|------|-----|-------------|
    | booking_id | BIGINT | PK | Booking ID |
    |	seat | INTEGER | | Reserved seat: NOT NULL |
-   |	passanger_name | VARCHAR | | Passenger name: NOT NULL |
    |	status | ENUM | | Booking's status: 'Reserved', 'Cancelled', 'Paid'. NOT NULL, DEFAULT 'Reserved' |
-   |	user_id | BIGINT | FK | User ID: NOT NULL |
+   |	passenger_id | BIGINT | FK | Passenger ID: NOT NULL |
    |	flight_id | BIGINT | FK | Flight ID: NOT NULL |
