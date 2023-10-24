@@ -2233,7 +2233,7 @@ PostgreSQL and PgAdmin
    | email | VARCHAR | | User email: NOT NULL, UNIQUE |
    | birthday | DATE | | User's birthday |
    | passport | VARCHAR | | Passenger's passport: UNIQUE, NOT NULL |
-
+   
 5. Users
 
    | name | type | key | Description |
@@ -2251,7 +2251,6 @@ PostgreSQL and PgAdmin
    |	zip | INTEGER | | Zip code |
    |	street | VARCHAR | | User's street |
    |	passenger_id | BIGINT | FK | Passenger ID: UNIQUE, NOT NULL |
-
 6. Employees
 
    | name | type | key | Description |
