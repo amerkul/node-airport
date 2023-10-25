@@ -1,5 +1,8 @@
 import AirportApplication from './src/airport-application';
 import {userRouter} from './src/router/user-router';
+import * as dotenv from 'dotenv';
 
-const app = new AirportApplication([userRouter.router], 3000);
+dotenv.config();
+
+const app = new AirportApplication([userRouter.router], process.env.SERVER_PORT);
 app.listen();

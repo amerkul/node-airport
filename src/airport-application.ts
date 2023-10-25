@@ -4,9 +4,9 @@ import { errorMiddleware } from './middleware/error-middleware';
 
 export default class AirportApplication {
     private app: express.Application;
-    private port: Number;
+    private port: Number | string | undefined;
 
-    constructor(routers: Array<any>, port: Number) {
+    constructor(routers: Array<any>, port: Number | string | undefined) {
         this.app = express();
         this.port = port;
         this.initializeMiddlewares();
