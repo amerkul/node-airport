@@ -9,7 +9,7 @@
     },
     "include": [
       "src/com/solvd/airport/**/*.ts", "server.ts"    
-    ],
+, "src/airport-application.ts"    ],
     "exclude": [
       "node_modules"
     ]
