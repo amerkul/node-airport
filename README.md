@@ -2244,7 +2244,6 @@ PostgreSQL and PgAdmin
    | city | VARCHAR | | User city |
    | zip | INTEGER | | Zip code |
    | street | VARCHAR | | User's street |
-   | passenger_id | BIGINT | FK | Passenger ID: UNIQUE, NOT NULL |
 
 5. Passengers
 

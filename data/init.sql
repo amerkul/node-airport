@@ -23,7 +23,7 @@ CREATE TABLE airlines (
 	name VARCHAR ( 255 ) UNIQUE NOT NULL,
 	iata VARCHAR ( 3 ) UNIQUE NOT NULL,
 	archive BOOLEAN NOT NULL DEFAULT false,
-	base_airport_id BIGINT NOT NULL
+	base_airport_id INTEGER NOT NULL
 );
 
 ALTER TABLE airlines 
@@ -35,7 +35,7 @@ CREATE TABLE airplanes (
 	name VARCHAR ( 255 ) UNIQUE NOT NULL,
 	capacity INTEGER NOT NULL,
 	archive BOOLEAN NOT NULL DEFAULT false,
-	airline_id BIGINT NOT NULL
+	airline_id INTEGER NOT NULL
 );
 
 ALTER TABLE airplanes
@@ -69,7 +69,7 @@ CREATE TABLE passengers (
 	passport VARCHAR ( 9 ) UNIQUE NOT NULL,
 	birthday DATE NOT NULL,
 	email VARCHAR ( 255 ) UNIQUE NOT NULL,
-	user_id BIGINT
+	user_id INTEGER
 );
 
 ALTER TABLE passengers
@@ -80,7 +80,7 @@ FOREIGN KEY ( user_id ) REFERENCES users( user_id );
 CREATE TABLE employees (
 	department VARCHAR ( 255 ) NOT NULL,
 	salary NUMERIC( 20, 2 ),
-	user_id BIGINT NOT NULL UNIQUE
+	user_id INTEGER NOT NULL UNIQUE
 );
 
 ALTER TABLE employees
@@ -93,10 +93,10 @@ CREATE TABLE flights (
 	arrival TIMESTAMP NOT NULL,
 	price NUMERIC ( 20, 2 ) NOT NULL,
 	status FLIGHT_STATUSES NOT NULL DEFAULT 'Scheduled',
-	from_id BIGINT NOT NULL,
-	to_id BIGINT NOT NULL,
-	airplane_id BIGINT NOT NULL,
-	airline_id BIGINT NOT NULL
+	from_id INTEGER NOT NULL,
+	to_id INTEGER NOT NULL,
+	airplane_id INTEGER NOT NULL,
+	airline_id INTEGER NOT NULL
 );
 
 ALTER TABLE flights
@@ -123,8 +123,8 @@ CREATE TABLE bookings (
 	booking_id serial PRIMARY KEY,
 	seat INTEGER NOT NULL,
 	status BOOKING_STATUSES NOT NULL DEFAULT 'Reserved', 
-	passenger_id BIGINT NOT NULL, 
-	flight_id BIGINT NOT NULL
+	passenger_id INTEGER NOT NULL, 
+	flight_id INTEGER NOT NULL
 );
 
 ALTER TABLE bookings
