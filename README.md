@@ -2222,8 +2222,30 @@ PostgreSQL and PgAdmin
    |	capacity | INTEGER | | Airplane's capacity: NOT NULL |
    |	archive | BOOLEAN | | Airplane's status: NOT NULL, DEFAULT false |
    |	airline_id | BIGINT | FK | Airline ID: NOT NULL |
+ 
+4. Users
 
-4. Passengers
+   | name | type | key | Description |
+   |------|------|-----|-------------|
+   | user_id | BIGINT | PK | User ID |
+   | role | ENUM | | User's role: Admin, Manager, Passenger . NOT NULL, DEFAULT 'Passenger'|
+   | username | VARCHAR | | Username: UNIQUE, NOT NULL |
+   | password | VARCHAR | | Password: NOT NULL |
+   | first_name | VARCHAR | | First name: NOT NULL |
+   | last_name | VARCHAR | | Last name: NOT NULL |
+   | email | VARCHAR | | User email: NOT NULL, UNIQUE |
+   | birthday | DATE | | User's birthday |
+   | passport | VARCHAR | | Passenger's passport: UNIQUE, NOT NULL |
+   | full_name | VARCHAR | | Full name: first name + last name: NOT NULL |
+   | active | BOOLEAN | | User's status: NOT NULL, DEFAULT true |
+   | phone | VARCHAR | | User phone: UNIQUE |
+   | sex | ENUM | | User sex: male, female |
+   | country | VARCHAR | | User country | 
+   | city | VARCHAR | | User city |
+   | zip | INTEGER | | Zip code |
+   | street | VARCHAR | | User's street |
+
+5. Passengers
 
    | name | type | key | Description |
    |------|------|-----|-------------|
@@ -2233,24 +2255,8 @@ PostgreSQL and PgAdmin
    | email | VARCHAR | | User email: NOT NULL, UNIQUE |
    | birthday | DATE | | User's birthday |
    | passport | VARCHAR | | Passenger's passport: UNIQUE, NOT NULL |
-   
-5. Users
+   | user_id | BIGINT | FK | User ID |
 
-   | name | type | key | Description |
-   |------|------|-----|-------------|
-   | user_id | BIGINT | PK | User ID |
-   |	role | ENUM | | User's role: Admin, Manager, Passenger . NOT NULL, DEFAULT 'Passenger'|
-   |	username | VARCHAR | | Username: UNIQUE, NOT NULL |
-   |	password | VARCHAR | | Password: NOT NULL |
-   |	full_name | VARCHAR | | Full name: first name + last name: NOT NULL |
-   |	active | BOOLEAN | | User's status: NOT NULL, DEFAULT true |
-   |	phone | VARCHAR | | User phone: UNIQUE |
-   |	sex | ENUM | | User sex: male, female |
-   |	country | VARCHAR | | User country | 
-   |	city | VARCHAR | | User city |
-   |	zip | INTEGER | | Zip code |
-   |	street | VARCHAR | | User's street |
-   |	passenger_id | BIGINT | FK | Passenger ID: UNIQUE, NOT NULL |
 6. Employees
 
    | name | type | key | Description |
