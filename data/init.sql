@@ -42,20 +42,16 @@ ALTER TABLE airplanes
 ADD CONSTRAINT airplanes_airlines_fk
 FOREIGN KEY ( airline_id ) REFERENCES airlines( airline_id );
 
-CREATE TABLE passengers (
-	passenger_id serial PRIMARY KEY,
-	first_name VARCHAR ( 255 ) NOT NULL,
-	last_name VARCHAR ( 255 ) NOT NULL,
-	passport VARCHAR ( 9 ) UNIQUE NOT NULL,
-	birthday DATE NOT NULL,
-	email VARCHAR ( 255 ) UNIQUE NOT NULL
-);
-
 CREATE TABLE users (
 	user_id serial PRIMARY KEY,
 	role USER_ROLE NOT NULL DEFAULT 'Passenger',
 	username VARCHAR ( 255 ) UNIQUE NOT NULL,
 	password VARCHAR ( 72 ) NOT NULL,
+	first_name VARCHAR ( 255 ) NOT NULL,
+	last_name VARCHAR ( 255 ) NOT NULL,
+	passport VARCHAR ( 9 ) UNIQUE NOT NULL,
+	email VARCHAR ( 255 ) UNIQUE NOT NULL,
+	birthday DATE NOT NULL,
 	full_name VARCHAR ( 255 ) NOT NULL,
 	phone VARCHAR ( 255 ) UNIQUE,
 	sex SEX,
@@ -63,13 +59,22 @@ CREATE TABLE users (
 	city VARCHAR ( 255 ),
 	zip INTEGER,
 	street VARCHAR ( 255 ),
-	active BOOLEAN NOT NULL DEFAULT true,
-	passenger_id BIGINT NOT NULL UNIQUE
+	active BOOLEAN NOT NULL DEFAULT true
 );
 
-ALTER TABLE users
-ADD CONSTRAINT users_passengers_fk
-FOREIGN KEY ( passenger_id ) REFERENCES passengers( passenger_id );
+CREATE TABLE passengers (
+	passenger_id serial PRIMARY KEY,
+	first_name VARCHAR ( 255 ) NOT NULL,
+	last_name VARCHAR ( 255 ) NOT NULL,
+	passport VARCHAR ( 9 ) UNIQUE NOT NULL,
+	birthday DATE NOT NULL,
+	email VARCHAR ( 255 ) UNIQUE NOT NULL,
+	user_id BIGINT
+);
+
+ALTER TABLE passengers
+ADD CONSTRAINT passengers_users_fk
+FOREIGN KEY ( user_id ) REFERENCES users( user_id );
 
 
 CREATE TABLE employees (
