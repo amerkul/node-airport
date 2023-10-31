@@ -1,4 +1,4 @@
-import {CustomSha256Hash} from '../src/com/solvd/airport/crypto/custom-hash';
+import {CustomSha256Hash} from '../../src/crypto/custom-hash';
 
 const hash = new CustomSha256Hash();
 

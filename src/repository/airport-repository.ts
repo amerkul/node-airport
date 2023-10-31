@@ -4,10 +4,11 @@ import { AirportFilter } from '../model/filter/airport-filter';
 
 class AirportRepository {
 
-    async createAirport(airport: Airport): Promise<Airport[]> {
+    async createAirport(airport: Airport): Promise<number> {
         const result = await pool.query(
             `INSERT INTO airports (name, iata, icao, country, city, latitude, longitude)
-             VALUES ($1, $2, $3, $4, $5, $6, $7)`, [
+             VALUES ($1, $2, $3, $4, $5, $6, $7)
+             RETURNING airport_id`, [
                 airport.name,
                 airport.iata,
                 airport.icao,
@@ -16,7 +17,7 @@ class AirportRepository {
                 airport.latitude || null,
                 airport.longitude || null,
         ]);
-        return result.rows.map(r => this.projectAirport(r));
+        return result.rows[0].airport_id;
     }
 
     async findById(id: number): Promise<Airport[]> {
@@ -28,17 +29,37 @@ class AirportRepository {
         return result.rows.map(r => this.projectAirport(r));
     }
 
-    async update(newData: Airport, id: number): Promise<Airport[]> {
-        let query = `UPDATE airports SET `
-        for (let key in newData) {
-            let i = 0;
-            if (newData[key] !== undefined) {
-                query += `${key}=$${++i}, `
-            } 
+    async update(newData: Airport): Promise<void> {
+        let query = `
+        UPDATE airports
+        SET `;
+        const params: string[] = [];
+        if (newData.name !== undefined) {
+            params.push(`name = '${newData.name}'`);
+        } 
+        if (newData.archive !== undefined) {
+            params.push(`archive = ${newData.archive}`);
         }
-        query = query.substring(0, query.length - 2) + ` WHERE airport_id = ${id}`;
-        const result = await pool.query(query);
-        return result.rows.map(r => this.projectAirport(r));
+        if (newData.country !== undefined) {
+            params.push(`country = '${newData.country}'`);
+        }
+        if (newData.city !== undefined) {
+            params.push(`city = '${newData.city}'`);
+        }
+        if (newData.iata !== undefined) {
+            params.push(`iata = '${newData.iata}'`);
+        }
+        if (newData.icao !== undefined) {
+            params.push(`icao = '${newData.icao}'`);
+        }
+        if (newData.longitude !== undefined) {
+            params.push(`longitude = ${newData.longitude}`);
+        }
+        if (newData.latitude !== undefined) {
+            params.push(`latitude = ${newData.latitude}`);
+        }
+        query += params.join(', ') + ` WHERE airport_id = ${newData.id}`;
+        await pool.query(query);
     }
 
     async delete(id: number): Promise<void> {
@@ -48,29 +69,32 @@ class AirportRepository {
     async search(filter: AirportFilter, offset: number, size: number) {
         let query = `
         SELECT airport_id, name, archive, country, city, latitude, 
-        longitude, iata, icao FROM airports
-        WHERE `;
+        longitude, iata, icao FROM airports `;
+        const params: string[] = [];
         if (filter.ids) {
-            query += `airport_id in (${filter.ids.join(', ')}) `;
+            params.push(` airport_id in (${filter.ids.join(', ')}) `);
         } 
         if (filter.archive !== undefined) {
-            query += `&& archive = ${filter.archive} `;
+            params.push(` archive = ${filter.archive} `);
         }
         if (filter.name !== undefined) {
-            query += `&& name = ${filter.name} `;
+            params.push(` name ILIKE '%${filter.name}%'`);
         }
         if (filter.country !== undefined) {
-            query += `&& country = ${filter.country} `;
+            params.push(` country ILIKE '%${filter.country}%' `);
         }
         if (filter.city !== undefined) {
-            query += `&& city = ${filter.city} `;
+            params.push(` city ILIKE '%${filter.city}%' `);
+        }
+        if (params.length > 0) {
+            query += `WHERE ${params.join('AND')} `
         }
         query += `OFFSET ${offset} LIMIT ${size}`;
         const result = await pool.query(query);
         return result.rows.map(r => this.projectAirport(r));
     }
 
-    private projectAirport(r: any): Airport {
+    public projectAirport(r: any): Airport {
         return ({
             id: r.airport_id,
             name: r.name,
@@ -78,8 +102,8 @@ class AirportRepository {
             icao: r.icao,
             country: r.country,
             city: r.city,
-            latitude: r.latitude,
-            longitude: r.longitude,
+            latitude: !!r.latitude ? parseFloat(r.latitude) : null,
+            longitude: !!r.longitude ? parseFloat(r.longitude) : null,
             archive: r.archive,
         });
     }

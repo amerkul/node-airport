@@ -2,6 +2,7 @@
     "devDependencies": {
         "@babel/core": "^7.22.20",
         "@babel/preset-env": "^7.22.20",
+        "@testcontainers/postgresql": "^10.2.2",
         "@types/bcrypt": "^5.0.0",
         "@types/express": "^4.17.19",
         "@types/jest": "^29.5.5",
@@ -12,7 +13,7 @@
         "typescript": "^5.2.2"
     },
     "scripts": {
-        "test": "jest",
+        "test": "jest --runInBand",
         "dev": "ts-node ./src/com/solvd/airport/airport-application.ts"
     },
     "dependencies": {

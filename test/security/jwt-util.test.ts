@@ -1,5 +1,5 @@
-import AuthenticationUserDetails from '../src/com/solvd/airport/security/auth-user-details';
-import {authUtil} from '../src/com/solvd/airport/security/auth-util';
+import AuthenticationUserDetails from '../../src/security/auth-user-details';
+import {authUtil} from '../../src/security/auth-util';
 
 const userDetails = new AuthenticationUserDetails('anna', 'anna', 'role');
 let token = '';

@@ -1,5 +1,5 @@
-export class PassengerFilter {
+export class UserFilter {
     public fullName: string | undefined;
     public passport: string | undefined;
-    public userId: number | undefined;
+    public active: boolean | undefined;
 }

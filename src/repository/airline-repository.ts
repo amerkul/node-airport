@@ -4,21 +4,21 @@ import { AirlineFilter } from "../model/filter/airline-filter";
 
 class AirlineRepository {
 
-    async create(airline: Airline, airportId: number): Promise<Airline[]>{
+    async create(airline: Airline, airportId: number): Promise<number>{
         const result = await pool.query(`
         INSERT INTO airlines (name, iata, base_airport_id)
-        VALUES ($1, $2, $3)`, [
+        VALUES ($1, $2, $3) RETURNING airline_id`, [
             airline.name,
             airline.iata,
             airportId
         ]);
-        return result.rows.map(r => this.projectAirline(r));
+        return result.rows[0].airline_id;
     }
 
     async findById(id: number): Promise<Airline[]> {
         const result = await pool.query(`
         SELECT airline_id, name, iata, archive FROM airlines
-        WHERE id = $1`, [id]);
+        WHERE airline_id = $1`, [id]);
         return result.rows.map(r => this.projectAirline(r));
     }
 
@@ -28,41 +28,49 @@ class AirlineRepository {
         WHERE airline_id = $1`, [id]);
     }
 
-    async update(newData: Airline, id: number): Promise<Airline[]> {
-        let query = `UPDATE airlines SET `
-        for (let key in newData) {
-            let i = 0;
-            if (newData[key] !== undefined) {
-                query += `${key}=$${++i}, `
-            } 
+    async update(newData: Airline): Promise<void> {
+        let query = `
+        UPDATE airlines
+        SET `;
+        const params: string[] = [];
+        if (newData.name !== undefined) {
+            params.push(`name = '${newData.name}'`);
+        } 
+        if (newData.archive !== undefined) {
+            params.push(`archive = ${newData.archive}`);
         }
-        query = query.substring(0, query.length - 2) + ` WHERE airline_id = ${id}`;
-        const result = await pool.query(query);
-        return result.rows.map(r => this.projectAirline(r));
+        if (newData.iata !== undefined) {
+            params.push(`iata = '${newData.iata}'`);
+        }
+        query += params.join(', ') + ` WHERE airline_id = ${newData.id}`;
+        await pool.query(query);
     }
 
     async search(filter: AirlineFilter, offset: number, size: number): Promise<Airline[]> {
         let query = `
-        SELECT airline_id, name, iata, archive
-        WHERE `;
+        SELECT airline_id, name, iata, archive FROM airlines `;
+        const params: string[] = [];
         if (filter.ids) {
-            query += `airline_id in (${filter.ids.join(', ')}) `;
+            params.push(` airline_id in (${filter.ids.join(', ')}) `);
         } 
         if (filter.archive !== undefined) {
-            query += `&& archive = ${filter.archive} `;
+            params.push(` archive = ${filter.archive} `);
         }
         if (filter.name !== undefined) {
-            query += `&& name = ${filter.name} `;
+            params.push(` name ILIKE '%${filter.name}%' `);
         }
         if (filter.airportId !== undefined) {
-            query += `&& airport_id = ${filter.airportId} `;
+            params.push(` base_airport_id = ${filter.airportId} `);
+        }
+        if (params.length > 0) {
+            query += `WHERE ${params.join('AND')} `;
         }
         query += `OFFSET ${offset} LIMIT ${size}`;
         const result = await pool.query(query);
         return result.rows.map(r => this.projectAirline(r));
     }
 
-    private projectAirline(r: any): Airline {
+    public projectAirline(r: any): Airline {
         return ({
             id: r.airline_id,
             name: r.name,
