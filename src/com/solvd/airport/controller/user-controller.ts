@@ -28,7 +28,6 @@ class UserController {
         } catch(e) {
             next(new InternalException(500, 'Server exception'));
         }
-        
     }
 
     async login(req: Request, res: Response, next: NextFunction) {

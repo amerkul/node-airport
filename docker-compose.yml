@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  airportDB:
+    image: postgres:14.5
+    container_name: airportDB
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - data:/var/lib/postgresql/data
+    networks:
+      - airport
+  pgAdmin:
+    image: dpage/pgadmin4:7.8
+    container_name: pgAdmin
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
+      PGADMIN_DEFAULT_PASSWORD: strong-password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - airport
+networks:
+  airport: 
+    driver: bridge 
+volumes:
+  data:
+    driver: local
+  pgadmin-data:
+    driver: local
+    
