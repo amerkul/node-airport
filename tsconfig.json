@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+      "strictPropertyInitialization": false,
       "sourceMap": true,
       "module": "commonjs",
       "strict": true,
@@ -9,7 +10,7 @@
     },
     "include": [
       "src/com/solvd/airport/**/*.ts", "server.ts"    
-    ],
+, "src/airport-application.ts"    ],
     "exclude": [
       "node_modules"
     ]

@@ -7,7 +7,7 @@ class AuthenticationUtil {
 
     private static ROLE: string = 'role';
     private static BEARER: string = 'Bearer ';
-    private secret: string = 'secret';
+    private secret: string = process.env.SECRET as string;
     private validityMillisecond: number = 300000;
     
     createToken(authUser: AuthenticationUserDetails): string {
