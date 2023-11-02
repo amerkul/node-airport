@@ -11,6 +11,10 @@ import EmailAlreadyExistsException from "../exception/exist-exception";
 import CreateUserDto from "../dto/create-user-dto";
 import {authUtil} from "../security/auth-util";
 import InternalException from "../exception/internal-exception";
+import { UserFilter } from "../model/filter/user-filter";
+import CustomError from "../exception/custom-error";
+import { UpdateUserDto } from "../dto/update-user-dto";
+import NotFoundException from "../exception/not-found-exception";
 
 class UserController {
 
@@ -21,9 +25,12 @@ class UserController {
                 next(new EmailAlreadyExistsException(409, "Email exists"));
             } else {
                 const hashedPassword = await bcrypt.hash(userDto.password, 10);
-                const user = await userService.create(new User(userDto.username, hashedPassword, userDto.role));
+                let user: User = {...userDto};
+                user.password = hashedPassword;
+                user.role = 'Passenger';
+                user = await userService.create(user);
                 user.password = "";
-                res.send(user);
+                res.status(201).send(user);
             }
         } catch(e) {
             next(new InternalException(500, 'Server exception'));
@@ -45,8 +52,70 @@ class UserController {
             } else {
                 next(new AuthenticationException(401, "Unauthorized"));
             }
-        } catch (e) {
-            next(new InternalException(500, 'Server exception'));
+        } catch (e: any) {
+            next(new InternalException(e.code || 500, e.message));
+        }
+    }
+
+    async getAll(req: Request, res: Response, next: NextFunction) {
+        try {
+            const filter: UserFilter = JSON.parse(JSON.stringify(req.query));
+            res.send(await userService.retrieveByFilter(filter, ((filter.page - 1) * filter.per_page)  || 0, filter.per_page || 10));
+        } catch(err: any) {
+            next(new CustomError(err.code || 500, err.message));
+        }
+    }
+
+    async getById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const user: AuthenticationUserDetails = res.locals.user;
+            const id = parseInt(req.params.user_id);
+            if (user.role === 'Passenger' && user.userId !== id) {
+                throw new NotFoundException(404, 'Not found');
+            }
+            res.send(await userService.retrieveById(id));
+        } catch(err: any) {
+            next(new CustomError(err.code || 500, err.message));
+        }
+    }
+
+    async create(req: Request, res: Response, next: NextFunction) {
+        try {
+            const body: CreateUserDto = req.body;
+            let user: User = {...body};
+            const hashedPassword = await bcrypt.hash(body.password, 10);
+            user.password = hashedPassword;
+            user.role = 'Passenger';
+            user = await userService.create(body);
+            user.password ='';
+            res.status(201).send(user);
+        } catch(err: any) {
+            next(new CustomError(err.code || 500, err.message));
+        }
+    }
+
+    async update(req: Request, res: Response, next: NextFunction) {
+        try {
+            const body: UpdateUserDto = req.body;
+            const user: AuthenticationUserDetails = res.locals.user;
+            const id = parseInt(req.params.user_id);
+            if (user.role === 'Passenger' && user.userId !== id) {
+                throw new NotFoundException(404, 'Not found');
+            }
+            const newData: User = {...body};
+            res.send(await userService.update(newData, id));
+        } catch(err: any) {
+            next(new CustomError(err.code || 500, err.message));
+        }
+    }
+
+    async deleteById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = parseInt(req.params.user_id);
+            await userService.delete(id);
+            res.sendStatus(204);
+        } catch(err: any) {
+            next(new CustomError(err.code || 500, err.message));
         }
     }
 

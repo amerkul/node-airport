@@ -4,13 +4,13 @@ import { AirplaneFilter } from "../model/filter/airplane-filter";
 
 class AirplaneRepository {
 
-    async create(airplane: Airplane, airline_id: number): Promise<number> {
+    async create(airplane: Airplane, airlineId: number): Promise<number> {
         const result = await pool.query(`
         INSERT INTO airplanes (name, capacity, airline_id)
         VALUES ($1, $2, $3) RETURNING airplane_id`, [
             airplane.name,
             airplane.capacity,
-            airline_id
+            airlineId
         ]);
         return result.rows[0].airplane_id;
     }

@@ -109,7 +109,6 @@ describe('Flight repository', () => {
     
     it("should get all flights", async () => {
         const result: Flight[] = await flightRepository.search(new FlightFilter(), 0, 10);
-        console.log(result);
         expect(result).toEqual([{
             id: 1,
             depature: '2023-10-31 00:00:00',

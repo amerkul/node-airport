@@ -61,8 +61,8 @@ class EmployeeRepository {
         city, zip, street, department, salary FROM users
         JOIN employees ON users.user_id = employees.user_id `;
         const params: string[] = [];
-        if (filter.fullName !== undefined) {
-            params.push(` users.full_name ILIKE '%${filter.fullName}%' `);
+        if (filter.full_name !== undefined) {
+            params.push(` users.full_name ILIKE '%${filter.full_name}%' `);
         } 
         if (filter.active !== undefined) {
             params.push(` users.active = ${filter.active} `);

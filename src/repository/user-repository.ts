@@ -22,6 +22,16 @@ class UserRepository {
         return result.rows[0].user_id;
     }
 
+    async findByUsername(username: string): Promise<User[]> {
+        const result = await pool.query(`
+        SELECT user_id, active, role, username, password, 
+        first_name, last_name, full_name, email, 
+        birthday::text, passport, phone, sex, country,
+        city, zip, street FROM users
+        WHERE username = $1`, [username]);
+        return result.rows.map(r => this.projectUser(r));
+    }
+
     async findById(id: number): Promise<User[]> {
         const result = await pool.query(`
         SELECT user_id, active, role, username, password, 

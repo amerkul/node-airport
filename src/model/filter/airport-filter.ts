@@ -4,4 +4,6 @@ export class AirportFilter {
     public archive: boolean | undefined;
     public country: string | undefined;
     public city: string | undefined;
+    public page: number;
+    public per_page: number;
 }

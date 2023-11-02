@@ -1,25 +1,61 @@
 import { NextFunction, Request, Response } from "express";
+import { airportService } from "../service/airport-service";
+import CustomError from "../exception/custom-error";
+import { Airport } from "../model/airport";
+import { AirportFilter } from "../model/filter/airport-filter";
+import { CreateAirportDto } from "../dto/create-airport-dto";
+import { UpdateAirportDto } from "../dto/update-airport-dto";
 
 class AirportController {
 
-    async getAll(req: Request, res: Response, next: NextFunction) {
-
+    async getAllByFilter(req: Request, res: Response, next: NextFunction) {
+        try {
+            const filter: AirportFilter = JSON.parse(JSON.stringify(req.query));
+            res.send(await airportService.retrieveByFilter(filter, ((filter.page - 1) * filter.per_page)  || 0, filter.per_page || 10));
+        } catch(err: any) {
+            next(new CustomError(err.code || 500, err.message));
+        }
     }
 
     async getById(req: Request, res: Response, next: NextFunction) {
-
+        try {
+            const id = parseInt(req.params.airport_id);
+            res.send(await airportService.retrieveById(id));
+        } catch(err: any) {
+            next(new CustomError(err.code || 500, err.message));
+        }
     }
 
     async create(req: Request, res: Response, next: NextFunction) {
-
+        try {
+            const body: CreateAirportDto = req.body;
+            const airport: Airport = {...body};
+            airport.archive = false;
+            res.status(201).send(await airportService.create(airport));
+        } catch(err: any) {
+            next(new CustomError(err.code || 500, err.message));
+        }
     }
 
     async update(req: Request, res: Response, next: NextFunction) {
-
+        try {
+            const body: UpdateAirportDto = req.body;
+            const airport: Airport = {...body};
+            const id = parseInt(req.params.airport_id);
+            res.send(await airportService.update(airport, id));
+        } catch(err: any) {
+            next(new CustomError(err.code || 500, err.message));
+        }
     }
 
     async deleteById(req: Request, res: Response, next: NextFunction) {
-
+        try {
+            const id = parseInt(req.params.airport_id);
+            await airportService.delete(id);
+            res.sendStatus(204);
+        } catch(err: any) {
+            next(new CustomError(err.code || 500, err.message));
+        }
     }
     
 }

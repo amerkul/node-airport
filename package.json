@@ -14,7 +14,7 @@
     },
     "scripts": {
         "test": "jest --runInBand",
-        "dev": "ts-node ./src/com/solvd/airport/airport-application.ts"
+        "dev": "ts-node ./src/server.ts"
     },
     "dependencies": {
         "bcrypt": "^5.1.1",

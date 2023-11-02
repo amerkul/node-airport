@@ -36,6 +36,11 @@ describe('User repository', () => {
         });
     }, 60000);
 
+    it("should return []", async () => {
+        const result: User[] = await userRepository.findByUsername('anna');
+        expect(result).toEqual([]);
+    }, 60000);
+
     it("should create a user with id = 4", async () => {
         const user = new User('anna', '$2y$10$10jqAjd7pxuFsVnUSisvbetvCtBnv9bSn9gsjVjcpRjAXE5ZqueB.', 'Passenger');
         user.fullName = 'Anna Merkul';

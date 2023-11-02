@@ -13,8 +13,8 @@ class FlightRepository {
             flight.depature,
             flight.arrival,
             flight.price,
-            flight.from.id,
-            flight.to.id,
+            flight.from?.id,
+            flight.to?.id,
             flight.airplane?.id,
             flight.airline?.id
         ]);
@@ -108,10 +108,10 @@ class FlightRepository {
         ON flights.airplane_id = airplanes.airplane_id`;
         const params: string[] = [];
         if (filter.depatureDate !== undefined) {
-            params.push(` depature = '${filter.depatureDate}' `);
+            params.push(` DATE(depature) >= '${filter.depatureDate}'::date `);
         } 
         if (filter.arrivalDate !== undefined) {
-            params.push(` arrival = '${filter.arrivalDate}' `);
+            params.push(` DATE(arrival) <= '${filter.arrivalDate}'::date `);
         }
         if (filter.status !== undefined) {
             params.push(` status = '${filter.status}' `);

@@ -4,7 +4,7 @@ import { Passenger } from "../model/passenger";
 
 class PassengerRepository {
 
-    async create(passenger: Passenger, userId: number | null): Promise<void> {
+    async create(passenger: Passenger, userId: number | null): Promise<number> {
         const result = await pool.query(`
         INSERT INTO passengers (full_name,
         email, birthday, passport, user_id)
@@ -59,8 +59,8 @@ class PassengerRepository {
         SELECT passenger_id, full_name,
         email, birthday::text, passport FROM passengers `;
         const params: string[] = []; 
-        if (filter.fullName !== undefined) {
-            params.push(` full_name ILIKE '%${filter.fullName}%' `);
+        if (filter.full_name !== undefined) {
+            params.push(` full_name ILIKE '%${filter.full_name}%' `);
         } 
         if (filter.passport !== undefined) {
             params.push(` passport = '%${filter.passport}%' `);
