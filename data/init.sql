@@ -34,15 +34,15 @@ ON DELETE CASCADE;
 CREATE TABLE airplanes (
 	airplane_id serial PRIMARY KEY,
 	name VARCHAR ( 255 ) UNIQUE NOT NULL,
-	capacity INTEGER NOT NULL,
+	capacity INTEGER NOT NULL CHECK (capacity > 0 AND capacity < 500),
 	archive BOOLEAN NOT NULL DEFAULT false,
-	airline_id INTEGER NOT NULL 
+	airline_id INTEGER DEFAULT NULL
 );
 
 ALTER TABLE airplanes
 ADD CONSTRAINT airplanes_airlines_fk
 FOREIGN KEY ( airline_id ) REFERENCES airlines( airline_id )
-ON DELETE CASCADE;
+ON DELETE SET DEFAULT;
 
 CREATE TABLE users (
 	user_id serial PRIMARY KEY,
@@ -70,13 +70,13 @@ CREATE TABLE passengers (
 	passport VARCHAR ( 9 ) NOT NULL,
 	birthday DATE NOT NULL,
 	email VARCHAR ( 255 ) NOT NULL,
-	user_id INTEGER 
+	user_id INTEGER DEFAULT NULL
 );
 
 ALTER TABLE passengers
 ADD CONSTRAINT passengers_users_fk
 FOREIGN KEY ( user_id ) REFERENCES users( user_id )
-ON DELETE CASCADE;
+ON DELETE SET DEFAULT;
 
 
 CREATE TABLE employees (
@@ -130,16 +130,16 @@ CREATE TABLE bookings (
 	booking_id serial PRIMARY KEY,
 	seat INTEGER NOT NULL,
 	status BOOKING_STATUSES NOT NULL DEFAULT 'Reserved', 
-	passenger_id INTEGER NOT NULL, 
-	flight_id INTEGER NOT NULL 
+	passenger_id INTEGER DEFAULT NULL, 
+	flight_id INTEGER DEFAULT NULL
 );
 
 ALTER TABLE bookings
 ADD CONSTRAINT bookings_passengers_fk
 FOREIGN KEY ( passenger_id ) REFERENCES passengers( passenger_id )
-ON DELETE CASCADE;
+ON DELETE SET DEFAULT;
 
 ALTER TABLE bookings
 ADD CONSTRAINT bookings_flight_fk
 FOREIGN KEY ( flight_id ) REFERENCES flights( flight_id )
-ON DELETE CASCADE;
+ON DELETE SET DEFAULT;

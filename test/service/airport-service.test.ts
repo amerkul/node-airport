@@ -11,13 +11,13 @@ describe('Airport service', () => {
     }, 60000);
 
     afterAll(async () => {
-        await testContainer.destroy();
+        setTimeout( async () => await testContainer.destroy(), 1000);
     }, 60000);
     
     it('should update airport name', async () => {
         const newData = new Airport();
         newData.name = 'New name'
-        console.log(await airportService.update(newData, 1));
+        expect(async () => await airportService.update(newData, 1)).not.toThrow();
     }, 60000);
     
 });

@@ -154,7 +154,7 @@ describe('Employee repository', () => {
 
     it("should get employees with id = 3", async () => {
         const filter = new EmployeeFilter();
-        filter.fullName = 'ann';
+        filter.full_name = 'ann';
         const result: Employee[] = await employeeRepository.search(filter, 0, 10);
         expect(result).toEqual([
             {

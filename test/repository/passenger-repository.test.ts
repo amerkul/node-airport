@@ -68,7 +68,7 @@ describe('Passenger repository', () => {
 
     it("should get a passenger with id = 1", async () => {
         const filter = new PassengerFilter();
-        filter.fullName = 'anna';
+        filter.full_name = 'anna';
         const result: Passenger[] = await passengerRepository.search(filter, 0, 10);
         expect(result).toEqual([{
                 id: 1,
