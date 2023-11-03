@@ -46,6 +46,24 @@ class AirlineRepository {
         await pool.query(query);
     }
 
+    async findByUniqueParams(airline: Airline): Promise<Airline[]> {
+        let query = `
+        SELECT airline_id, name, iata, archive FROM airlines `;
+        const params: string[] = [];
+        if (airline.name !== undefined) {
+            params.push(` name = '${airline.name}' `);
+        }
+        if (airline.iata !== undefined) {
+            params.push(` iata = '${airline.iata}' `);
+        }
+        if (params.length === 0) {
+            return [];
+        }
+        query += `WHERE ${params.join('OR')} `;
+        const result = await pool.query(query);
+        return result.rows.map(r => this.projectAirline(r));
+    }
+
     async search(filter: AirlineFilter, offset: number, size: number): Promise<Airline[]> {
         let query = `
         SELECT airline_id, name, iata, archive FROM airlines `;

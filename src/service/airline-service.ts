@@ -3,21 +3,31 @@ import NotFoundException from "../exception/not-found-exception";
 import { Airline } from "../model/airline";
 import { AirlineFilter } from "../model/filter/airline-filter";
 import { airlineRepository } from "../repository/airline-repository";
+import { Validator } from "./validator/service-validator";
 
 class AirlineService {
 
+    private validator: Validator = new Validator();
+
     async create(airline: Airline, airportId: number): Promise<Airline> {
         try {
+            this.validator.checkRequiredAirlineParamsOrThrow(airline);
+            const uniqueAirlines = await airlineRepository.findByUniqueParams(airline);
+            this.validator.checkUniqueAirlineParamsOrThrow(uniqueAirlines, airline);
             const airlineId = await airlineRepository.create(airline, airportId);
             airline.id = airlineId;
             return airline;
         } catch (err: any) {
-            throw new CustomError(500, err.message)
+            throw new CustomError(err.code || 500, err.message)
         }
     }
 
     async update(newData: Airline, id: number): Promise<Airline> {
         try {
+            const uniqueAirlines = await airlineRepository.findByUniqueParams(newData);
+            this.validator.checkUniqueAirlineParamsOrThrow(
+                uniqueAirlines.filter(unique => unique.id !== id), newData
+            );
             newData.id = id;
             await airlineRepository.update(newData);
             return this.retrieveById(id);
