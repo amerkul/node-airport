@@ -10,7 +10,7 @@ import { userService } from "../service/user-service";
 import EmailAlreadyExistsException from "../exception/exist-exception";
 import CreateUserDto from "../dto/create-user-dto";
 import {authUtil} from "../security/auth-util";
-import InternalException from "../exception/internal-exception";
+import InternalException from "../exception/argument-exception";
 import { UserFilter } from "../model/filter/user-filter";
 import CustomError from "../exception/custom-error";
 import { UpdateUserDto } from "../dto/update-user-dto";
@@ -32,8 +32,8 @@ class UserController {
                 user.password = "";
                 res.status(201).send(user);
             }
-        } catch(e) {
-            next(new InternalException(500, 'Server exception'));
+        } catch(e: any) {
+            next(new CustomError(e.code || 500, e.message));
         }
     }
 
@@ -53,7 +53,7 @@ class UserController {
                 next(new AuthenticationException(401, "Unauthorized"));
             }
         } catch (e: any) {
-            next(new InternalException(e.code || 500, e.message));
+            next(new CustomError(e.code || 500, e.message));
         }
     }
 

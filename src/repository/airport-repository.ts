@@ -58,12 +58,37 @@ class AirportRepository {
         if (newData.latitude !== undefined) {
             params.push(`latitude = ${newData.latitude}`);
         }
+        if (params.length === 0) {
+            return;
+        }
         query += params.join(', ') + ` WHERE airport_id = ${newData.id}`;
         await pool.query(query);
     }
 
     async delete(id: number): Promise<void> {
         pool.query(`DELETE FROM airports WHERE airport_id = ${id}`);
+    }
+
+    async findByUniqueParameters(airport: Airport): Promise<Airport[]> {
+        let query = `
+        SELECT airport_id, name, archive, country, city, latitude, 
+        longitude, iata, icao FROM airports `;
+        const params: string[] = [];
+        if (airport.name !== undefined) {
+            params.push(` name = '${airport.name}' `);
+        } 
+        if (airport.iata !== undefined) {
+            params.push(` iata = '${airport.iata}' `);
+        }
+        if (airport.iata !== undefined) {
+            params.push(` icao = '${airport.iata}' `);
+        }
+        if (params.length === 0) {
+            return [];
+        }
+        query += `WHERE ${params.join('OR')} `;
+        const result = await pool.query(query);
+        return result.rows.map(r => this.projectAirport(r));
     }
 
     async search(filter: AirportFilter, offset: number, size: number) {
