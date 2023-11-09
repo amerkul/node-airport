@@ -18,10 +18,10 @@ class UserRouter {
         this.router.post('/login', userController.login);
 
         this.router.get('/api/v1/passengers', authMiddleware, setRoles(['Admin', 'Manager']), passengerController.getAll);
-        this.router.post('/api/v1/passengers', authMiddleware, passengerController.create);
-        this.router.delete('/api/v1/passengers/:passenger_id', authMiddleware, setRoles(['Admin']), passengerController.deleteById);
-        this.router.get('/api/v1/passengers/:passenger_id', authMiddleware, setRoles(['Admin', 'Manager']), passengerController.getById);
-        this.router.put('/api/v1/passengers/:passenger_id', authMiddleware, setRoles(['Admin', 'Manager']), passengerController.update);
+        this.router.post('/api/v1/passengers', authMiddleware, setRoles(['Admin', 'Manager', 'Passenger']), passengerController.create);
+        this.router.delete('/api/v1/passengers/:passenger_id', authMiddleware, setRoles(['Admin', 'Passenger']), passengerController.deleteById);
+        this.router.get('/api/v1/passengers/:passenger_id', authMiddleware, setRoles(['Admin', 'Manager', 'Passenger']), passengerController.getById);
+        this.router.put('/api/v1/passengers/:passenger_id', authMiddleware, setRoles(['Admin', 'Manager', 'Passenger']), passengerController.update);
 
         this.router.get('/api/v1/users', authMiddleware, setRoles(['Admin', 'Manager']), userController.getAll);
         this.router.post('/api/v1/users', authMiddleware, setRoles(['Admin']), userController.create);

@@ -5,7 +5,6 @@ export class UpdateEmployeeDto {
     public password: string | undefined;
     public firstName: string | undefined;
     public lastName: string | undefined;
-    public fullName: string | undefined;
     public email: string | undefined;
     public birthday: string | undefined | null;
     public passport: string | undefined;

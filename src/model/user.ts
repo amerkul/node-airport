@@ -8,7 +8,7 @@ export default class User {
     public role?: string;
     public firstName: string | undefined;
     public lastName: string | undefined;
-    public fullName: string | undefined;
+    public fullName?: string | undefined;
     public email: string | undefined;
     public birthday: string | undefined | null;
     public passport: string | undefined;

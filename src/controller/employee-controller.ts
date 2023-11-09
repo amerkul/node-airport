@@ -6,6 +6,8 @@ import { Employee } from "../model/employee";
 import { CreateEmployeeDto } from "../dto/create-employee-dto";
 import { UpdateEmployeeDto } from "../dto/update-employee-dto";
 import User from "../model/user";
+import { Paginator } from "./util/paginator";
+import { InputValidator } from "./validator/input-validator";
 
 
 class EmployeeController {
@@ -13,7 +15,21 @@ class EmployeeController {
     async getAll(req: Request, res: Response, next: NextFunction) {
         try {
             const filter: EmployeeFilter = JSON.parse(JSON.stringify(req.query));
-            res.send(await employeeService.retrieveByFilter(filter, ((filter.page - 1) * filter.per_page) || 0, filter.per_page || 10));
+            InputValidator.validateEmployeeInputOrThrow(filter);
+            const page = isNaN(filter.page) ? 1 : filter.page;
+            const size = isNaN(filter.per_page) ? 10 : filter.per_page;
+            const employees = await employeeService.retrieveByFilter(
+                filter, 
+                Paginator.getOffset(page, size), 
+                size);
+            const totalEntries: number = await employeeService.retrieveTotalEntries(filter);
+            res.send({
+                employees: employees,
+                page: page,
+                per_page: size,
+                total_entries: totalEntries as number || 0,
+                total_pages: Paginator.getTotalPages(totalEntries, size)
+            });
         } catch(err: any) {
             next(new CustomError(err.code || 500, err.message));
         }
@@ -21,6 +37,7 @@ class EmployeeController {
 
     async getById(req: Request, res: Response, next: NextFunction) {
         try {
+            InputValidator.validateIntRouteParamOrThrow(req.params.employee_id);
             const id = parseInt(req.params.employee_id);
             res.send(await employeeService.retrieveById(id));
         } catch(err: any) {
@@ -31,7 +48,9 @@ class EmployeeController {
     async create(req: Request, res: Response, next: NextFunction) {
         try {
             const body: CreateEmployeeDto = req.body;
+            InputValidator.validateEmployeeInputOrThrow(body);
             const user: User = {...body};
+            user.fullName = `${user.firstName} ${user.lastName}`;
             const {department, salary} = {...body};
             const employee: Employee = new Employee();
             employee.department = department;
@@ -45,8 +64,10 @@ class EmployeeController {
 
     async update(req: Request, res: Response, next: NextFunction) {
         try {
-            const body: UpdateEmployeeDto = req.body;
+            InputValidator.validateIntRouteParamOrThrow(req.params.employee_id);
             const id = parseInt(req.params.employee_id);
+            const body: UpdateEmployeeDto = req.body;
+            InputValidator.validateEmployeeInputOrThrow(body);
             const user: User = {...body};
             const {department, salary} = {...body};
             const newData: Employee = new Employee();
@@ -61,6 +82,7 @@ class EmployeeController {
 
     async deleteById(req: Request, res: Response, next: NextFunction) {
         try {
+            InputValidator.validateIntRouteParamOrThrow(req.params.employee_id);
             const id = parseInt(req.params.employee_id);
             await employeeService.delete(id);
             res.sendStatus(204);

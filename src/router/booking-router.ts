@@ -13,12 +13,11 @@ class BookingRouter {
 
     public initialize() {
         this.router.post('/api/v1/flights/:flight_id/bookings', authMiddleware, setRoles(['Admin', 'Manager', 'Passenger']), bookingController.create);
+        this.router.get('/api/v1/bookings/:booking_id', authMiddleware, setRoles(['Admin', 'Manager']), bookingController.getById);
         this.router.delete('/api/v1/bookings/:booking_id', authMiddleware, setRoles(['Admin', 'Manager']), bookingController.deleteById);
         this.router.get('/api/v1/bookings', authMiddleware, setRoles(['Admin', 'Manager']), bookingController.getAll);
-        this.router.get('/api/v1/bookings/:booking_id', setRoles(['Admin', 'Manager']), bookingController.getById);
-        this.router.get('/api/v1/users/:user_id/bookings', authMiddleware, setRoles(['Admin', 'Manager', 'Passenger']), bookingController.getUserBookings);
         this.router.put('/api/v1/users/:user_id/bookings/:booking_id', authMiddleware, setRoles(['Admin', 'Manager', 'Passenger']), bookingController.update);
-        this.router.get('/api/v1/flights/:flight_id/bookings/:booking_id', authMiddleware, setRoles(['Admin', 'Manager']), bookingController.update);
+        this.router.get('/api/v1/users/:user_id/bookings', authMiddleware, setRoles(['Admin', 'Manager', 'Passenger']), bookingController.getUserBookings);
     }
 
 }

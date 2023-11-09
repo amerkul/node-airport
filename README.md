@@ -35,11 +35,17 @@ Later
    Body params
    | Param | Type | Required |
    |-------|------|------------|
-   | first_name | String | True |
-   | last_name | String | True |
+   | firstName | String | True |
+   | lastName | String | True |
    | username | String | True |
    | passport | String | True |
    | password | String | True |
+   | email | String | True |
+   | birthday | string | |
+   | sex | string | |
+   | country | string | |
+   | zip | integer | |
+   | string | string | |
 
    Responses
 
@@ -47,34 +53,34 @@ Later
 
    ```json
    {
-     "id": 1,
-     "first_name": "Anna",
-     "last_name": "Merkul",
-     "full_name": "Anna Merkul",
-     "passport": "MP1111111",
-     "role": "Passenger",
-     "active": true,
-     "details": {
-       "email": null,
-       "phone": null,
-       "sex": null,
-       "birthday": null,
-       "country": null,
-       "city": null,
-       "zip": null,
-       "street": null
-     }
-   }
-   ```
+    "id": 4,
+    "username": "vera",
+    "password": "",
+    "role": "Passenger",
+    "firstName": "First",
+    "lastName": "Last",
+    "passport": "MM3333333",
+    "email": "dddddd@mail.ru",
+    "fullName": "First Last"
+  }
 
    🔴 409
 
    ```json
-   {
+  {
      "status": 409,
      "error": "Conflict",
      "message": "Username exists"
-   }
+  }
+   ```
+
+   🔴 400
+
+   ```json
+   {
+    "code": 400,
+    "message": "Not unique params  \n            dddddd@mail.ru, MM3333333"
+  }
    ```
    
 2. Login 💛 (POST)
@@ -92,7 +98,7 @@ Later
 
    ```json
    {
-     "full_name": "Anna Merkul",
+     "username": "amerkul",
      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoiYW5uYSIsInJvbGUiOiJhZG1pbiIsImlzcyI6IjE2OTc1Mzk1Mjg2MTYiLCJleHAiOiIxNjk3NTM5ODI4NjE2In0=.6c742def1a56618ec0afeada5cce1a4c4ce1e26fb347862b87c2fc3cf76580f5"
    }
    ```
@@ -194,9 +200,8 @@ Later
 
    ```json
    {
-     "status": 404,
-     "error": "Not Found",
-     "message": "The airport with id = 1 doesn't exist"
+    "code": 404,
+    "message": "Airport with id = 10 doesn't exist"
    }
    ```
    
@@ -243,9 +248,8 @@ Later
    
    ```json
    {
-     "status": 400,
-     "error": "Bad Request",
-     "message": "Providing name is required"
+    "code": 400,
+    "message": "Invalid input params country = Test &country"
    }
    ```
    
@@ -296,9 +300,8 @@ Later
   
    ```json
    {
-     "status": 404,
-     "error": "Not Found",
-     "message": "The airport with id = 1 doesn't exist"
+    "code": 404,
+    "message": "Airport with id = 10 doesn't exist"
    }
    ```
    
@@ -322,16 +325,6 @@ Later
    🟢 204
 
    No content
-   
-   🔴 404
-  
-   ```json
-   {
-     "status": 404,
-     "error": "Not Found",
-     "message": "The airport with id = 1 doesn't exist"
-   }
-   ```
 
 ### Airlines
 
@@ -346,6 +339,7 @@ Later
    | ids[] | Integer | Fitler airlines by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
    | archive | Boolean | Filter by archive. |
    | name | String | Filter airlines by name. |
+   | airportId | Integer | Filter by airport ID |
    | page | Integer | Filter airlines by page. |
    | per_page | Integer | Filter airlines by this value. |
 
@@ -404,8 +398,7 @@ Later
    ```json
    {
      "status": 404,
-     "error": "Not Found",
-     "message": "The airline with id = 1 doesn't exist"
+     "message": "Airline with id = 1 doesn't exist"
    }
    ```
    
@@ -433,7 +426,7 @@ Later
    {
      "id": 2,
      "name": "Air Belgium",
-     "iata": null,
+     "iata": "TTT",
      "archive": false
    }
    ```
@@ -442,9 +435,8 @@ Later
 
    ```json
    {
-     "status": 400,
-     "error": "Bad Request",
-     "message": "Providing name is required"
+    "code": 400,
+    "message": "Invalid input params iata = O"
    }
    ```
    
@@ -488,8 +480,7 @@ Later
    ```json
    {
      "status": 404,
-     "error": "Not Found",
-     "message": "The airline with id = 1 doesn't exist"
+     "message": "Airline with id = 1 doesn't exist"
    }
    ```
       
@@ -513,16 +504,6 @@ Later
    🟢 204
 
    No content
-   
-   🔴 404
-
-   ```json
-   {
-     "status": 404,
-     "error": "Not Found",
-     "message": "The airplane with id = 1 doesn't exist"
-   }
-   ```
 
 9. List of airport airplines 💚 (GET)
     > `http://localhost:3000/api/v1/airports/{airport_id}/airlines`
@@ -574,8 +555,7 @@ Later
     ```json
     {
       "status": 404,
-      "error": "Not Found",
-      "message": "The airport with id = 1 doesn't exist"
+      "message": "Not Found"
     }
     ```
 
@@ -592,6 +572,7 @@ Later
    | ids[] | String | Fitler airplanes by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
    | name | String | Filter by name |
    | archive | Boolean | Filter by archive. |
+   | airlineId | Integer | Filter by airline ID |
    | page | Integer | Filter airplanes by page. |
    | per_page | Integer | Filter airplanes by this value. |
 
@@ -650,8 +631,7 @@ Later
    ```json
    {
      "status": 404,
-     "error": "Not Found",
-     "message": "The airplane with id = 1 doesn't exist"
+     "message": "Airplane with id = 1 doesn't exist"
    }
    ```
    
@@ -679,7 +659,7 @@ Later
    {
      "id": 1,
      "name": "Airbus A380",
-     "capacity": 853,
+     "capacity": 400,
      "archive": false
    }
    ```
@@ -688,9 +668,8 @@ Later
 
    ```json
    {
-     "status": 400,
-     "error": "Bad Request",
-     "message": "Providing name is required"
+    "code": 400,
+    "message": "Invalid input params capacity = 1000"
    }
    ```
    
@@ -724,7 +703,7 @@ Later
    {
      "id": 1,
      "name": "Airbus A380",
-     "capacity": 853,
+     "capacity": 500,
      "archive": true
    }
    ```
@@ -734,8 +713,7 @@ Later
    ```json
    {
      "status": 404,
-     "error": "Not Found",
-     "message": "The airplane with id = 1 doesn't exist"
+     "message": "Airplane with id = 1 doesn't exist"
    }
    ```
       
@@ -759,16 +737,6 @@ Later
    🟢 204
 
    No content
-   
-   🔴 404
-
-   ```json
-   {
-     "status": 404,
-     "error": "Not Found",
-     "message": "The airplane with id = 1 doesn't exist"
-   }
-   ```
 
 10. List of airline airplanes 💚 (GET)
     > `http://localhost:3000/api/v1/airlines/{airline_id}/airplanes`
@@ -814,8 +782,7 @@ Later
     ```json
     {
       "status": 404,
-      "error": "Not Found",
-      "message": "The airline with id = 1 doesn't exist"
+      "message": "Not Found"
     }
     ```
 
@@ -834,8 +801,8 @@ Later
    Query params
    | Param | Type | description |
    |-------|------|------------|
-   | ids[] | Integer | Fitler passengers by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
-   | active | Boolean | Filter by active. |
+   | userId | Integer | Fitler by user ID|
+   | passport | String | Filter by passport. |
    | full_name  | String | Filter passengers by full name. |
    | page | Integer | Filter passengers by page. |
    | per_page | Integer | Filter passengers by this value. |
@@ -846,29 +813,20 @@ Later
 
    ```json
     {
-     "passengers" : [
-       {
-         "id": 1,
-         "first_name": "Anna",
-         "last_name": "Merkul",
-         "full_name": "Anna Merkul",
-         "passport": "MP1111111",
-         "active": true,
-       },
-       {
-         "id": 2,
-         "first_name": "Ivan",
-         "last_name": "Karavai",
-         "full_name": "Ivan Karavai",
-         "passport": "MP2222222",
-         "active": true,
-       }
-     ],
-     "page": 1,
-     "per_page": 10,
-     "total_entries": 2,
-     "total_pages": 1 
-    }
+    "passengers": [
+        {
+            "id": 1,
+            "fullName": "Anna Merkul",
+            "email": "amerkul@gmail.com",
+            "birthday": "2002-08-16",
+            "passport": "MP7777777"
+        }
+    ],
+    "page": 1,
+    "per_page": 10,
+    "total_entries": 1,
+    "total_pages": 1
+   } 
     ```
    
 3. Get a passenger's profile 💚 (GET)
@@ -892,22 +850,12 @@ Later
 
    ```json
    {
-     "id": 1,
-     "first_name": "Anna",
-     "last_name": "Merkul",
-     "full_name": "Anna Merkul",
-     "passport": "MP1111111",
-     "active": true,
-     "details": {
-       "email": "anna.merkul@bk.ru",
-       "phone": "+375293376183",
-       "sex": "female",
-       "birthday": "2002-08-16",
-       "country": "Belarus",
-       "city": "Minsk",
-       "zip": 220101,
-       "street": null
-     }
+    "id": 1,
+    "fullName": "Anna Merkul",
+    "email": "amerkul@gmail.com",
+    "birthday": "2002-08-16",
+    "passport": "MP7777777",
+    "userId": null
    }
    ```
    
@@ -915,9 +863,8 @@ Later
 
    ```json
    {
-     "status": 404,
-     "error": "Not Found",
-     "message": "The passenger with id = 1 doesn't exist"
+    "code": 400,
+    "message": "Passenger with id = 100 doesn't exist"
    }
    ```
    
@@ -934,17 +881,11 @@ Later
     Body params
     | Param | Type | Required |
     |-------|------|------------|
-    | first_name | String | True |
-    | last_name | String | True |
+    | full_name | String | True |
+    | userId | Integer | True |
     | email | String | True |
     | passport | String | True |
-    | phone | String | |
-    | sex | String | |
-    | birthday | Date | |
-    | country | String | |
-    | city | String | |
-    | zip | Integer | |
-    | street | String | |
+    | birthday | Date | True |
 
     Responses
    
@@ -952,22 +893,12 @@ Later
 
     ```json
     {
-     "id": 1,
-     "first_name": "Anna",
-     "last_name": "Merkul",
-     "full_name": "Anna Merkul",
-     "passport": "MP1111111",
-     "active": true,
-     "details": {
-       "email": "anna.merkul@bk.ru",
-       "phone": null,
-       "sex": null,
-       "birthday": null,
-       "country": null,
-       "city": null,
-       "zip": null,
-       "street": null
-     }
+      "id": 2,
+      "userId": 1,
+      "fullName": "New Name",
+      "birthday": "2000-11-20",
+      "email": "email@mail.ru",
+      "passport": "KK4444433"
     }
     ```
    
@@ -975,9 +906,8 @@ Later
 
     ```json
     {
-     "status": 400,
-     "error": "Bad Request",
-     "message": "Providing email is required"
+    "code": 400,
+    "message": "Invalid input params passport = KK4444433c"
     }
     ```
     
@@ -999,18 +929,10 @@ Later
    Body params
    | Param | Type | Required |
    |-------|------|------------|
-   | active | Boolean | |
-   | first_name | String | |
-   | last_name | String | |
+   | full_name | String | |
    | email | String | |
    | passport | String | |
-   | phone | String | |
-   | sex | String | |
    | birthday | Date | |
-   | country | String | |
-   | city | String | |
-   | zip | Integer | |
-   | street | String | |
 
    Responses
    
@@ -1018,23 +940,13 @@ Later
    
    ```json
    {
-     "id": 1,
-     "first_name": "Anna",
-     "last_name": "Merkul",
-     "full_name": "Anna Merkul",
-     "passport": "MP3333333",
-     "active": true,
-     "details": {
-       "email": "anna.merkul@bk.ru",
-       "phone": null,
-       "sex": null,
-       "birthday": null,
-       "country": null,
-       "city": null,
-       "zip": null,
-       "street": null
-     }
-   }
+      "id": 2,
+      "userId": 1,
+      "fullName": "New Name",
+      "birthday": "2000-11-20",
+      "email": "email@mail.ru",
+      "passport": "KK4444433"
+    }
    ```
    
    🔴 404
@@ -1067,18 +979,8 @@ Later
    🟢 204
 
    No content
-   
-   🔴 404
 
-   ```json
-   {
-     "status": 404,
-     "error": "Not Found",
-     "message": "The passenger with id = 1 doesn't exist"
-   }
-   ```
-
-11. List of flight passengers 💚 (GET)
+11. List of user passengers 💚 (GET)
    > `http://localhost:3000/api/v1/flights/{flight_id}/passengers`
 
    Returns a list of flight passengers.
@@ -1091,13 +993,13 @@ Later
    Path params
    | Param | Type | Required |
    |-------|------|------------|
-   | flight_id | Integer | True |
+   | user_id | Integer | True |
 
    Query params
    | Param | Type | description |
    |-------|------|------------|
+   | passport | String | Filter by passport. |
    | full_name  | String | Filter passengers by full name. |
-   | active    | String | Filter passengers by status. |
    | page | Integer | Filter passengers by page. |
    | per_page | Integer | Filter passengers by this value. |
 
@@ -1107,36 +1009,28 @@ Later
 
    ```json
     {
-     "passengers" : [
-       {
-         "id": 1,
-         "first_name": "Anna",
-         "last_name": "Merkul",
-         "full_name": "Anna Merkul",
-         "active": true,
-       },
-       {
-         "id": 2,
-         "first_name": "Ivan",
-         "last_name": "Karavai",
-         "full_name": "Ivan Karavai",
-         "active": true,
-       }
-     ],
-     "page": 1,
-     "per_page": 10,
-     "total_entries": 2,
-     "total_pages": 1 
-    }
-   ```
+    "passengers": [
+        {
+            "id": 1,
+            "fullName": "Anna Merkul",
+            "email": "amerkul@gmail.com",
+            "birthday": "2002-08-16",
+            "passport": "MP7777777"
+        }
+    ],
+    "page": 1,
+    "per_page": 10,
+    "total_entries": 1,
+    "total_pages": 1
+   } 
+  ```
    
    🔴 404
 
    ```json
    {
      "status": 404,
-     "error": "Not Found",
-     "message": "The flight with id = 1 doesn't exist"
+     "error": "Not Found"
    }
    ```
 
@@ -1155,8 +1049,9 @@ Later
    Query params
    | Param | Type | description |
    |-------|------|------------|
-   | ids[] | Integer | Fitler passengers by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
    | active | Boolean | Filter by active. |
+   | department | String | Filter by department |
+   | passport | String | Filter by passport |
    | full_name  | String | Filter passengers by full name. |
    | page | Integer | Filter passengers by page. |
    | per_page | Integer | Filter passengers by this value. |
@@ -1167,30 +1062,78 @@ Later
 
    ```json
     {
-     "employees" : [
-       {
-         "id": 1,
-         "first_name": "Anna",
-         "last_name": "Merkul",
-         "full_name": "Anna Merkul",
-         "department": "Development",
-         "salary": 500,
-         "active": true,
-       },
-       {
-         "id": 2,
-         "first_name": "Ivan",
-         "last_name": "Karavai",
-         "full_name": "Ivan Karavai",
-         "department": "Development",
-         "salary": 500,
-         "active": true,
-       }
-     ],
-     "page": 1,
-     "per_page": 10,
-     "total_entries": 2,
-     "total_pages": 1 
+    "employees": [
+        {
+            "user": {
+                "id": 3,
+                "role": "Admin",
+                "username": "amerkul",
+                "firstName": "Anna",
+                "lastName": "Merkul",
+                "email": "amerkul@mail.ru",
+                "birthday": "2002-08-16",
+                "passport": "MP7777777",
+                "fullName": "Anna Merkul",
+                "active": true,
+                "phone": "+375293376183",
+                "sex": "Female",
+                "country": null,
+                "city": null,
+                "zip": null,
+                "street": null
+            },
+            "department": "CEO",
+            "salary": 1000
+        },
+        {
+            "user": {
+                "id": 2,
+                "role": "Manager",
+                "username": "dog",
+                "firstName": "Dog",
+                "lastName": "White",
+                "email": "dog@mail.ru",
+                "birthday": "2004-03-03",
+                "passport": "MP3433434",
+                "fullName": "Dog White",
+                "active": true,
+                "phone": "+375292222222",
+                "sex": "Male",
+                "country": null,
+                "city": null,
+                "zip": null,
+                "street": null
+            },
+            "department": "Test automation",
+            "salary": 700
+        },
+        {
+            "user": {
+                "id": 5,
+                "role": "Manager",
+                "username": "username",
+                "firstName": "First",
+                "lastName": "Last",
+                "email": "dddddd@fmail.ru",
+                "birthday": "2000-10-10",
+                "passport": "MM3333330",
+                "fullName": "First Last",
+                "active": true,
+                "phone": "88888888888",
+                "sex": null,
+                "country": null,
+                "city": null,
+                "zip": null,
+                "street": "Street 1 d"
+            },
+            "department": "Lazy",
+            "salary": null
+        }
+    ],
+    "page": 1,
+    "per_page": 10,
+    "total_entries": 3,
+    "total_pages": 1
     }
     ```
    
@@ -1215,23 +1158,26 @@ Later
 
    ```json
    {
-     "id": 1,
-     "first_name": "Anna",
-     "last_name": "Merkul",
-     "full_name": "Anna Merkul",
-     "department": "Development",
-     "salary": 500,
-     "active": true,
-     "details": {
-       "email": "anna.merkul@bk.ru",
-       "phone": "+375293376183",
-       "sex": "female",
-       "birthday": "2002-08-16",
-       "country": "Belarus",
-       "city": "Minsk",
-       "zip": 220101,
-       "street": null
-     }
+    "user": {
+        "id": 3,
+        "role": "Admin",
+        "username": "amerkul",
+        "firstName": "Anna",
+        "lastName": "Merkul",
+        "email": "amerkul@mail.ru",
+        "birthday": "2002-08-16",
+        "passport": "MP7777777",
+        "fullName": "Anna Merkul",
+        "active": true,
+        "phone": "+375293376183",
+        "sex": "Female",
+        "country": null,
+        "city": null,
+        "zip": null,
+        "street": null
+    },
+    "department": "CEO",
+    "salary": 1000
    }
    ```
    
@@ -1240,8 +1186,7 @@ Later
    ```json
    {
      "status": 404,
-     "error": "Not Found",
-     "message": "The employee with id = 1 doesn't exist"
+     "message": "Employee with id = 1 doesn't exist"
    }
    ```
    
@@ -1258,8 +1203,10 @@ Later
     Body params
     | Param | Type | Required |
     |-------|------|------------|
-    | first_name | String | True |
-    | last_name | String | True |
+    | username | String | True |
+    | password | String | True |
+    | firstName | String | True |
+    | lastName | String | True |
     | email | String | True |
     | department | String | True |
     | salary | Float | |
@@ -1277,23 +1224,22 @@ Later
 
     ```json
     {
-     "id": 1,
-     "first_name": "Anna",
-     "last_name": "Merkul",
-     "full_name": "Anna Merkul",
-     "department": "Development",
-     "salary": 500,
-     "active": true,
-     "details": {
-       "email": "anna.merkul@bk.ru",
-       "phone": null,
-       "sex": null,
-       "birthday": null,
-       "country": null,
-       "city": null,
-       "zip": null,
-       "street": null
-     }
+    "department": "Lazy",
+    "user": {
+        "username": "username",
+        "password": "password",
+        "role": "Manager",
+        "firstName": "First",
+        "lastName": "Last",
+        "passport": "MM3333330",
+        "email": "dddddd@fmail.ru",
+        "phone": 88888888888,
+        "birthday": "2000-10-10",
+        "street": "Street 1 d",
+        "department": "Lazy",
+        "fullName": "First Last",
+        "id": 5
+    }
     }
     ```
    
@@ -1301,9 +1247,8 @@ Later
 
     ```json
     {
-     "status": 400,
-     "error": "Bad Request",
-     "message": "Providing email is required"
+    "code": 400,
+    "message": "Not unique params dddddd@fmail.ru, MM3333330, username"
     }
     ```
     
@@ -1325,9 +1270,12 @@ Later
    Body params
    | Param | Type | Required |
    |-------|------|------------|
-   | active | Boolean | |
-   | first_name | String | |
-   | last_name | String | |
+   | active | Boolean | |   
+   | username | String | |
+   | password | String | |
+   | passport | String | |
+   | firstName | String | |
+   | lastName | String | |
    | email | String | |
    | department | String | |
    | salary | Float | |
@@ -1345,23 +1293,26 @@ Later
    
    ```json
    {
-     "id": 1,
-     "first_name": "Anna",
-     "last_name": "Merkul",
-     "full_name": "Anna Merkul",
-     "department": "Development",
-     "salary": 500,
-     "active": true,
-     "details": {
-       "email": "anna.merkul@bk.ru",
-       "phone": null,
-       "sex": null,
-       "birthday": null,
-       "country": null,
-       "city": null,
-       "zip": null,
-       "street": null
-     }
+    "user": {
+        "id": 3,
+        "role": "Admin",
+        "username": "amerkul",
+        "firstName": "Anna",
+        "lastName": "Merkul",
+        "email": "amerkul@mail.ru",
+        "birthday": "2002-08-16",
+        "passport": "MP7777777",
+        "fullName": "Anna Merkul",
+        "active": true,
+        "phone": "+375293376183",
+        "sex": "Female",
+        "country": null,
+        "city": null,
+        "zip": null,
+        "street": null
+    },
+    "department": "CEO",
+    "salary": 1000
    }
    ```
    
@@ -1370,8 +1321,7 @@ Later
    ```json
    {
      "status": 404,
-     "error": "Not Found",
-     "message": "The employee with id = 1 doesn't exist"
+     "message": "Employee with id = 1 doesn't exist"
    }
    ```
    
@@ -1395,16 +1345,6 @@ Later
    🟢 204
 
    No content
-   
-   🔴 404
-
-   ```json
-   {
-     "status": 404,
-     "error": "Not Found",
-     "message": "The employee with id = 1 doesn't exist"
-   }
-   ```
 
 
 ### Flights
@@ -1418,12 +1358,13 @@ Later
    | Param | Type | description |
    |-------|------|------------|
    | ids[] | Integer | Fitler flights by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
-   | from  | Integer | Filter flights by place of departure. Provide an airport id. |
-   | to    | Integer | Filter flights by place of arrival. Provide an airport id. |
-   | price[gte] | Float | Filter flights on or greater than this value. |
-   | price[lte] | Float | Filter flights on or less than this value. |
-   | departure | Datetime | Filter flights on or after this value. |
-   | arrival | Datetime | Filter flights on or after this value. |
+   | fromCountry  | String | Filter flights by place of departure. Provide an airport country. |
+   | airplaneId  | Integer | Filter flights by airplane ID. |
+   | toCountry    | String | Filter flights by place of arrival. Provide an airport country. |
+   | toCity  | String | Filter flights by place of arrival. Provide an airport city. |
+   | fromCity    | String | Filter flights by place of depature. Provide an airport city. |
+   | departureDate | Date | Filter flights on or after this value. |
+   | arrivalDate | Date | Filter flights on or after this value. |
    | status | String | Filter by status. |
    | page | Integer | Filter flights by page. |
    | per_page | Integer | Filter flights by this value. |
@@ -1438,7 +1379,7 @@ Later
        [
         {
          "id": 1,
-         "status": "In Air"
+         "status": "In Air",
          "from": {
            "id": 1,
            "name": "National Airport Minsk",
@@ -1550,8 +1491,7 @@ Later
    ```json
    {
      "status": 404,
-     "error": "Not Found",
-     "message": "The flight with id = 1 doesn't exist"
+     "message": "Flight with id = 1 doesn't exist"
    }
    ```
    
@@ -1614,9 +1554,8 @@ Later
 
    ```json
    {
-     "status": 400,
-     "error": "Bad Request",
-     "message": "Providing from value is required"
+    "code": 400,
+    "message": "Some of required values are undefined  depature = 2023-11-20, arrival = 2023-12-20 08:33:33,            price = 33.33, from = 1, to = undefined, airplane = 1, airline = 1"
    }
    ```
    
@@ -1641,16 +1580,6 @@ Later
 
    No content
    
-   🔴 404
-
-   ```json
-   {
-     "status": 404,
-     "error": "Not Found",
-     "message": "The flight with id = 1 doesn't exist"
-   }
-   ```
-   
 7. Update a flight info 💙 (PUT)
    > `http://localhost:3000/api/v1/flights/{flight_id}`
 
@@ -1674,8 +1603,8 @@ Later
    | status | String | |
    | departure | Datetime | |
    | arrival | Datetime | |
-   | airplane_id | Integer | True |
-   | airpline_id | Integer | True |
+   | airplane_id | Integer | |
+   | airpline_id | Integer | |
    | price | Float | |
 
    Responses
@@ -1716,9 +1645,8 @@ Later
 
    ```json
    {
-     "status": 404,
-     "error": "Not Found",
-     "message": "The flight with id = 1 doesn't exist"
+    "code": 404,
+    "message": "Flight with id = 100 doesn't exist"
    }
    ```
    
@@ -1736,13 +1664,13 @@ Later
    | Param | Type | description |
    |-------|------|------------|
    | ids[] | Integer | Fitler flights by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
-   | from  | Integer | Filter flights by place of departure. Provide an airport id. |
-   | to    | Integer | Filter flights by place of arrival. Provide an airport id. |
-   | status | String | Filter flights by status. |
-   | price[gte] | Float | Filter flights on or greater than this value. |
-   | price[lte] | Float | Filter flights on or less than this value. |
-   | departure | Datetime | Filter flights on or after this value. |
-   | arrival | Datetime | Filter flights on or before this value. |
+   | fromCountry  | String | Filter flights by place of departure. Provide an airport country. |
+   | toCountry    | String | Filter flights by place of arrival. Provide an airport country. |
+   | toCity  | String | Filter flights by place of arrival. Provide an airport city. |
+   | fromCity    | String | Filter flights by place of depature. Provide an airport city. |
+   | departureDate | Date | Filter flights on or after this value. |
+   | arrivalDate | Date | Filter flights on or after this value. |
+   | status | String | Filter by status. |
    | page | Integer | Filter flights by page. |
    | per_page | Integer | Filter flights by this value. |
 
@@ -1824,8 +1752,7 @@ Later
    ```json
    {
      "status": 404,
-     "error": "Not Found",
-     "message": "The airplane with id = 1 doesn't exist"
+     "message": "Not Found"
    }
    ```
    
@@ -1845,8 +1772,6 @@ Later
    | Param | Type | description |
    |-------|------|------------|
    | ids[] | Integer | Fitler bookings by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
-   | flights[]  | Integer | Fitler bookings by flights. Multiple IDs of flights can be provided using an ampersand separated list. For example, flights[]=1&flights[]=2. |
-   | passengers[] | String | Filter bookings by passengers. Multiple IDs of passengers can be provided using an ampersand separated list. For example, passengers[]=1&passengers[]=2|
    | status    | String | Filter bookings by status. |
    | page | Integer | Filter bookings by page. |
    | per_page | Integer | Filter bookings by this value. |
@@ -1857,34 +1782,37 @@ Later
 
    ```json
    {
-     "bookings": [
-       {
-         "id": 1,
-         "status": "Reserved",
-         "seat": 1,
-         "passenger_name": "Anna Merkul",
-         "passenger_id": 1,
-         "flight": {
-           "from": {
-             "id": 2,
-             "name": "Brussels International Airport",
-             "country": "Belgium",
-             "city": "Brussels"
-           },
-           "to" : {
-             "id": 1,
-             "name": "National Airport Minsk",
-             "country": "Belarus",
-             "city": "Minsk"
-           },
-           "price": 500,
-         }
-       }
-     ],
-     "page": 1,
-     "per_page": 10,
-     "total_entries": 1,
-     "total_pages": 1 
+    "bookings": [
+        {
+            "id": 1,
+            "seat": 10,
+            "status": "Reserved",
+            "passenger": {
+                "id": 1,
+                "fullName": "Anna Merkul"
+            },
+            "flight": {
+                "id": 1,
+                "from": {
+                    "id": 1,
+                    "name": "National Airport Minsk",
+                    "country": "Belarus",
+                    "city": "Minsk"
+                },
+                "to": {
+                    "id": 2,
+                    "name": "Brussels International Airport",
+                    "country": "Belgium",
+                    "city": "Brussels"
+                },
+                "price": 400
+            }
+        }
+    ],
+    "page": 1,
+    "per_page": 10,
+    "total_entries": "1",
+    "total_pages": 1
    }
    ```
    
@@ -1908,28 +1836,31 @@ Later
    🟢 200
 
    ```json
-   {
-     "id": 1,
-     "status": "Reserved",
-     "seat": 1,
-     "passenger_name": "Anna Merkul",
-     "passenger_id": 1,
-     "flight": {
-       "from": {
-         "id": 2,
-         "name": "Brussels International Airport",
-         "country": "Belgium",
-         "city": "Brussels"
-       },
-       "to" : {
-         "id": 1,
-         "name": "National Airport Minsk",
-         "country": "Belarus",
-         "city": "Minsk"
-       },
-       "price": 500
-     }
-   }
+        {
+            "id": 1,
+            "seat": 10,
+            "status": "Reserved",
+            "passenger": {
+                "id": 1,
+                "fullName": "Anna Merkul"
+            },
+            "flight": {
+                "id": 1,
+                "from": {
+                    "id": 1,
+                    "name": "National Airport Minsk",
+                    "country": "Belarus",
+                    "city": "Minsk"
+                },
+                "to": {
+                    "id": 2,
+                    "name": "Brussels International Airport",
+                    "country": "Belgium",
+                    "city": "Brussels"
+                },
+                "price": 400
+            }
+        }
    ```
    
    🔴 404
@@ -1937,8 +1868,7 @@ Later
    ```json
    {
      "status": 404,
-     "error": "Not Found",
-     "message": "The booking with id = 1 doesn't exist"
+     "message": "Booking with id = 1 doesn't exist"
    }
    ```
 
@@ -1970,27 +1900,30 @@ Later
 
    ```json
    {
-     "id": 1,
-     "status": "Cancelled",
-     "seat": 1,
-     "passenger_name": "Anna Merkul",
-     "passenger_id": 1,
-     "flight": {
-       "from": {
-         "id": 2,
-         "name": "Brussels International Airport",
-         "country": "Belgium",
-         "city": "Brussels"
-       },
-       "to" : {
-         "id": 1,
-         "name": "National Airport Minsk",
-         "country": "Belarus",
-         "city": "Minsk"
-       },
-       "price": 500
-     }
-   }
+            "id": 1,
+            "seat": 10,
+            "status": "Reserved",
+            "passenger": {
+                "id": 1,
+                "fullName": "Anna Merkul"
+            },
+            "flight": {
+                "id": 1,
+                "from": {
+                    "id": 1,
+                    "name": "National Airport Minsk",
+                    "country": "Belarus",
+                    "city": "Minsk"
+                },
+                "to": {
+                    "id": 2,
+                    "name": "Brussels International Airport",
+                    "country": "Belgium",
+                    "city": "Brussels"
+                },
+                "price": 400
+            }
+    }
    ```
    
    🔴 404
@@ -1998,8 +1931,7 @@ Later
    ```json
    {
      "status": 404,
-     "error": "Not Found",
-     "message": "The booking with id = 1 doesn't exist"
+     "message": "Booking with id = 1 doesn't exist"
    }
    ```
       
@@ -2024,15 +1956,6 @@ Later
 
    No content
    
-   🔴 404
-
-   ```json
-   {
-     "status": 404,
-     "error": "Not Found",
-     "message": "The booking with id = 1 doesn't exist"
-   }
-   ```
 
 9. Book a flight 💛 (POST)
    > `http://localhost:3000/api/v1/flights/{flight_id}/bookings`
@@ -2052,9 +1975,8 @@ Later
    Body params
    | Param | Type | Required |
    |-------|------|------------|
-   | passenger_id | Integer | True |
+   | passengerId | Integer | True |
    | seat | Integer | True |
-   | passenger_name | String | |
 
    Responses
    
@@ -2062,27 +1984,30 @@ Later
 
    ```json
    {
-     "id": 1,
-     "status": "Reserved",
-     "seat": 1,
-     "passenger_name": "Anna Merkul",
-     "passenger_id": 1,
-     "flight": {
-       "from": {
-         "id": 2,
-         "name": "Brussels International Airport",
-         "country": "Belgium",
-         "city": "Brussels"
-       },
-       "to" : {
-         "id": 1,
-         "name": "National Airport Minsk",
-         "country": "Belarus",
-         "city": "Minsk"
-       },
-       "price": 500
-     }
-   }
+            "id": 1,
+            "seat": 10,
+            "status": "Reserved",
+            "passenger": {
+                "id": 1,
+                "fullName": "Anna Merkul"
+            },
+            "flight": {
+                "id": 1,
+                "from": {
+                    "id": 1,
+                    "name": "National Airport Minsk",
+                    "country": "Belarus",
+                    "city": "Minsk"
+                },
+                "to": {
+                    "id": 2,
+                    "name": "Brussels International Airport",
+                    "country": "Belgium",
+                    "city": "Brussels"
+                },
+                "price": 400
+            }
+    }
    ```
    
    🔴 404
@@ -2090,8 +2015,7 @@ Later
    ```json
    {
      "status": 404,
-     "error": "Not Found",
-     "message": "The flight with id = 1 doesn't exist"
+     "error": "Not Found"
    }
    ```
    
@@ -2099,14 +2023,13 @@ Later
 
    ```json
    {
-     "status": 400,
-     "error": "Bad Request",
-     "message": "Providing passenger id is required"
+    "code": 404,
+    "message": "Flight with id = 20 doesn't exist"
    }
    ```
 
-11. List of passenger bookings 💚 (GET)
-    > `http://localhost:3000/api/v1/passengers/{passenger_id}/bookings`
+11. List of user bookings 💚 (GET)
+    > `http://localhost:3000/api/v1/users/{user_id}/bookings`
 
     Returns a list of passenger bookings.
 
@@ -2124,7 +2047,6 @@ Later
     | Param | Type | description |
     |-------|------|------------|
     | ids[] | Integer | Fitler bookings by IDs. Multiple IDs can be provided using an ampersand separated list. For example, ids[]=1&ids[]=2. |
-    | flights[]  | Integer | Fitler bookings by flights. Multiple IDs of flights can be provided using an ampersand separated list. For example, flights[]=1&flights[]=2. |
     | status    | String | Filter bookings by status. |
     | page | Integer | Filter bookings by page. |
     | per_page | Integer | Filter bookings by this value. |
@@ -2135,34 +2057,37 @@ Later
 
     ```json
     {
-     "bookings": [
-       {
-         "id": 1,
-         "status": "Reserved",
-         "seat": 1,
-         "passenger_name": "Anna Merkul",
-         "passenger_id": 1,
-         "flight": {
-           "from": {
-             "id": 2,
-             "name": "Brussels International Airport",
-             "country": "Belgium",
-             "city": "Brussels"
-           },
-           "to" : {
-             "id": 1,
-             "name": "National Airport Minsk",
-             "country": "Belarus",
-             "city": "Minsk"
-           },
-           "price": 500,
-         }
-       }
-     ],
-     "page": 1,
-     "per_page": 10,
-     "total_entries": 1,
-     "total_pages": 1 
+    "bookings": [
+        {
+            "id": 1,
+            "seat": 10,
+            "status": "Reserved",
+            "passenger": {
+                "id": 1,
+                "fullName": "Anna Merkul"
+            },
+            "flight": {
+                "id": 1,
+                "from": {
+                    "id": 1,
+                    "name": "National Airport Minsk",
+                    "country": "Belarus",
+                    "city": "Minsk"
+                },
+                "to": {
+                    "id": 2,
+                    "name": "Brussels International Airport",
+                    "country": "Belgium",
+                    "city": "Brussels"
+                },
+                "price": 400
+            }
+        }
+    ],
+    "page": 1,
+    "per_page": 10,
+    "total_entries": 1,
+    "total_pages": 1
     }
     ```
 
@@ -2171,8 +2096,7 @@ Later
     ```json
     {
      "status": 404,
-     "error": "Not Found",
-     "message": "The passenger with id = 1 doesn't exist"
+     "message": "The user with id = 1 doesn't exist"
     }
     ```
 
@@ -2285,6 +2209,6 @@ PostgreSQL and PgAdmin
    |------|------|-----|-------------|
    | booking_id | BIGINT | PK | Booking ID |
    |	seat | INTEGER | | Reserved seat: NOT NULL |
-   |	status | ENUM | | Booking's status: 'Reserved', 'Cancelled', 'Paid'. NOT NULL, DEFAULT 'Reserved' |
-   |	passenger_id | BIGINT | FK | Passenger ID: NOT NULL |
-   |	flight_id | BIGINT | FK | Flight ID: NOT NULL |
+   |	status | ENUM | | Booking's status: 'Reserved', 'Cancelled'. NOT NULL, DEFAULT 'Reserved' |
+   |	passenger_id | BIGINT | FK | Passenger ID |
+   |	flight_id | BIGINT | FK | Flight ID |

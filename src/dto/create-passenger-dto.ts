@@ -3,5 +3,5 @@ export class CreatePassengerDto {
     public email: string;
     public birthday: string;
     public passport: string;
-    public user_id?: number;
+    public userId?: number;
 }

@@ -24,11 +24,11 @@ class AirlineService {
 
     async update(newData: Airline, id: number): Promise<Airline> {
         try {
+            newData.id = id;
             const uniqueAirlines = await airlineRepository.findByUniqueParams(newData);
             this.validator.checkUniqueAirlineParamsOrThrow(
                 uniqueAirlines.filter(unique => unique.id !== id), newData
             );
-            newData.id = id;
             await airlineRepository.update(newData);
             return this.retrieveById(id);
         } catch(err: any) {
@@ -56,9 +56,9 @@ class AirlineService {
         }
     }
 
-    async retrieveAll(offset: number, size: number): Promise<Airline[]> {
+    async retrieveTotalEntries(filter: AirlineFilter): Promise<number> {
         try {
-            return await airlineRepository.search(new AirlineFilter(), offset, size);
+            return await airlineRepository.findTotalEntries(filter);
         } catch(err: any) {
             throw new CustomError(500, err.message);
         }

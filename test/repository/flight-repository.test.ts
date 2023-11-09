@@ -29,6 +29,7 @@ describe('Flight repository', () => {
         flight.arrival = '2023-10-30 03:00:00';
         flight.price = 500;
         flight.from = from;
+        flight.status = FlightStatus.SCHEDULED;
         flight.to = to;
         flight.airline = airline;
         flight.airplane = airplane;
@@ -37,15 +38,29 @@ describe('Flight repository', () => {
     }, 60000);
 
     it('should update the flight with id = 3', async () => {
+        const airline = new Airline();
         const flight = new Flight();
         flight.id = 3
-        flight.depature = '2023-10-29 01:00:00';
+        airline.id = 2;
+        const airplane = new Airplane();
+        airplane.id = 1;
+        const from = new Airport();
+        from.id = 1;
+        const to = new Airport();
+        to.id = 2;
+        flight.depature = '2023-10-30 01:00:00';
+        flight.arrival = '2023-10-30 03:00:00';
+        flight.price = 500;
+        flight.from = from;
         flight.status = FlightStatus.CANCELLED;
+        flight.to = to;
+        flight.airline = airline;
+        flight.airplane = airplane;
         await flightRepository.update(flight);
         const result = await flightRepository.findById(3);
         expect(result[0]).toEqual({
             id: 3,
-            depature: '2023-10-29 01:00:00',
+            depature: '2023-10-30 01:00:00',
             arrival: '2023-10-30 03:00:00',
             price: 500,
             status: 'Cancelled',

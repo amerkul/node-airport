@@ -22,7 +22,8 @@ describe('Passenger repository', () => {
             fullName: 'Anna Merkul',
             email: 'amerkul@gmail.com',
             birthday: '2002-08-16',
-            passport: 'MP7777777'
+            passport: 'MP7777777',
+            userId: null
         });
     }, 60000);
 
@@ -47,7 +48,8 @@ describe('Passenger repository', () => {
             fullName: 'Anna Merkul',
             email: 'anna.merkul@bk.ru',
             birthday: '2002-08-16',
-            passport: 'MP2222222'
+            passport: 'MP2222222',
+            userId: null
         });
     }, 60000);
 

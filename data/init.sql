@@ -34,15 +34,15 @@ ON DELETE CASCADE;
 CREATE TABLE airplanes (
 	airplane_id serial PRIMARY KEY,
 	name VARCHAR ( 255 ) UNIQUE NOT NULL,
-	capacity INTEGER NOT NULL CHECK (capacity > 0 AND capacity < 500),
+	capacity INTEGER NOT NULL CHECK (capacity > 0 AND capacity <= 500),
 	archive BOOLEAN NOT NULL DEFAULT false,
-	airline_id INTEGER DEFAULT NULL
+	airline_id INTEGER NOT NULL
 );
 
 ALTER TABLE airplanes
 ADD CONSTRAINT airplanes_airlines_fk
 FOREIGN KEY ( airline_id ) REFERENCES airlines( airline_id )
-ON DELETE SET DEFAULT;
+ON DELETE CASCADE;
 
 CREATE TABLE users (
 	user_id serial PRIMARY KEY,
@@ -53,9 +53,9 @@ CREATE TABLE users (
 	last_name VARCHAR ( 255 ) NOT NULL,
 	passport VARCHAR ( 9 ) UNIQUE NOT NULL,
 	email VARCHAR ( 255 ) UNIQUE NOT NULL,
-	birthday DATE NOT NULL,
+	birthday DATE,
 	full_name VARCHAR ( 255 ) NOT NULL,
-	phone VARCHAR ( 255 ) UNIQUE,
+	phone VARCHAR ( 255 ),
 	sex SEX,
 	country VARCHAR ( 255 ),
 	city VARCHAR ( 255 ),
@@ -103,10 +103,6 @@ CREATE TABLE flights (
 );
 
 ALTER TABLE flights
-ADD CONSTRAINT unique_flight
-UNIQUE (airplane_id, depature, arrival, from_id, to_id);
-
-ALTER TABLE flights
 ADD CONSTRAINT flights_from_fk
 FOREIGN KEY ( from_id ) REFERENCES airports( airport_id )
 ON DELETE CASCADE;
@@ -143,3 +139,37 @@ ALTER TABLE bookings
 ADD CONSTRAINT bookings_flight_fk
 FOREIGN KEY ( flight_id ) REFERENCES flights( flight_id )
 ON DELETE SET DEFAULT;
+
+CREATE PROCEDURE update_flight(depature_in TIMESTAMP, arrival_in TIMESTAMP,
+							   price_in NUMERIC(20,2), status_in FLIGHT_STATUSES, 
+							   from_id_in INTEGER, to_id_in INTEGER,
+							   airline_id_in INTEGER, airplane_id_in INTEGER,
+							   flight_id_in INTEGER)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+		UPDATE flights
+		SET depature = depature_in,
+		arrival = arrival_in, price = price_in,
+		status = status_in, from_id = from_id_in,
+		to_id = to_id_in, airline_id = airline_id_in,
+		airplane_id = airplane_id_in WHERE flight_id = flight_id_in;
+		IF status_in = 'Cancelled' THEN
+            UPDATE bookings 
+			SET status = 'Cancelled'
+			WHERE flight_id = flight_id_in;
+        END IF;
+END;
+$$;
+
+CREATE PROCEDURE delete_flight(flight_id_in INTEGER)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+		UPDATE bookings 
+		SET status = 'Cancelled'
+		WHERE flight_id = flight_id_in;
+		DELETE FROM flights
+		WHERE flight_id = flight_id_in;
+END;
+$$;

@@ -1,18 +1,27 @@
+import InvalidArgumentException from "../exception/argument-exception";
 import CustomError from "../exception/custom-error";
 import NotFoundException from "../exception/not-found-exception";
 import { Booking } from "../model/booking";
 import { BookingFilter } from "../model/filter/booking-filter";
 import { bookingRepository } from "../repository/booking-repository";
+import { Validator } from "./validator/service-validator";
 
 class BookingService {
 
+    private validator: Validator = new Validator();
+
     async create(booking: Booking): Promise<Booking> {
         try {
+            this.validator.checkRequiredBookingParamsOrThrow(booking);
+            const uniqueBookings = await bookingRepository.findByUniqueParams(booking);
+            if (uniqueBookings.length !== 0) {
+                throw new InvalidArgumentException(400, `Could not book a seat.`);
+            } 
             const bookingId = await bookingRepository.create(booking);
             booking.id = bookingId;
             return booking;
         } catch(err: any) {
-            throw new CustomError(500, err.message);
+            throw new CustomError(err.code || 500, err.message);
         }
     }
 
@@ -28,11 +37,14 @@ class BookingService {
         }
     }
 
-    async update(newData: Booking, id: number): Promise<Booking> {
+    async update(newData: Booking): Promise<Booking> {
         try {
-            newData.id = id;
+            const uniqueBookings = await bookingRepository.findByUniqueParams(newData);
+            if (uniqueBookings.filter(unique => unique.id !== newData.id).length !== 0) {
+                throw new InvalidArgumentException(400, `Could not book a seat.`);
+            }
             await bookingRepository.update(newData);
-            return this.retrieveById(id);
+            return newData;
         } catch(err: any) {
             throw new CustomError(err.code || 500, err.message);
         }
@@ -62,9 +74,25 @@ class BookingService {
         }
     }
 
+    async retrieveTotalEntries(filter: BookingFilter): Promise<number> {
+        try {
+            return await bookingRepository.findTotalEntries(filter);
+        } catch(err: any) {
+            throw new CustomError(500, err.message);
+        }
+    }
+
     async retrieveUserBookingsByFilter(filter: BookingFilter, userId: number, offset: number, size: number): Promise<Booking[]> {
         try {
             return await bookingRepository.findUserBookings(filter, userId, offset, size);
+        } catch(err: any) {
+            throw new CustomError(500, err.message);
+        }
+    }
+
+    async retrieveUserBookingsTotalEntries(filter: BookingFilter, userId: number): Promise<number> {
+        try {
+            return await bookingRepository.findUserBookingsTotalEntries(filter, userId);
         } catch(err: any) {
             throw new CustomError(500, err.message);
         }

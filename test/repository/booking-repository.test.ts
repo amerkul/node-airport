@@ -82,20 +82,20 @@ describe('Passenger repository', () => {
             id: 1, 
             fullName: 'Anna Merkul' },
           flight: { 
-            id: 1, 
+            id: 2, 
             from: {
-                city: "Minsk",
-                country: "Belarus",
-                id: 1,
-                name: "National Airport Minsk",
-            },  
-            to: {
                 city: "Brussels",
                 country: "Belgium",
                 id: 2,
                 name: "Brussels International Airport",
             },  
-            price: 400
+            to: {
+                city: "Minsk",
+                country: "Belarus",
+                id: 1,
+                name: "National Airport Minsk",
+            },  
+            price: 500
         }
         });
     }, 60000);

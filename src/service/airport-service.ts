@@ -64,6 +64,14 @@ class AirportService {
         }
     }
 
+    async retrieveTotalEntries(filter: AirportFilter): Promise<number> {
+        try {
+            return await airportRepository.findTotalEntries(filter);
+        } catch(err: any) {
+            throw new CustomError(500, err.message);
+        }
+    }
+
 }
 
 export const airportService = new AirportService();

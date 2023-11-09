@@ -4,4 +4,5 @@ export class Passenger {
     public email?: string | undefined;
     public birthday?: string | undefined;
     public passport?: string | undefined;
+    public userId?: number;
 }

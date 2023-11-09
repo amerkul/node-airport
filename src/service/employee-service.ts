@@ -3,17 +3,23 @@ import { Employee } from "../model/employee";
 import { employeeRepository } from "../repository/employee-repository";
 import NotFoundException from "../exception/not-found-exception";
 import { EmployeeFilter } from "../model/filter/employee-filter";
+import { Validator } from "./validator/service-validator";
 
 
 class EmployeeService {
 
+    private validator: Validator = new Validator();
+    
     async create(employee: Employee): Promise<Employee> {
         try {
+            this.validator.checkRequiredEmployeeParamsOrThrow(employee);
+            const uniqueEmployees = await employeeRepository.findByUniqueParams(employee);
+            this.validator.checkUniqueEmployeeParamsOrThrow(uniqueEmployees, employee);
             const id = await employeeRepository.create(employee);
             employee.user.id = id;
             return employee;
         } catch(err: any) {
-            throw new CustomError(500, err.message);
+            throw new CustomError(err.code || 500, err.message);
         }
     }
 
@@ -32,6 +38,18 @@ class EmployeeService {
     async update(newData: Employee, id: number): Promise<Employee> {
         try {
             newData.user.id = id;
+            const uniqueEmployees = await employeeRepository.findByUniqueParams(newData);
+            this.validator.checkUniqueEmployeeParamsOrThrow(
+                uniqueEmployees.filter(unique => unique.user.id !== id), newData
+            );
+            const user = uniqueEmployees.filter(unique => unique.user.id === id).shift();
+            if (newData.user.firstName !== undefined && newData.user.lastName !== undefined) {
+                newData.user.fullName = `${newData.user.firstName} ${newData.user.lastName}`;
+            } else if (newData.user.firstName !== undefined && user !== undefined) {
+                newData.user.fullName = `${newData.user.firstName} ${user.user.lastName}`;
+            } else if (newData.user.lastName !== undefined && user !== undefined) {
+                newData.user.fullName = `${user.user.firstName} ${newData.user.lastName}`;
+            }
             await employeeRepository.update(newData);
             return this.retrieveById(id);
         } catch(err: any) {
@@ -47,9 +65,9 @@ class EmployeeService {
         }
     }
 
-    async retrieveAll(offset: number, size: number): Promise<Employee[]> {
+    async retrieveTotalEntries(filter: EmployeeFilter): Promise<number> {
         try {
-            return await employeeRepository.search(new EmployeeFilter(), offset, size);
+            return await employeeRepository.findTotalEntries(filter);
         } catch(err: any) {
             throw new CustomError(500, err.message);
         }

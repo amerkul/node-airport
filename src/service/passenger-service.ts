@@ -3,16 +3,20 @@ import NotFoundException from "../exception/not-found-exception";
 import { PassengerFilter } from "../model/filter/passenger-filter";
 import { Passenger } from "../model/passenger";
 import { passengerRepository } from "../repository/passenger-repository";
+import { Validator } from "./validator/service-validator";
 
 class PassengerService {
 
-    async create(passenger: Passenger, userId: number | null): Promise<Passenger> {
+    private validator: Validator = new Validator();
+
+    async create(passenger: Passenger, userId: number): Promise<Passenger> {
         try {
+            this.validator.checkRequiredPassengerParamsOrThrow(passenger);
             const passengerId = await passengerRepository.create(passenger, userId);
             passenger.id = passengerId;
             return passenger;
         } catch(err: any) {
-            throw new CustomError(500, err.message);
+            throw new CustomError(err.code || 500, err.message);
         }
     }
 
@@ -46,9 +50,9 @@ class PassengerService {
         }
     }
 
-    async retrieveAll(offset: number, size: number): Promise<Passenger[]> {
+    async retrieveTotalEntries(filter: PassengerFilter): Promise<number> {
         try {
-            return await passengerRepository.search(new PassengerFilter(), offset, size);
+            return await passengerRepository.findTotalEntries(filter);
         } catch(err: any) {
             throw new CustomError(500, err.message);
         }

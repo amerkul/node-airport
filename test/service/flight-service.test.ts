@@ -23,7 +23,7 @@ describe('Flight service', () => {
         filter.fromCity = 'Minsk';
         filter.toCountry = 'Belgium';
         filter.toCity = 'Brussels';
-        const paths: Flight[] = await flightService.retrieveAllWays(filter, 0 , 10);
+        const paths: Flight[] = await flightService.retrieveAllWays(filter);
         expect(paths.length).toBe(1);
     }, 60000);
 
