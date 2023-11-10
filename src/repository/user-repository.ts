@@ -124,7 +124,6 @@ class UserRepository {
                 return;
             }
             query += params.join(', ') + ` WHERE user_id = ${newData.id}`;
-            console.log(query);
             await pool.query(query);
         } catch(e:any) {
             throw new CustomError(500, e.message);

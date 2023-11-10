@@ -135,7 +135,7 @@ describe('Passenger repository', () => {
 
     it("should get an empty booking list", async () => {
         const filter = new BookingFilter();
-        filter.status = BookingStatus.PAID;
+        filter.status = BookingStatus.CANCELLED;
         const result: Booking[] = await bookingRepository.search(filter, 0, 10);
         expect(result).toEqual([]);
     }, 60000);

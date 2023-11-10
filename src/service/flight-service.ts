@@ -34,7 +34,6 @@ class FlightService {
                 `${filter.fromCountry}, ${filter.fromCity}`, 
                 `${filter.toCountry}, ${filter.toCity}`
             );
-            console.log(paths);
             return paths.map(path => 
                 path.map((step: { weight: any; }) => step.weight)
                     .filter((step: Flight) => !!step)

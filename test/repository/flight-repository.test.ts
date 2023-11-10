@@ -82,7 +82,8 @@ describe('Flight repository', () => {
             },
             airplane: {
                 id: 1,
-                name: "Boeing 737-500"
+                name: "Boeing 737-500",
+                capacity: 125,
             }
         });
     }, 60000);
@@ -117,7 +118,8 @@ describe('Flight repository', () => {
             },
             airplane: {
                 id: 1,
-                name: "Boeing 737-500"
+                name: "Boeing 737-500",
+                capacity: 125,
             }
         });
     }, 60000);
@@ -143,7 +145,10 @@ describe('Flight repository', () => {
               city: 'Brussels'
             },
             airline: { id: 1, name: 'Belavia' },
-            airplane: { id: 1, name: 'Boeing 737-500' }
+            airplane: { id: 1, 
+              name: 'Boeing 737-500' ,
+              capacity: 125,
+            }
           },
           {
             id: 2,
@@ -164,7 +169,11 @@ describe('Flight repository', () => {
               city: 'Minsk'
             },
             airline: { id: 2, name: 'Brussels Airlines' },
-            airplane: { id: 2, name: 'Boeing 737-800' }
+            airplane: { 
+              id: 2,
+              name: 'Boeing 737-800',
+              capacity: 222,
+            }
           }]);
     }, 60000);
 
@@ -191,7 +200,11 @@ describe('Flight repository', () => {
               city: 'Brussels'
             },
             airline: { id: 1, name: 'Belavia' },
-            airplane: { id: 1, name: 'Boeing 737-500' }
+            airplane: { 
+              id: 1, 
+              name: 'Boeing 737-500',
+              capacity: 125
+            }
           },
           {
             id: 2,
@@ -212,7 +225,11 @@ describe('Flight repository', () => {
               city: 'Minsk'
             },
             airline: { id: 2, name: 'Brussels Airlines' },
-            airplane: { id: 2, name: 'Boeing 737-800' }
+            airplane: { 
+              id: 2, 
+              name: 'Boeing 737-800',
+              capacity: 222,
+            }
           },]);
     }, 60000);
     
