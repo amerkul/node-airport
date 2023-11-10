@@ -1,7 +1,7 @@
 name: Build and push image to Dockerhub
 
 on:
-  push:
+  pull_request:
     branches: [main]
 
 jobs:
