@@ -2,9 +2,6 @@ import LoginDto from "../../dto/login-dto";
 import InvalidArgumentException from "../../exception/argument-exception";
 import { FlightFilter } from "../../model/filter/flight-filter";
 import NotFoundException from "../../exception/not-found-exception";
-import { FlightStatus } from "model/enum/flight-status";
-import { Sex } from "../../model/enum/sex";
-import { BookingStatus } from "model/enum/booking-status";
 
 export class InputValidator {
 
