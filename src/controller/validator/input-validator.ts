@@ -6,7 +6,7 @@ import NotFoundException from "../../exception/not-found-exception";
 export class InputValidator {
 
     static validateAirlineInputOrThrow(input: any) {
-        let notValidParams: string[] = [];
+        const notValidParams: string[] = [];
         if (input.iata !== undefined &&
             !/^[a-zA-Z0-9]{2,3}$/.test(input.iata)) {
                 notValidParams.push(`iata = ${input.iata}`);
@@ -33,7 +33,7 @@ export class InputValidator {
     }
 
     static validateAirplaneInputOrThrow(input: any) {
-        let notValidParams: string[] = [];
+        const notValidParams: string[] = [];
         if (input.capacity !== undefined &&
             (input.capacity < 1 || input.capacity > 500)) {
                 notValidParams.push(`capacity = ${input.capacity}`);
@@ -60,7 +60,7 @@ export class InputValidator {
     }
 
     static validateAirportInputOrThrow(input: any) {
-        let notValidParams: string[] = [];
+        const notValidParams: string[] = [];
         if (input.iata !== undefined &&
             !/^[a-zA-Z0-9]{3}$/.test(input.iata)) {
                 notValidParams.push(`iata = ${input.iata}`);
@@ -103,7 +103,7 @@ export class InputValidator {
     }
 
     static validatePassengerInputOrThrow(input: any) {
-        let notValidParams: string[] = [];
+        const notValidParams: string[] = [];
         if (input.full_name !== undefined &&
             !/^[a-zA-Z0-9\s]{1,255}$/.test(input.full_name)) {
                 notValidParams.push(`full name = ${input.full_name}`);
@@ -130,7 +130,7 @@ export class InputValidator {
     }
 
     static validateUserInputOrThrow(input: any) {
-        let notValidParams: string[] = [];
+        const notValidParams: string[] = [];
         if (input.username !== undefined &&
             !/^[a-zA-Z0-9.-_@]{1,255}$/.test(input.username)) {
                 notValidParams.push(`username = ${input.username}`);
@@ -162,7 +162,7 @@ export class InputValidator {
         }
         if (input.phone !== undefined && 
             input.phone !== null &&
-            !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g.test(input.phone)) {
+            !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/g.test(input.phone)) {
                 notValidParams.push(`phone = ${input.phone}`);
         }
         if (input.sex !== undefined &&
@@ -204,7 +204,7 @@ export class InputValidator {
     }
 
     static validateEmployeeInputOrThrow(input: any) {
-        let notValidParams: string[] = [];
+        const notValidParams: string[] = [];
         if (input.username !== undefined &&
             !/^[a-zA-Z0-9.-_@]{1,255}$/.test(input.username)) {
                 notValidParams.push(`username = ${input.username}`);
@@ -240,7 +240,7 @@ export class InputValidator {
         }
         if (input.phone !== undefined && 
             input.phone !== null &&
-            !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g.test(input.phone)) {
+            !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/g.test(input.phone)) {
                 notValidParams.push(`phone = ${input.phone}`);
         }
         if (input.sex !== undefined &&
@@ -290,7 +290,7 @@ export class InputValidator {
     }
 
     static validateBookingInputOrThrow(input: any) {
-        let notValidParams: string[] = [];
+        const notValidParams: string[] = [];
         if (input.seat !== undefined &&
             (input.seat < 1 || input.seat > 500)) {
                 notValidParams.push(`seat = ${input.seat}`);
@@ -317,7 +317,7 @@ export class InputValidator {
     }
 
     static validateLoginInputOrThrow(input: LoginDto) {
-        let notValidParams: string[] = [];
+        const notValidParams: string[] = [];
         if (input.username !== undefined &&
             !/^[a-zA-Z0-9.-_@]{1,255}$/.test(input.username)) {
                 notValidParams.push(`username = ${input.username}`);
@@ -332,7 +332,7 @@ export class InputValidator {
     }
 
     static validateFlightInputOrThrow(input: any) {
-        let notValidParams: string[] = [];
+        const notValidParams: string[] = [];
         if (input.price !== undefined &&
             !/^[0-9]{1,18}.[0-9]{1,2}$/.test(input.price.toString())) {
                 notValidParams.push(`price = ${input.price.toString()}`);
@@ -371,7 +371,7 @@ export class InputValidator {
     }
 
     static validateFlightFilterInputOrThrow(input: FlightFilter) {
-        let notValidParams: string[] = [];
+        const notValidParams: string[] = [];
         if (input.arrivalDate !== undefined &&
             new Date(input.arrivalDate).toString() === 'Invalid Date') {
                 notValidParams.push(`arrival = ${input.arrivalDate}`);

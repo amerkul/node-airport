@@ -22,11 +22,11 @@ class JwtParser {
     }
 
     parseClaims(token: string): Claims {
-        const [_, encodedBody] = token.split('.');
+        const [, encodedBody] = token.split('.');
         const str = Buffer.from(encodedBody, 'base64').toString();
         const body = JSON.parse(str);
-        let claims = new Claims();
-        for (let key in body) {
+        const claims = new Claims();
+        for (const key in body) {
             claims.put(key, body[key]);
         }
         return claims;
@@ -64,7 +64,7 @@ class JwtBuilder {
     compact(): string {
         const header = this.getEncodedHeader();
         const payload = this.getEncodedPayload();
-        let signature = this.getEncodedSignature(header, payload);
+        const signature = this.getEncodedSignature(header, payload);
         return `${header}.${payload}.${signature}`;
     }
 

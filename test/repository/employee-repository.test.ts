@@ -6,7 +6,7 @@ import User from "../../src/model/user";
 
 describe('Employee repository', () => {
 
-    let testContainer = new PGTestContainer();
+    const testContainer = new PGTestContainer();
 
     beforeAll(async () => {
         await testContainer.init();

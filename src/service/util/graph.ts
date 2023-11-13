@@ -37,9 +37,9 @@ export class FlightGraph {
     }
 
     getAllPaths(v1: string, v2: string) {
-        let visited = new Set();
-        let currentPath: any[] = [];
-        let paths: any[] = [];
+        const visited = new Set();
+        const currentPath: any[] = [];
+        const paths: any[] = [];
         this.dfs({node: v1, weight: null} , v2, visited, currentPath, paths);
         return paths;
     }
@@ -56,9 +56,9 @@ export class FlightGraph {
             currentPath.pop();
             return;
         }
-        let children = this.items.get(v1.node);
+        const children = this.items.get(v1.node);
         if (children !== undefined) {
-            for (let child of children) {
+            for (const child of children) {
                 if (v1.weight === null 
                     || new Date(v1.weight.arrival) < new Date(child.weight.depature)) {
                     this.dfs(child, v2, visited, currentPath, paths);

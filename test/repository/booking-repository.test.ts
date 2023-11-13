@@ -8,7 +8,7 @@ import { BookingStatus } from "../../src/model/enum/booking-status";
 
 describe('Passenger repository', () => {
     
-    let testContainer = new PGTestContainer();
+    const testContainer = new PGTestContainer();
 
     beforeAll(async () => {
         await testContainer.init();

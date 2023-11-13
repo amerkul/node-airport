@@ -182,8 +182,8 @@ class AirportRepository {
             icao: r.icao,
             country: r.country,
             city: r.city,
-            latitude: !!r.latitude ? parseFloat(r.latitude) : null,
-            longitude: !!r.longitude ? parseFloat(r.longitude) : null,
+            latitude: r.latitude ? parseFloat(r.latitude) : null,
+            longitude: r.longitude ? parseFloat(r.longitude) : null,
             archive: r.archive,
         });
     }

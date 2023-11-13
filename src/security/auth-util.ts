@@ -1,4 +1,3 @@
-import AuthenticationException from "../exception/auth-exception";
 import Claims from "./auth-claims";
 import Jwt from "./auth-jwt";
 import AuthenticationUserDetails from "./auth-user-details";
@@ -26,21 +25,21 @@ class AuthenticationUtil {
     }
 
     getUsername(token: string) {
-        let claims = Jwt.parser().parseClaims(token);
+        const claims = Jwt.parser().parseClaims(token);
         return claims.getSubject();
     }
 
     validateToken(token: string): boolean {
         try {
             const [encodedHeader, encodedBody, encodedSignature] = token.split('.');
-            let claims = Jwt.parser().parseClaims(token);
+            const claims = Jwt.parser().parseClaims(token);
             const expectedSignature = Jwt.builder()
                     .signWith('sha256', this.secret)
                     .getEncodedSignature(encodedHeader, encodedBody);
             if (expectedSignature !== encodedSignature) {
                 return false;
             }
-            let dateNow = Date.now();
+            const dateNow = Date.now();
             const expiration = claims.getExpiration();
             return dateNow < Number(expiration);
         } catch (e: any) {

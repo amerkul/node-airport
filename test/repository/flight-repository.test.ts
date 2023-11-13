@@ -7,7 +7,7 @@ import { Airport } from "../../src/model/airport";
 import { FlightStatus } from "../../src/model/enum/flight-status";
 import { FlightFilter } from "../../src/model/filter/flight-filter";
 
-let testContainer = new PGTestContainer();
+const testContainer = new PGTestContainer();
 
 beforeAll(async () => {
     await testContainer.init();

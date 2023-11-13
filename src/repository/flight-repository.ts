@@ -189,8 +189,7 @@ class FlightRepository {
 
     async findByUniqueParams(flight: Flight): Promise<Flight[]> {
         try {
-            const params: string[] = [];
-            let query = `
+            const query = `
             SELECT flight_id, depature::text, 
             arrival::text, price, status,
             from_id, from_a.name AS from_name, 

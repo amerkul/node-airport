@@ -4,7 +4,7 @@ import { Airport } from "../../src/model/airport";
 
 describe('Airport service', () => {
 
-    let testContainer = new PGTestContainer();
+    const testContainer = new PGTestContainer();
 
     beforeAll(async () => {
         await testContainer.init();

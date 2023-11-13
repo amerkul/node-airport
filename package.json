@@ -18,7 +18,7 @@
     "scripts": {
         "test": "jest --runInBand",
         "dev": "ts-node ./src/server.ts",
-        "lint": "eslint . --ext .ts"
+        "lint": "eslint . --ext .ts . --fix"
     },
     "dependencies": {
         "bcrypt": "^5.1.1",

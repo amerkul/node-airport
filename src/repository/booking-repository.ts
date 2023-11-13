@@ -142,7 +142,7 @@ class BookingRepository {
 
     async findByUniqueParams(booking: Booking): Promise<Booking[]> {
         try {
-            let query = `
+            const query = `
             SELECT booking_id, seat, b.status, b.passenger_id 
             AS passenger_id, p.full_name AS passenger_name, 
             b.flight_id, from_a.airport_id AS from_id, 

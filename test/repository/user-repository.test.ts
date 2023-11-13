@@ -7,7 +7,7 @@ import { PGTestContainer } from "./pg-container";
 
 describe('User repository', () => {
 
-    let testContainer = new PGTestContainer();
+    const testContainer = new PGTestContainer();
 
     beforeAll(async () => {
         await testContainer.init();
