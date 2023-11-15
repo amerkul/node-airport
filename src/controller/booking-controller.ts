@@ -12,6 +12,7 @@ import { Paginator } from "./util/paginator";
 import { InputValidator } from "./validator/input-validator";
 import { flightService } from "../service/flight-service";
 import InvalidArgumentException from "../exception/argument-exception";
+import { passengerService } from "../service/passenger-service";
 
 class BookingController {
 
@@ -65,6 +66,9 @@ class BookingController {
                 }
             }
             const flight = await flightService.retrieveById(parseInt(req.params.flight_id));
+            if (body.passengerId !== undefined) {
+                await passengerService.retrieveById(body.passengerId);
+            }
             if (flight.airplane?.capacity !== undefined 
                 && flight.airplane?.capacity < body.seat) {
                     throw new InvalidArgumentException(400, "Passenger seat is great than airplane's capacity");

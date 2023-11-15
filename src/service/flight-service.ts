@@ -5,6 +5,9 @@ import { FlightStatus } from "../model/enum/flight-status";
 import { FlightFilter } from "../model/filter/flight-filter";
 import { Flight } from "../model/flight";
 import { flightRepository } from "../repository/flight-repository";
+import { airlineService } from "./airline-service";
+import { airplaneService } from "./airplane-service";
+import { airportService } from "./airport-service";
 import { FlightGraph } from "./util/graph";
 import { Validator } from "./validator/service-validator";
 
@@ -46,6 +49,12 @@ class FlightService {
     async create(flight: Flight): Promise<Flight> {
         try {
             this.validator.checkRequiredFlightParamsOrThrow(flight);
+            await Promise.all([
+                airportService.retrieveById(flight.from?.id as number), 
+                airportService.retrieveById(flight.to?.id as number),
+                airplaneService.retrieveById(flight.airplane?.id as number),
+                airlineService.retrieveById(flight.airline?.id as number)
+            ]);
             if (new Date(flight.depature as string) >= new Date(flight.arrival as string)) {
                 throw new InvalidArgumentException(400, "Invalid date range");
             }
@@ -80,6 +89,12 @@ class FlightService {
             if (notFreeAirplanes.filter(notFree => notFree.id !== newData.id).length !== 0) {
                 throw new InvalidArgumentException(400, `Airplane is not free on this time`);
             } 
+            await Promise.all([
+                airportService.retrieveById(newData.from?.id as number), 
+                airportService.retrieveById(newData.to?.id as number),
+                airplaneService.retrieveById(newData.airplane?.id as number),
+                airlineService.retrieveById(newData.airline?.id as number)
+            ]);
             await flightRepository.update(newData);
             return newData;
         } catch(err: any) {

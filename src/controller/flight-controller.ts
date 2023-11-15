@@ -98,7 +98,6 @@ class FlightController {
                     id: body.airplane_id || flight.airplane?.id
                 }
             }
-            console.log(newData);
             res.send(await flightService.update(newData));
         } catch(err: any) {
             next(new CustomError(err.code || 500, err.message));

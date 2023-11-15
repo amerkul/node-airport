@@ -7,6 +7,7 @@ import { CreateAirplaneDto } from "../dto/create-airplane-dto";
 import { UpdateAirplaneDto } from "../dto/update-airplane-dto";
 import { Paginator } from "./util/paginator";
 import { InputValidator } from "./validator/input-validator";
+import { airlineService } from "../service/airline-service";
 
 class AirplaneController {
 
@@ -48,6 +49,7 @@ class AirplaneController {
         try {
             InputValidator.validateIntRouteParamOrThrow(req.params.airline_id);
             const airlineId = parseInt(req.params.airline_id);
+            await airlineService.retrieveById(airlineId);
             const body: CreateAirplaneDto = req.body;
             InputValidator.validateAirplaneInputOrThrow(body);
             const airplane: Airplane = {...body};
