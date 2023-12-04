@@ -8,11 +8,13 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "airport"
     volumes:
       - data:/var/lib/postgresql/data
-      - data/init.sql:/docker-entrypoint-initdb.d/1-init.sql
+      - ./data/init.sql:/docker-entrypoint-initdb.d/1-init.sql
+      - ./data/data.sql:/docker-entrypoint-initdb.d/2-data.sql
     networks:
       - airport
   pgAdmin:
@@ -26,6 +28,23 @@ services:
       PGADMIN_DEFAULT_PASSWORD: strong-password
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - airport
+  app:
+    container_name: app
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+    ports:
+      - 3000:3000
+    depends_on:
+      - airportDB
     networks:
       - airport
 networks:

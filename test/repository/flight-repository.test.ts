@@ -7,7 +7,7 @@ import { Airport } from "../../src/model/airport";
 import { FlightStatus } from "../../src/model/enum/flight-status";
 import { FlightFilter } from "../../src/model/filter/flight-filter";
 
-let testContainer = new PGTestContainer();
+const testContainer = new PGTestContainer();
 
 beforeAll(async () => {
     await testContainer.init();
@@ -29,6 +29,7 @@ describe('Flight repository', () => {
         flight.arrival = '2023-10-30 03:00:00';
         flight.price = 500;
         flight.from = from;
+        flight.status = FlightStatus.SCHEDULED;
         flight.to = to;
         flight.airline = airline;
         flight.airplane = airplane;
@@ -37,15 +38,29 @@ describe('Flight repository', () => {
     }, 60000);
 
     it('should update the flight with id = 3', async () => {
+        const airline = new Airline();
         const flight = new Flight();
         flight.id = 3
-        flight.depature = '2023-10-29 01:00:00';
+        airline.id = 2;
+        const airplane = new Airplane();
+        airplane.id = 1;
+        const from = new Airport();
+        from.id = 1;
+        const to = new Airport();
+        to.id = 2;
+        flight.depature = '2023-10-30 01:00:00';
+        flight.arrival = '2023-10-30 03:00:00';
+        flight.price = 500;
+        flight.from = from;
         flight.status = FlightStatus.CANCELLED;
+        flight.to = to;
+        flight.airline = airline;
+        flight.airplane = airplane;
         await flightRepository.update(flight);
         const result = await flightRepository.findById(3);
         expect(result[0]).toEqual({
             id: 3,
-            depature: '2023-10-29 01:00:00',
+            depature: '2023-10-30 01:00:00',
             arrival: '2023-10-30 03:00:00',
             price: 500,
             status: 'Cancelled',
@@ -67,7 +82,8 @@ describe('Flight repository', () => {
             },
             airplane: {
                 id: 1,
-                name: "Boeing 737-500"
+                name: "Boeing 737-500",
+                capacity: 125,
             }
         });
     }, 60000);
@@ -102,14 +118,14 @@ describe('Flight repository', () => {
             },
             airplane: {
                 id: 1,
-                name: "Boeing 737-500"
+                name: "Boeing 737-500",
+                capacity: 125,
             }
         });
     }, 60000);
     
     it("should get all flights", async () => {
         const result: Flight[] = await flightRepository.search(new FlightFilter(), 0, 10);
-        console.log(result);
         expect(result).toEqual([{
             id: 1,
             depature: '2023-10-31 00:00:00',
@@ -129,7 +145,10 @@ describe('Flight repository', () => {
               city: 'Brussels'
             },
             airline: { id: 1, name: 'Belavia' },
-            airplane: { id: 1, name: 'Boeing 737-500' }
+            airplane: { id: 1, 
+              name: 'Boeing 737-500' ,
+              capacity: 125,
+            }
           },
           {
             id: 2,
@@ -150,7 +169,11 @@ describe('Flight repository', () => {
               city: 'Minsk'
             },
             airline: { id: 2, name: 'Brussels Airlines' },
-            airplane: { id: 2, name: 'Boeing 737-800' }
+            airplane: { 
+              id: 2,
+              name: 'Boeing 737-800',
+              capacity: 222,
+            }
           }]);
     }, 60000);
 
@@ -177,7 +200,11 @@ describe('Flight repository', () => {
               city: 'Brussels'
             },
             airline: { id: 1, name: 'Belavia' },
-            airplane: { id: 1, name: 'Boeing 737-500' }
+            airplane: { 
+              id: 1, 
+              name: 'Boeing 737-500',
+              capacity: 125
+            }
           },
           {
             id: 2,
@@ -198,7 +225,11 @@ describe('Flight repository', () => {
               city: 'Minsk'
             },
             airline: { id: 2, name: 'Brussels Airlines' },
-            airplane: { id: 2, name: 'Boeing 737-800' }
+            airplane: { 
+              id: 2, 
+              name: 'Boeing 737-800',
+              capacity: 222,
+            }
           },]);
     }, 60000);
     

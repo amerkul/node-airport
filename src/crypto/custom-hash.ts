@@ -70,7 +70,7 @@ export class CustomSha256Hash implements CustomHash {
                 const result = [];
                 for (let i = 0; i < 8; i++) { 
                     result[i] = this.hashed[i].toString(16).padStart(8, "0") 
-                };
+                }
                 return result.join("");
             }
             default: throw new Error(`Unexpected value: ${encoding}`);
@@ -79,7 +79,7 @@ export class CustomSha256Hash implements CustomHash {
 
     packChunk(i: number, b: Array<number>): number {
         return this.omega1(b[i - 2]) + b[i - 7] + this.omega0(b[i - 15]) + b[i - 16];
-    };
+    }
 
 
     omega0(n: number): number {
@@ -92,8 +92,8 @@ export class CustomSha256Hash implements CustomHash {
 
     hashValues(i: number, t: Int32Array, b: Array<number>) {
         while (i < 64) {
-            let temp1 = t[7] + this.sigma1(t[4]) + this.choice(t[4], t[5], t[6]) + CustomSha256Hash.K[i] + b[i++];
-            let temp2 = this.sigma0(t[0]) + this.majority(t[0], t[1], t[2]);
+            const temp1 = t[7] + this.sigma1(t[4]) + this.choice(t[4], t[5], t[6]) + CustomSha256Hash.K[i] + b[i++];
+            const temp2 = this.sigma0(t[0]) + this.majority(t[0], t[1], t[2]);
             t[7] = t[6];
             t[6] = t[5];
             t[5] = t[4];
@@ -103,21 +103,21 @@ export class CustomSha256Hash implements CustomHash {
             t[1] = t[0];
             t[0] = temp1 + temp2;
         }
-    };
+    }
 
     sumValues(i: number, t: Int32Array) { 
         while (i < 8) { 
             this.hashed[i] = t[i] + this.hashed[i++];
         } 
-    };
+    }
 
     sigma0(x: number): number {
         return (((x >>> 2) | (x << 30)) ^ ((x >>> 13) | (x << 19)) ^ ((x >>> 22) | (x << 10)))
-    };
+    }
 
     sigma1(x: number): number { 
         return (((x >>> 6) | (x << 26)) ^ ((x >>> 11) | (x << 21)) ^ ((x >>> 25) | (x << 7)))
-    };
+    }
 
     choice(x: number, y: number, z: number): number {
         return (x & y) ^ (~x & z);

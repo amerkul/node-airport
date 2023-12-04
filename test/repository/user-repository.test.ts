@@ -7,7 +7,7 @@ import { PGTestContainer } from "./pg-container";
 
 describe('User repository', () => {
 
-    let testContainer = new PGTestContainer();
+    const testContainer = new PGTestContainer();
 
     beforeAll(async () => {
         await testContainer.init();
@@ -22,7 +22,7 @@ describe('User repository', () => {
             lastName: 'Black',
             phone: '+375291111111',
             username: 'cat',
-            password: '$2y$10$g5NuZ2nAWAsQOij1e9VRy.2oZKGhC2XH4G66RllU41u52Zr108yCO',
+            password: undefined,
             sex: 'Female',
             active: true,
             country: null,
@@ -34,6 +34,11 @@ describe('User repository', () => {
             birthday: '2005-03-03',
             passport: 'MP5656565'
         });
+    }, 60000);
+
+    it("should return []", async () => {
+        const result: User[] = await userRepository.findByUsername('anna');
+        expect(result).toEqual([]);
     }, 60000);
 
     it("should create a user with id = 4", async () => {
@@ -65,7 +70,7 @@ describe('User repository', () => {
             role: 'Passenger',
             phone: null,
             username: 'anna',
-            password: '$2y$10$10jqAjd7pxuFsVnUSisvbetvCtBnv9bSn9gsjVjcpRjAXE5ZqueB.',
+            password: undefined,
             sex: null,
             active: true,
             country: null,
@@ -88,7 +93,7 @@ describe('User repository', () => {
             lastName: 'Black',
             phone: '+375291111111',
             username: 'cat',
-            password: '$2y$10$g5NuZ2nAWAsQOij1e9VRy.2oZKGhC2XH4G66RllU41u52Zr108yCO',
+            password: undefined,
             sex: 'Female',
             active: true,
             country: null,
@@ -111,7 +116,7 @@ describe('User repository', () => {
             id: 2,
             lastName: "White",
             passport: "MP3433434",
-            password: "$2y$10$5VZOdoki./.sSIOOwGsILeurCV97EZnKheOugFJaTqocjxzueZx7a",
+            password: undefined,
             phone: "+375292222222",
             role: "Manager",
             sex: "Male",
@@ -130,7 +135,7 @@ describe('User repository', () => {
             id: 3,
             lastName: "Merkul",
             passport: "MP7777777",
-            password: "$2y$10$Zfi5kbTrmZqlqOp1itJrM.8iJPLNGSd3Az0WURXXR6BIREDeQU/q2",
+            password: undefined,
             phone: "+375293376183",
             role: "Admin",
             sex: "Female",
@@ -151,7 +156,7 @@ describe('User repository', () => {
             lastName: 'Black',
             phone: '+375291111111',
             username: 'cat',
-            password: '$2y$10$g5NuZ2nAWAsQOij1e9VRy.2oZKGhC2XH4G66RllU41u52Zr108yCO',
+            password: undefined,
             sex: 'Female',
             active: true,
             country: null,

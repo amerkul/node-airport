@@ -5,7 +5,7 @@ import { PGTestContainer } from "./pg-container";
 
 describe('Passenger repository', () => {
     
-    let testContainer = new PGTestContainer();
+    const testContainer = new PGTestContainer();
 
     beforeAll(async () => {
         await testContainer.init();
@@ -22,7 +22,8 @@ describe('Passenger repository', () => {
             fullName: 'Anna Merkul',
             email: 'amerkul@gmail.com',
             birthday: '2002-08-16',
-            passport: 'MP7777777'
+            passport: 'MP7777777',
+            userId: null
         });
     }, 60000);
 
@@ -47,7 +48,8 @@ describe('Passenger repository', () => {
             fullName: 'Anna Merkul',
             email: 'anna.merkul@bk.ru',
             birthday: '2002-08-16',
-            passport: 'MP2222222'
+            passport: 'MP2222222',
+            userId: null
         });
     }, 60000);
 
@@ -68,7 +70,7 @@ describe('Passenger repository', () => {
 
     it("should get a passenger with id = 1", async () => {
         const filter = new PassengerFilter();
-        filter.fullName = 'anna';
+        filter.full_name = 'anna';
         const result: Passenger[] = await passengerRepository.search(filter, 0, 10);
         expect(result).toEqual([{
                 id: 1,

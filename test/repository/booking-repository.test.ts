@@ -8,7 +8,7 @@ import { BookingStatus } from "../../src/model/enum/booking-status";
 
 describe('Passenger repository', () => {
     
-    let testContainer = new PGTestContainer();
+    const testContainer = new PGTestContainer();
 
     beforeAll(async () => {
         await testContainer.init();
@@ -82,20 +82,20 @@ describe('Passenger repository', () => {
             id: 1, 
             fullName: 'Anna Merkul' },
           flight: { 
-            id: 1, 
+            id: 2, 
             from: {
-                city: "Minsk",
-                country: "Belarus",
-                id: 1,
-                name: "National Airport Minsk",
-            },  
-            to: {
                 city: "Brussels",
                 country: "Belgium",
                 id: 2,
                 name: "Brussels International Airport",
             },  
-            price: 400
+            to: {
+                city: "Minsk",
+                country: "Belarus",
+                id: 1,
+                name: "National Airport Minsk",
+            },  
+            price: 500
         }
         });
     }, 60000);
@@ -135,7 +135,7 @@ describe('Passenger repository', () => {
 
     it("should get an empty booking list", async () => {
         const filter = new BookingFilter();
-        filter.status = BookingStatus.PAID;
+        filter.status = BookingStatus.CANCELLED;
         const result: Booking[] = await bookingRepository.search(filter, 0, 10);
         expect(result).toEqual([]);
     }, 60000);

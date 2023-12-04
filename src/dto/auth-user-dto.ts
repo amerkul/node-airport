@@ -1,9 +1,9 @@
 export default class AuthenticatedUserDto {
-    public fullName: string;
+    public username: string;
     public token: string;
 
-    constructor(fullName: string, token: string) {
-        this.fullName = fullName;
+    constructor(username: string, token: string) {
+        this.username = username;
         this.token = token;
     }
     
